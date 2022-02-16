@@ -2,8 +2,8 @@
 
 export class Attribute{
 
-    _name;
-    _value;
+    #name;
+    #value;
 
     constructor(name, value){
         this.setName(name);
@@ -11,14 +11,14 @@ export class Attribute{
     }
 
     setName(name){
-        this._name = name;
+        this.#name = name;
     }
 
     setValue(value){
-        this._value = value;
+        this.#value = value;
     }
 
-    getName(){ return this._name; }
-    getValue(){ return this._value; }
+    getName(){ return this.#name; }
+    getValue(){ return this.#value; }
 
 }

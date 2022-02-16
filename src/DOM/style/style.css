@@ -1,0 +1,101 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&family=Lobster&display=swap');
+
+:root{
+    --amazon: rgb(83, 121, 90);
+    --tea-green: rgb(201, 227, 172);
+    --russet: rgb(124, 80, 41);
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--tea-green);
+}
+
+#content{
+    display: grid;
+    grid-template-columns: minmax(200px, 25%) minmax(400px, 75%);
+    height: 100vh;
+}
+
+#side-panel{
+    display: grid;
+    align-content: start;
+    background-color: #EAEFBD;
+}
+
+#logo-container{
+    padding: 5%;
+    display: grid;
+    grid-template-columns: 15% 35%;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    gap: 3%;
+    row-gap: 10%;
+}
+
+.logo{
+    width: 100%;
+}
+
+#name{
+    width: fit-content;
+    height: fit-content;
+    font-family: 'Lobster', cursive;
+    font-size: larger;
+    color: var(--russet);
+}
+
+#tagline{
+    grid-column: span 2;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: bolder;
+    font-family: sans-serif;
+    color: var(--russet); 
+}
+
+.category-container{
+    padding: 3% 10%;
+}
+
+.category-heading{
+    font-weight: bold;
+    font-family: sans-serif;
+    color: var(--russet); 
+    color: var(--amazon);
+}
+
+.category-items-container{
+    display: grid;
+    gap: 8%;
+    padding: 4%;
+    width: fit-content;
+}
+
+.category-item{
+    border: solid 1px var(--tea-green);
+    background-color: transparent;
+    font-family: sans-serif;
+    color: var(--russet);
+    font-size: 1rem;
+    text-align: left;
+    padding: 3%;
+}
+
+.category-item:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}

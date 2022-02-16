@@ -1,7 +1,8 @@
-import './style/style.css';
-import { Element } from './element';
-import { Attribute } from './attribute';
-import Logo from "./images/logo.png";
+import './DOM/style/style.css';
+import { Element } from './DOM/element';
+import { Attribute } from './DOM/attribute';
+import { LogoContainer } from './DOM/side-panel/logo';
+import { Category } from './DOM/side-panel/category';
 
 const Main = (() => {
 
@@ -10,24 +11,14 @@ const Main = (() => {
     let sidePanel = new Element("div", new Array(sidePanelAttribute));
     sidePanel = sidePanel.getElement();
     
-    const logoContainerAttribute = new  Attribute("id", "logo-container"); 
-    let logoContainer = new Element("div", new Array(logoContainerAttribute));
-    logoContainer = logoContainer.getElement();
+    const logoContainer = new LogoContainer();
+    const byTimeItems = new Array("Today", "Upcoming");
+    const byTime = new Category("Time", byTimeItems);
+    const userDefinedCategories = new Category("My Categories");
 
-    let attrArr = new Array(new Attribute("src", Logo),
-    new Attribute("alt", "doodoo-list logo")); 
-    const logo = new Element("img", attrArr, "logo");
-
-    let textContent = "doodoo-list";
-    const name = new Element("p", new Array(new Attribute("id", "name")), undefined, textContent);
-
-    const tagline = new Element("h5", new Array(new Attribute("id", "tagline")),
-    undefined, "Here to help you get your 💩 together");
-
-    logoContainer.append(logo.getElement());
-    logoContainer.append(name.getElement());
-    logoContainer.append(tagline.getElement());
-    sidePanel.append(logoContainer);
+    sidePanel.append(logoContainer.getLogoContainer());
+    sidePanel.append(byTime.getCategory());
+    sidePanel.append(userDefinedCategories.getCategory());
     content.append(sidePanel);
 
 })();

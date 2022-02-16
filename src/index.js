@@ -14,7 +14,8 @@ const Main = (() => {
     const logoContainer = new LogoContainer();
     const byTimeItems = new Array("Today", "Upcoming");
     const byTime = new Category("Time", byTimeItems);
-    const userDefinedCategories = new Category("My Categories");
+    const userDefinedItems = new Array("All", "Hobbies", "Work", "Family", "Friends", "Travel");
+    const userDefinedCategories = new Category("My Categories", userDefinedItems);
 
     sidePanel.append(logoContainer.getLogoContainer());
     sidePanel.append(byTime.getCategory());

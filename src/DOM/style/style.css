@@ -82,7 +82,7 @@ body{
     display: grid;
     gap: 8%;
     padding: 4%;
-    width: fit-content;
+    grid-template-columns: 50% 50%;
 }
 
 .category-item{
@@ -93,6 +93,7 @@ body{
     font-size: 1rem;
     text-align: left;
     padding: 3%;
+    width: 100%;
 }
 
 .category-item:hover{

@@ -6,13 +6,11 @@ import { Element } from "../element";
 export class Category{
 
     #category;
-    #categoryName;
     #categoryContainer;
     #categoryItemContainer;
 
     constructor(textContent, items){
         this.setCategory(textContent, items);
-        this.#setCategoryName(textContent);
     }
 
     setCategory(textContent, items){
@@ -43,18 +41,10 @@ export class Category{
             const newItem = new Element("input",
                 new Array(new Attribute("type", "button"),
                 new Attribute("value", item)),
-                `${this.getCategoryName()}-item ${item} category-item`);
+                `${item} category-item`);
             
             this.#categoryItemContainer.append(newItem.getElement());
         });
 
-    }
-
-    #setCategoryName(textContent){
-        this.#categoryName = textContent;
-    }
-
-    getCategoryName(){
-        return this.#categoryName;
     }
 }

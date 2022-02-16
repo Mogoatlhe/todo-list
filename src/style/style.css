@@ -1,0 +1,62 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&family=Lobster&display=swap');
+
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #C9E3AC;
+}
+
+#content{
+    display: grid;
+    grid-template-columns: minmax(200px, 25%) minmax(400px, 75%);
+    height: 100vh;
+}
+
+#side-panel{
+    display: grid;
+    align-items: space-around;
+    background-color: #EAEFBD;
+}
+
+#logo-container{
+    display: grid;
+    grid-template-columns: 15% 30%;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    gap: 3%;
+    row-gap: 10%;
+}
+
+.logo{
+    width: 100%;
+}
+
+#name{
+    width: fit-content;
+    height: fit-content;
+    font-family: 'Lobster', cursive;
+    font-size: larger;
+    color: rgb(124 80 41);
+}
+
+#tagline{
+    grid-column: span 2;
+    text-align: center;
+    /* font-family: 'Exo 2', sans-serif; */
+    font-family: sans-serif;
+    font-weight: bolder;
+    color: rgb(124 80 41); 
+    /* #538917 */
+}

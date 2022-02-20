@@ -37,4 +37,16 @@ export class Element{
     getElement(){
         return this.#element;
     }
+
+    addElementClass(className){
+        this.#element.classList.add(className);
+    }
+
+    addClasses(classNames){
+        classNames.map(className => this.#element.classList.add(className));
+    }
+
+    removeElementClass(className){
+        this.#element.classList.remove(className);
+    }
 }

@@ -39,13 +39,18 @@ export class Category{
         "category-items-container");
         this.#categoryItemContainer = categoryItemContainer.getElement();
 
-        items.map(item => {
+        items.map((item, index) => {
             const newItem = new Element("input",
                 new Array(new Attribute("type", "button"),
                 new Attribute("value", item)),
                 `${item} category-item`);
             
-            this.#categoryItemContainer.append(newItem.getElement());
+            const newItemNode = newItem.getElement();
+            if(index  === 0){
+                newItemNode.addElementClass("active");
+            }
+            
+            this.#categoryItemContainer.append(newItemNode);
         });
 
     }

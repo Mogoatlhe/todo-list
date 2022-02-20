@@ -42,7 +42,7 @@ export class Element{
         this.#element.classList.add(className);
     }
 
-    addClasses(classNames){
+    addElementClasses(classNames){
         classNames.map(className => this.#element.classList.add(className));
     }
 

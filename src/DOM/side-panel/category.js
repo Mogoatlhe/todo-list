@@ -1,17 +1,17 @@
 
-import { Attribute } from "../attribute";
 import { Element } from "../element";
+import { CategoryItem } from "../main/categoryItem";
 
 
 export class Category{
 
-    #todos;
+    #items;
     #category;
     #categoryContainer;
     #categoryItemContainer;
 
     constructor(textContent, items){
-        this.#todos = new Array();
+        this.#items = new Array();
         this.setCategory(textContent, items);
     }
 
@@ -39,34 +39,10 @@ export class Category{
         "category-items-container");
         this.#categoryItemContainer = categoryItemContainer.getElement();
 
-        items.map((item, index) => {
-            const newItem = new Element("input",
-                new Array(new Attribute("type", "button"),
-                new Attribute("value", item)),
-                `${item} category-item`);
-            
-            this.#categoryItemContainer.append(newItem.getElement());
+        items.map((item) => {
+            this.#categoryItemContainer.append(item.getItem());
+            this.#items.push();
         });
 
-    }
-
-    addToDo(todo){
-        this.#todos.add(todo);
-    }
-
-    removeTodo(id){
-        if(this.isToDosEmpty()){
-            return;
-        }
-
-        this.#todos.map((todo, index) => {
-            if(todo.id === id){
-                this.#todos.splice(index, 1);
-            }
-        });
-    }
-
-    isToDosEmpty(){
-        return this.#todos.length === 0 ? true : false;
     }
 }

@@ -45,12 +45,7 @@ export class Category{
                 new Attribute("value", item)),
                 `${item} category-item`);
             
-            const newItemNode = newItem.getElement();
-            if(index  === 0){
-                newItemNode.addElementClass("active");
-            }
-            
-            this.#categoryItemContainer.append(newItemNode);
+            this.#categoryItemContainer.append(newItem.getElement());
         });
 
     }

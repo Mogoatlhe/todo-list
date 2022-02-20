@@ -5,11 +5,13 @@ import { Element } from "../element";
 
 export class Category{
 
+    #todos;
     #category;
     #categoryContainer;
     #categoryItemContainer;
 
     constructor(textContent, items){
+        this.#todos = new Array();
         this.setCategory(textContent, items);
     }
 
@@ -46,5 +48,25 @@ export class Category{
             this.#categoryItemContainer.append(newItem.getElement());
         });
 
+    }
+
+    addToDo(todo){
+        this.#todos.add(todo);
+    }
+
+    removeTodo(id){
+        if(this.isToDosEmpty()){
+            return;
+        }
+
+        this.#todos.map((todo, index) => {
+            if(todo.id === id){
+                this.#todos.splice(index, 1);
+            }
+        });
+    }
+
+    isToDosEmpty(){
+        return this.#todos.length === 0 ? true : false;
     }
 }

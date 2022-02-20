@@ -130,6 +130,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/DOM/main/main.js":
+/*!******************************!*\
+  !*** ./src/DOM/main/main.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Main\": () => (/* binding */ Main)\n/* harmony export */ });\n/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../element */ \"./src/DOM/element.js\");\n\n\n\nclass Main{\n\n    #main;\n\n    constructor(){\n        this.setMain();\n    }\n\n    setMain(){\n\n        const main = new _element__WEBPACK_IMPORTED_MODULE_0__.Element(\"main\", []);\n        this.#main = main.getElement();\n\n    }\n\n    getMain(){\n        return this.#main;\n    }\n\n}\n\n\n//# sourceURL=webpack://todo-list/./src/DOM/main/main.js?");
+
+/***/ }),
+
 /***/ "./src/DOM/side-panel/category.js":
 /*!****************************************!*\
   !*** ./src/DOM/side-panel/category.js ***!
@@ -166,7 +176,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _DOM_style_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DOM/style/style.css */ \"./src/DOM/style/style.css\");\n/* harmony import */ var _DOM_side_panel_category__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DOM/side-panel/category */ \"./src/DOM/side-panel/category.js\");\n/* harmony import */ var _DOM_side_panel_logo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DOM/side-panel/logo */ \"./src/DOM/side-panel/logo.js\");\n/* harmony import */ var _DOM_side_panel_sidePanel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DOM/side-panel/sidePanel */ \"./src/DOM/side-panel/sidePanel.js\");\n\n\n\n\n\nconst Main = (() => {\n\n    const content = document.getElementById(\"content\");\n    \n    const logoContainer = new _DOM_side_panel_logo__WEBPACK_IMPORTED_MODULE_2__.LogoContainer();\n    const byTimeItems = new Array(\"Today\", \"Upcoming\");\n    const byTime = new _DOM_side_panel_category__WEBPACK_IMPORTED_MODULE_1__.Category(\"Time\", byTimeItems);\n    const userDefinedItems = new Array(\"All\", \"Hobbies\", \"Work\", \"Family\", \"Friends\", \"Travel\");\n    const userDefinedCategories = new _DOM_side_panel_category__WEBPACK_IMPORTED_MODULE_1__.Category(\"My Categories\", userDefinedItems);\n    \n    const sidePanel = new _DOM_side_panel_sidePanel__WEBPACK_IMPORTED_MODULE_3__.SidePanel(logoContainer.getLogoContainer(),\n    byTime.getCategory(), userDefinedCategories.getCategory());;\n    const sidePanelNode = sidePanel.getSidePanel();\n    \n    content.append(sidePanelNode);\n\n})();\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _DOM_style_style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DOM/style/style.css */ \"./src/DOM/style/style.css\");\n/* harmony import */ var _DOM_side_panel_category__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DOM/side-panel/category */ \"./src/DOM/side-panel/category.js\");\n/* harmony import */ var _DOM_side_panel_logo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DOM/side-panel/logo */ \"./src/DOM/side-panel/logo.js\");\n/* harmony import */ var _DOM_side_panel_sidePanel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DOM/side-panel/sidePanel */ \"./src/DOM/side-panel/sidePanel.js\");\n/* harmony import */ var _DOM_main_main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DOM/main/main */ \"./src/DOM/main/main.js\");\n\n\n\n\n\n\nconst LoadPages = (() => {\n\n    const content = document.getElementById(\"content\");\n    const main = new _DOM_main_main__WEBPACK_IMPORTED_MODULE_4__.Main();\n    const mainNode = main.getMain();\n    \n    const logoContainer = new _DOM_side_panel_logo__WEBPACK_IMPORTED_MODULE_2__.LogoContainer();\n    const byTimeItems = new Array(\"Inbox\", \"Today\", \"Upcoming\");\n    const byTime = new _DOM_side_panel_category__WEBPACK_IMPORTED_MODULE_1__.Category(\"Time\", byTimeItems);\n    const userDefinedItems = new Array(\"All\", \"Hobbies\", \"Work\", \"Family\", \"Friends\", \"Travel\");\n    const userDefinedCategories = new _DOM_side_panel_category__WEBPACK_IMPORTED_MODULE_1__.Category(\"My Categories\", userDefinedItems);\n    \n    const sidePanel = new _DOM_side_panel_sidePanel__WEBPACK_IMPORTED_MODULE_3__.SidePanel(logoContainer.getLogoContainer(),\n    byTime.getCategory(), userDefinedCategories.getCategory());;\n    const sidePanelNode = sidePanel.getSidePanel();\n    \n    content.append(sidePanelNode);\n    content.append(mainNode);\n\n})();\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
 
 /***/ }),
 

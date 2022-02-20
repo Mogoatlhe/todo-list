@@ -2,13 +2,16 @@ import './DOM/style/style.css';
 import { Category } from './DOM/side-panel/category';
 import { LogoContainer } from './DOM/side-panel/logo';
 import { SidePanel } from './DOM/side-panel/sidePanel';
+import { Main } from './DOM/main/main';
 
-const Main = (() => {
+const LoadPages = (() => {
 
     const content = document.getElementById("content");
+    const main = new Main();
+    const mainNode = main.getMain();
     
     const logoContainer = new LogoContainer();
-    const byTimeItems = new Array("Today", "Upcoming");
+    const byTimeItems = new Array("Inbox", "Today", "Upcoming");
     const byTime = new Category("Time", byTimeItems);
     const userDefinedItems = new Array("All", "Hobbies", "Work", "Family", "Friends", "Travel");
     const userDefinedCategories = new Category("My Categories", userDefinedItems);
@@ -18,5 +21,6 @@ const Main = (() => {
     const sidePanelNode = sidePanel.getSidePanel();
     
     content.append(sidePanelNode);
+    content.append(mainNode);
 
 })();

@@ -31,7 +31,7 @@ const LoadPages = (() => {
     byTime.getCategory(), userDefinedCategories.getCategory());;
     const sidePanelNode = sidePanel.getSidePanel();
     
-    const main = new Main(inboxCategoryItem.getName());
+    const main = new Main(inboxCategoryItem);
     const mainNode = main.getMain();
 
     content.append(sidePanelNode);

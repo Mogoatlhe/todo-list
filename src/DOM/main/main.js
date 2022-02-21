@@ -1,27 +1,47 @@
 
-import { Attribute } from "../attribute";
 import { Element } from "../element";
+import { Attribute } from "../attribute";
+import { CleanToilet } from "./cleanToilet";
 
 export class Main{
 
     #main;
     #categoryName;
     #addTaskButton;
+    #tasksContainer;
+    #currentCategoryItem;
 
-    constructor(name){
-        this.setMain(name);
+    constructor(currentCategoryItem){
+        this.#currentCategoryItem = currentCategoryItem;
+        this.setMain(currentCategoryItem.getName());
     }
 
     setMain(name){
 
-        const main = new Element("main", []);
+        const tasksContainer = new Attribute("id", "tasks-container");
         
+        const main = new Element("main", []);
+        const todosDisplay = new Element("div", [tasksContainer]);
         this.#main = main.getElement();
+        this.#tasksContainer = todosDisplay.getElement();
         this.#setCategoryName(name);
         this.#setAddTask();
 
+        this.appendToMain();
+    }
+    
+    appendToMain(){
         this.#main.append(this.#categoryName);
         this.#main.append(this.#addTaskButton);
+
+
+        if(this.#currentCategoryItem.isToDosEmpty()){
+            const cleanToilet = new CleanToilet();
+
+            this.#tasksContainer.append(cleanToilet.getCleanToilet());   
+        }
+
+        this.#main.append(this.#tasksContainer);
     }
     
     #setCategoryName(name){
@@ -39,8 +59,6 @@ export class Main{
         const addTaskIconNode = addTaskIcon.getElement();
         const addTaskTextNode = addTaskText.getElement();
         
-        const inputValueAttr = new Attribute("value", addTaskIconNode)
-
         this.#addTaskButton.append(addTaskIconNode);
         this.#addTaskButton.append(addTaskTextNode);
     }

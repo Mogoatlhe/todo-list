@@ -41,6 +41,8 @@ export class Main{
             this.#tasksContainer.append(cleanToilet.getCleanToilet());   
         }
 
+        this.#addTaskEvent();
+
         this.#main.append(this.#tasksContainer);
     }
     
@@ -63,8 +65,49 @@ export class Main{
         this.#addTaskButton.append(addTaskTextNode);
     }
 
+    #addTaskEvent(){
+
+        let toDoInputContainer;
+        let toDoNameInput;
+
+        this.#addTaskButton.addEventListener("click", () => {
+            toDoInputContainer = this.#showToDoInput();
+            toDoNameInput = toDoInputContainer.children[0];
+            this.#main.insertBefore(toDoInputContainer, this.#addTaskButton);
+            toDoNameInput.focus();
+        });
+
+    }
+
     getMain(){
         return this.#main;
     }
+
+    #showToDoInput(){
+
+        const toDoInputContainerId = new Attribute("id", "to-do-input-container");
+        const toDoNameID = new Attribute("id", "to-do-name-input");
+        const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym");
+        const toDoNameContenteditable = new Attribute("contenteditable", "true");
+
+        const toDoInputAttrArr = [toDoInputContainerId];
+        const todoNameAttrArr = [toDoNameID, toDoNameContenteditable, toDoNamePlaceholder];
+
+        const toDoInputContainer = new Element("div", toDoInputAttrArr);
+        const toDoName = new Element("div", todoNameAttrArr);
+
+        const toDoInputContainerNode = toDoInputContainer.getElement();
+        const toDoNameNode = toDoName.getElement();
+        
+        // toDoNameNode.setAttribute("contenteditable", "true");
+
+        toDoInputContainerNode.append(toDoNameNode);
+        return toDoInputContainerNode;
+
+        // https://www.speedtest.net/result/12796846649 - Monday
+
+    }
+
+
 
 }

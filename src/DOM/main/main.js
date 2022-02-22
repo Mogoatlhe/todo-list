@@ -2,6 +2,7 @@
 import { Element } from "../element";
 import { Attribute } from "../attribute";
 import { CleanToilet } from "./cleanToilet";
+import { TodoButtons } from "./todoButtons";
 
 export class Main{
 
@@ -85,9 +86,10 @@ export class Main{
 
     #showToDoInput(){
 
+        const toDoButtons = new TodoButtons();
         const toDoInputContainerId = new Attribute("id", "to-do-input-container");
         const toDoNameId = new Attribute("id", "to-do-name-input");
-        const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym");
+        const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym Membership");
         const toDoDescriptionId = new Attribute("id", "to-do-description-input");
         const toDoDescriptionPlaceholder = new Attribute("placeholder", "Description");
         const contenteditableAttr = new Attribute("contenteditable", "true");
@@ -103,9 +105,12 @@ export class Main{
         const toDoInputContainerNode = toDoInputContainer.getElement();
         const toDoNameNode = toDoName.getElement();
         const toDoDescriptionNode = toDoDescription.getElement();
+        const toDoButtonsNode = toDoButtons.getToDoButtons();
 
         toDoInputContainerNode.append(toDoNameNode);
         toDoInputContainerNode.append(toDoDescriptionNode);
+        toDoInputContainerNode.append(toDoButtonsNode);
+        
         return toDoInputContainerNode;
 
         // https://www.speedtest.net/result/12796846649 - Monday

@@ -1,6 +1,7 @@
 
 import { Element } from "../element";
 import { Attribute } from "../attribute";
+import { PriorityFlags } from "./priorityFlags";
 
 export class TodoButtons{
 
@@ -12,6 +13,7 @@ export class TodoButtons{
 
     setToDoButtons(){
 
+        const priorityFlags = new PriorityFlags();
         const toDoButtonsContainerId = new Attribute("id", "to-do-buttons-container");
         const dueDateButtonId = new Attribute("id", "due-date-button");
         const categoryButtonId = new Attribute("id", "category-button");
@@ -35,6 +37,7 @@ export class TodoButtons{
         const periodIconNode = periodIcon.getElement();
         const categoryButtonNode = categoryButton.getElement();
         const categoryButtonNameNode = categoryButtonName.getElement();
+        const priorityFlagsNode = priorityFlags.getPriorityFlags();
 
         dueDateButtonNode.append(calendarIconNode);
         dueDateButtonNode.append(dueDateButtonTextNode);
@@ -42,6 +45,7 @@ export class TodoButtons{
         categoryButtonNode.append(categoryButtonNameNode);
         this.#todoButtonsContainer.append(dueDateButtonNode);
         this.#todoButtonsContainer.append(categoryButtonNode);
+        this.#todoButtonsContainer.append(priorityFlagsNode);
     }
 
     getToDoButtons(){

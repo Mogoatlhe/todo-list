@@ -160,8 +160,10 @@ main{
 }
 
 #to-do-input-container{
+    display: grid;
+    align-items: start;
     width: 90%;
-    height: 200px;
+    min-height: 150px;
     border: solid 1px var(--pale-spring-bud);
     margin: 2% 2%;
     border-radius: 5px;
@@ -170,13 +172,18 @@ main{
 
 #to-do-name-input,
 #to-do-description-input{
-    min-height: 25px;
+    min-height: 60px;
+    height: 60px;
     width: 100%;
     max-height: 35%;
     font-weight: bolder;
     overflow-x: hidden;
     overflow-y: auto;
     cursor: text;
+}
+
+#to-do-name-input{
+    margin-top: 10px;
 }
 
 #to-do-description-input{
@@ -213,8 +220,10 @@ main{
 
 #to-do-buttons-container{
     display: grid;
-    grid-template-columns: 100px 100px;
+    grid-template-columns: 100px 100px 1fr;
     gap: 5px;
+    align-self: end;
+    margin-top: 10px;
 }
 
 #due-date-button,
@@ -226,4 +235,33 @@ main{
     padding: 8px 10px;
     border: solid 1px var(--pale-spring-bud);
     color: var(--russet);
+}
+
+#priority-flags-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 8px;
+    justify-self: end;
+    width: 150px;
+    justify-content: space-between;
+}
+
+.fa-font-awesome, .fa-flag{
+    cursor: pointer;
+}
+
+.priority-1{
+    color: red;
+}
+
+.priority-2{
+    color: orange;
+}
+
+.priority-3{
+    color: blue;
+}
+
+.priority-4{
+    color: white;
 }

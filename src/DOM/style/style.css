@@ -168,8 +168,8 @@ main{
     padding: 1% 2%;
 }
 
-#to-do-name-input{
-    background-color: var(--tea-green);
+#to-do-name-input,
+#to-do-description-input{
     min-height: 25px;
     width: 100%;
     max-height: 35%;
@@ -179,9 +179,15 @@ main{
     cursor: text;
 }
 
-#to-do-name-input[placeholder]:empty:before {
+#to-do-description-input{
+    font-weight: 400;
+    max-height: 50%;
+}
+
+#to-do-name-input[placeholder]:empty:before,
+#to-do-description-input[placeholder]:empty:before {
     content: attr(placeholder);
-    color: #555; 
+    color: rgb(85, 85, 85); 
 }
 
 #to-do-name-input::after{
@@ -190,6 +196,8 @@ main{
     width: 2px;
     display: inline-block;
     animation: cursor-blink 1.2s steps(2) infinite;
+    display: flex;
+    align-items: center;
 }
 
 @keyframes cursor-blink {
@@ -198,6 +206,7 @@ main{
     }
 }
 
-#to-do-name-input:focus{
+#to-do-name-input:focus,
+#to-do-description-input:focus{
     outline: none;
 }

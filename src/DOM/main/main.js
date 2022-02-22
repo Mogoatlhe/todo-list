@@ -86,22 +86,26 @@ export class Main{
     #showToDoInput(){
 
         const toDoInputContainerId = new Attribute("id", "to-do-input-container");
-        const toDoNameID = new Attribute("id", "to-do-name-input");
+        const toDoNameId = new Attribute("id", "to-do-name-input");
         const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym");
-        const toDoNameContenteditable = new Attribute("contenteditable", "true");
+        const toDoDescriptionId = new Attribute("id", "to-do-description-input");
+        const toDoDescriptionPlaceholder = new Attribute("placeholder", "Description");
+        const contenteditableAttr = new Attribute("contenteditable", "true");
 
         const toDoInputAttrArr = [toDoInputContainerId];
-        const todoNameAttrArr = [toDoNameID, toDoNameContenteditable, toDoNamePlaceholder];
+        const todoNameAttrArr = [toDoNameId, toDoNamePlaceholder, contenteditableAttr];
+        const todoDescriptionAttrArr = [toDoDescriptionId, toDoDescriptionPlaceholder, contenteditableAttr];
 
         const toDoInputContainer = new Element("div", toDoInputAttrArr);
         const toDoName = new Element("div", todoNameAttrArr);
+        const toDoDescription = new Element("div", todoDescriptionAttrArr);
 
         const toDoInputContainerNode = toDoInputContainer.getElement();
         const toDoNameNode = toDoName.getElement();
-        
-        // toDoNameNode.setAttribute("contenteditable", "true");
+        const toDoDescriptionNode = toDoDescription.getElement();
 
         toDoInputContainerNode.append(toDoNameNode);
+        toDoInputContainerNode.append(toDoDescriptionNode);
         return toDoInputContainerNode;
 
         // https://www.speedtest.net/result/12796846649 - Monday

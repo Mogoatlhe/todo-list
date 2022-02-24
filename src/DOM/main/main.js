@@ -92,20 +92,22 @@ export class Main{
         const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym Membership");
         const toDoDescriptionId = new Attribute("id", "to-do-description-input");
         const toDoDescriptionPlaceholder = new Attribute("placeholder", "Description");
-        const contenteditableAttr = new Attribute("contenteditable", "true");
 
         const toDoInputAttrArr = [toDoInputContainerId];
-        const todoNameAttrArr = [toDoNameId, toDoNamePlaceholder, contenteditableAttr];
-        const todoDescriptionAttrArr = [toDoDescriptionId, toDoDescriptionPlaceholder, contenteditableAttr];
+        const todoNameAttrArr = [toDoNameId, toDoNamePlaceholder];
+        const todoDescriptionAttrArr = [toDoDescriptionId, toDoDescriptionPlaceholder];
 
         const toDoInputContainer = new Element("div", toDoInputAttrArr);
-        const toDoName = new Element("div", todoNameAttrArr);
-        const toDoDescription = new Element("div", todoDescriptionAttrArr);
+        const toDoName = new Element("textarea", todoNameAttrArr);
+        const toDoDescription = new Element("textarea", todoDescriptionAttrArr);
 
         const toDoInputContainerNode = toDoInputContainer.getElement();
         const toDoNameNode = toDoName.getElement();
         const toDoDescriptionNode = toDoDescription.getElement();
         const toDoButtonsNode = toDoButtons.getToDoButtons();
+
+        this.#preventMultipleEmptyLine(toDoNameNode);
+        this.#preventMultipleEmptyLine(toDoDescriptionNode);
 
         toDoInputContainerNode.append(toDoNameNode);
         toDoInputContainerNode.append(toDoDescriptionNode);
@@ -114,6 +116,39 @@ export class Main{
         return toDoInputContainerNode;
 
         // https://www.speedtest.net/result/12796846649 - Monday
+        // https://www.speedtest.net/result/12800664713 - Tuesday
+
+    }
+
+    #preventMultipleEmptyLine(node){
+
+        let returnPressCount = 0;
+        let output;
+
+        node.addEventListener("keyup", (e) => {
+
+            if(e.keyCode === 13){
+                returnPressCount++;
+                console.log(node.value);
+                // output[node.textContent.length - 1] = "\n";
+                // node.textContent = output;
+                // console.log(output);
+            }else{
+                returnPressCount = 0;
+            }
+
+            if(returnPressCount === 3){
+                returnPressCount = 0;
+                console.log(node.value);
+
+                if(node.value.includes("\n\n\n")){
+                    node.value = node.value.slice(0, node.value.length - 3);
+                    node.blur();
+                }
+            }
+
+
+        });
 
     }
 

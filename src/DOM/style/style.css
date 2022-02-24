@@ -180,10 +180,10 @@ main{
     overflow-x: hidden;
     overflow-y: auto;
     cursor: text;
-}
-
-#to-do-name-input{
+    background-color: transparent;
     margin-top: 10px;
+    resize: none;
+    border: none;
 }
 
 #to-do-description-input{
@@ -235,6 +235,8 @@ main{
     padding: 8px 10px;
     border: solid 1px var(--pale-spring-bud);
     color: var(--russet);
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    border-radius: 10px;
 }
 
 #priority-flags-container{
@@ -243,11 +245,11 @@ main{
     padding: 8px;
     justify-self: end;
     width: 150px;
-    justify-content: space-between;
 }
 
 .fa-font-awesome, .fa-flag{
     cursor: pointer;
+    width: fit-content;
 }
 
 .priority-1{

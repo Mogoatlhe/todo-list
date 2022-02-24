@@ -139,7 +139,6 @@ export class Main{
 
             if(returnPressCount === 3){
                 returnPressCount = 0;
-                console.log(node.value);
 
                 if(node.value.includes("\n\n\n")){
                     node.value = node.value.slice(0, node.value.length - 3);

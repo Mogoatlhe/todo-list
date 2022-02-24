@@ -247,6 +247,10 @@ main{
     width: 150px;
 }
 
+.fa-font-awesome{
+    opacity: 0.5;
+}
+
 .fa-font-awesome, .fa-flag{
     cursor: pointer;
     width: fit-content;

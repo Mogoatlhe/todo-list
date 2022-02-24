@@ -28,6 +28,7 @@ export class PriorityFlags{
             }
 
             priorityNode = priority.getElement();
+            this.#changePriority(priorityNode);
             this.#priorityFlags.append(priorityNode);
         }
 
@@ -35,6 +36,27 @@ export class PriorityFlags{
 
     getPriorityFlags(){
         return this.#priorityFlags;
+    }
+
+    #changePriority(node){
+
+        node.addEventListener("click", () => {
+            if(node.classList.contains("fa-flag")){
+                return;
+            }
+            
+            const flags = this.#priorityFlags.children;
+            [...flags].map(flag => {
+                if(flag.classList.contains("fa-flag")){
+                    flag.classList.remove("fa-flag");
+                    flag.classList.add("fa-font-awesome");
+                }
+            });
+
+            node.classList.remove("fa-font-awesome");
+            node.classList.add("fa-flag");
+        });
+
     }
 
 }

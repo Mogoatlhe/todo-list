@@ -9,6 +9,7 @@ export class Main{
     #main;
     #categoryName;
     #addTaskButton;
+    #cancelTaskBtn;
     #tasksContainer;
     #currentCategoryItem;
 
@@ -27,6 +28,7 @@ export class Main{
         this.#tasksContainer = todosDisplay.getElement();
         this.#setCategoryName(name);
         this.#setAddTask();
+        this.#setCancelTask();
 
         this.appendToMain(categotyItems);
     }
@@ -34,6 +36,7 @@ export class Main{
     appendToMain(categoryItems){
         this.#main.append(this.#categoryName);
         this.#main.append(this.#addTaskButton);
+        this.#main.append(this.#cancelTaskBtn);
 
 
         if(this.#currentCategoryItem.isToDosEmpty()){
@@ -43,6 +46,7 @@ export class Main{
         }
 
         this.#addTaskEvent(categoryItems);
+        this.#cancelTaskEvent();
 
         this.#main.append(this.#tasksContainer);
     }
@@ -66,16 +70,54 @@ export class Main{
         this.#addTaskButton.append(addTaskTextNode);
     }
 
+    #setCancelTask(){
+
+        const cancelTaskBtn = new Element("button", [], "cancel-task-button");
+        const cancelTaskText = new Element("p", [], undefined, "Cancel");
+
+        this.#cancelTaskBtn = cancelTaskBtn.getElement();
+        const cancelTaskTextNode = cancelTaskText.getElement();
+
+        this.#cancelTaskBtn.append(cancelTaskTextNode);
+    }
+
     #addTaskEvent(categoryItems){
 
         let toDoInputContainer;
         let toDoNameInput;
 
         this.#addTaskButton.addEventListener("click", () => {
+
+            if(!this.#addTaskButton.classList.contains("input-active")){
+                this.#addTaskButton.classList.add("input-empty");
+                this.#addTaskButton.classList.add("input-active");
+                this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
+            }
+
             toDoInputContainer = this.#showToDoInput(categoryItems);
             toDoNameInput = toDoInputContainer.children[0];
             this.#main.insertBefore(toDoInputContainer, this.#addTaskButton);
             toDoNameInput.focus();
+        });
+
+    }
+
+    #cancelTaskEvent(){
+
+        this.#cancelTaskBtn.addEventListener("click", () => {
+            const toDoInputContainer = document.getElementById("to-do-input-container");
+            const previousSibling = this.#cancelTaskBtn.previousSibling;
+            
+            if(toDoInputContainer === null){
+                return;
+            }
+
+            this.#main.removeChild(toDoInputContainer);
+
+            this.#cancelTaskBtn.classList.remove("display-cancel-btn");
+            previousSibling.classList.remove("input-empty");
+            previousSibling.classList.remove("input-active");
+
         });
 
     }
@@ -147,7 +189,5 @@ export class Main{
         });
 
     }
-
-
 
 }

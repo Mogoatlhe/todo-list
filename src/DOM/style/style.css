@@ -114,7 +114,7 @@ main{
 }
 
 .add-task-button{
-    display: grid;
+    display: inline-grid;
     grid-template-columns: 10% 90%;
     padding: 2% 2%;
     gap: 5px;
@@ -126,8 +126,38 @@ main{
     cursor: pointer;
 }
 
-.add-task-button:hover{
+.cancel-task-button{
+    display: none;
+}
+
+.add-task-button:hover,
+.display-cancel-btn:hover{
     transform: scale(1.1);
+}
+
+.input-active{
+    background-color: var(--russet);
+    border-radius: 8px;
+    color: var(--pale-spring-bud);
+    opacity: 0.5;
+}
+
+.input-empty:hover{
+    transform: none;
+    cursor: not-allowed;
+}
+
+.display-cancel-btn{
+    display: inline-grid;
+    margin-left: 8px;
+    font-size: 0.9rem;
+    align-items: center;
+    padding: 2% 2%;
+    border-radius: 8px;
+    background-color: var(--pale-spring-bud);
+    color: var(--russet);
+    border: none;
+    cursor: pointer;
 }
 
 #tasks-container{

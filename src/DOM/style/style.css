@@ -214,23 +214,21 @@ main{
 }
 
 #to-do-name-input:focus,
-#to-do-description-input:focus{
+#to-do-description-input:focus,
+#category-button:focus{
     outline: none;
 }
 
 #to-do-buttons-container{
     display: grid;
-    grid-template-columns: 100px 100px 1fr;
+    grid-template-columns: 220px 100px 1fr;
     gap: 5px;
     align-self: end;
     margin-top: 10px;
 }
 
-#due-date-button,
+#due-date,
 #category-button{
-    display: grid;
-    gap: 3px;
-    grid-template-columns: 10px 60px;
     background-color: transparent;
     padding: 8px 10px;
     border: solid 1px var(--pale-spring-bud);

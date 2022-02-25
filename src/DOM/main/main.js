@@ -12,12 +12,12 @@ export class Main{
     #tasksContainer;
     #currentCategoryItem;
 
-    constructor(currentCategoryItem){
+    constructor(currentCategoryItem, categoryItems){
         this.#currentCategoryItem = currentCategoryItem;
-        this.setMain(currentCategoryItem.getName());
+        this.setMain(currentCategoryItem.getName(), categoryItems);
     }
 
-    setMain(name){
+    setMain(name, categotyItems){
 
         const tasksContainer = new Attribute("id", "tasks-container");
         
@@ -28,10 +28,10 @@ export class Main{
         this.#setCategoryName(name);
         this.#setAddTask();
 
-        this.appendToMain();
+        this.appendToMain(categotyItems);
     }
     
-    appendToMain(){
+    appendToMain(categoryItems){
         this.#main.append(this.#categoryName);
         this.#main.append(this.#addTaskButton);
 
@@ -42,7 +42,7 @@ export class Main{
             this.#tasksContainer.append(cleanToilet.getCleanToilet());   
         }
 
-        this.#addTaskEvent();
+        this.#addTaskEvent(categoryItems);
 
         this.#main.append(this.#tasksContainer);
     }
@@ -66,13 +66,13 @@ export class Main{
         this.#addTaskButton.append(addTaskTextNode);
     }
 
-    #addTaskEvent(){
+    #addTaskEvent(categoryItems){
 
         let toDoInputContainer;
         let toDoNameInput;
 
         this.#addTaskButton.addEventListener("click", () => {
-            toDoInputContainer = this.#showToDoInput();
+            toDoInputContainer = this.#showToDoInput(categoryItems);
             toDoNameInput = toDoInputContainer.children[0];
             this.#main.insertBefore(toDoInputContainer, this.#addTaskButton);
             toDoNameInput.focus();
@@ -84,9 +84,9 @@ export class Main{
         return this.#main;
     }
 
-    #showToDoInput(){
+    #showToDoInput(categoryItems){
 
-        const toDoButtons = new TodoButtons();
+        const toDoButtons = new TodoButtons(categoryItems);
         const toDoInputContainerId = new Attribute("id", "to-do-input-container");
         const toDoNameId = new Attribute("id", "to-do-name-input");
         const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym Membership");
@@ -130,9 +130,6 @@ export class Main{
             if(e.keyCode === 13){
                 returnPressCount++;
                 console.log(node.value);
-                // output[node.textContent.length - 1] = "\n";
-                // node.textContent = output;
-                // console.log(output);
             }else{
                 returnPressCount = 0;
             }

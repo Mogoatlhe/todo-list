@@ -5,50 +5,68 @@ import { PriorityFlags } from "./priorityFlags";
 
 export class TodoButtons{
 
+    #categoryButton;
     #todoButtonsContainer;
 
-    constructor(){
-        this.setToDoButtons();
+    constructor(categoryItems){
+        this.setToDoButtons(categoryItems);
     }
 
-    setToDoButtons(){
+    setToDoButtons(categoryItems){
 
+        const today = this.#getTodayDate();
         const priorityFlags = new PriorityFlags();
         const toDoButtonsContainerId = new Attribute("id", "to-do-buttons-container");
-        const dueDateButtonId = new Attribute("id", "due-date-button");
+        const dueDateId = new Attribute("id", "due-date");
+        const dueDateType = new Attribute("type", "datetime-local");
+        const dueDateValue = new Attribute("value", today);
+        const dueDateMin = new Attribute("min", today);
         const categoryButtonId = new Attribute("id", "category-button");
         
         const toDoButtonsAttrArr = [toDoButtonsContainerId];
-        const dueDateButtonAttrArr = [dueDateButtonId];
+        const dueDateAttrArr = [dueDateId, dueDateType, dueDateValue, dueDateMin];
         const categoryButtonAttrArr = [categoryButtonId];
 
         const toDoButtonsContainer = new Element("div", toDoButtonsAttrArr);
-        const calendarIcon = new Element("i", [], "fa-solid fa-calendar-day");
-        const periodIcon = new Element("i", [], "fa-solid fa-circle-small");
-        const dueDateButton = new Element("button", dueDateButtonAttrArr);
-        const categoryButton = new Element("button", categoryButtonAttrArr);
-        const dueDateButtonText = new Element("p", [], undefined, "Due Date");
-        const categoryButtonName = new Element("p", [], undefined, "Inbox");
+        const dueDate = new Element("input", dueDateAttrArr);
+        const categoryButton = new Element("select", categoryButtonAttrArr);
         
-        this.#todoButtonsContainer = toDoButtonsContainer.getElement(); 
-        const calendarIconNode = calendarIcon.getElement();
-        const dueDateButtonTextNode = dueDateButtonText.getElement();
-        const dueDateButtonNode = dueDateButton.getElement();
-        const periodIconNode = periodIcon.getElement();
-        const categoryButtonNode = categoryButton.getElement();
-        const categoryButtonNameNode = categoryButtonName.getElement();
+        this.#todoButtonsContainer = toDoButtonsContainer.getElement();
+        const dueDateNode = dueDate.getElement();
+        this.#categoryButton = categoryButton.getElement();
         const priorityFlagsNode = priorityFlags.getPriorityFlags();
 
-        dueDateButtonNode.append(calendarIconNode);
-        dueDateButtonNode.append(dueDateButtonTextNode);
-        categoryButtonNode.append(periodIconNode);
-        categoryButtonNode.append(categoryButtonNameNode);
-        this.#todoButtonsContainer.append(dueDateButtonNode);
-        this.#todoButtonsContainer.append(categoryButtonNode);
+        this.#setSelectionOptions(categoryItems);
+        this.#todoButtonsContainer.append(dueDateNode);
+        this.#todoButtonsContainer.append(this.#categoryButton);
         this.#todoButtonsContainer.append(priorityFlagsNode);
     }
 
     getToDoButtons(){
         return this.#todoButtonsContainer;
+    }
+
+    #setSelectionOptions(categories){
+
+        let categoryName, optionValue, optionArr, option, optionNode;
+        
+        categories.map(category => {
+            categoryName = category.getName();
+            optionValue = new Attribute("value", categoryName);
+            optionArr = [optionValue];
+            option = new Element("option", optionArr, undefined, categoryName);
+            optionNode = option.getElement();
+            this.#categoryButton.append(optionNode);
+        });
+
+    }
+
+    #getTodayDate(){
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+
+        return `${year}-${month}-${day}T23:20`;
     }
 }

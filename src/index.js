@@ -19,6 +19,9 @@ const LoadPages = (() => {
     const familyCategoryItem = new CategoryItem("Family");
     const friendsCategoryItem = new CategoryItem("Friends");
     const travelCategoryItem = new CategoryItem("Travel");
+
+    const categoryItems = [inboxCategoryItem, hobbiesCategoryItem, workCategoryItem,
+    familyCategoryItem, friendsCategoryItem, travelCategoryItem];
     
     const logoContainer = new LogoContainer();
     const byTimeItems = new Array(inboxCategoryItem, todayCategoryItem, upcomingCategoryItem);
@@ -31,7 +34,7 @@ const LoadPages = (() => {
     byTime.getCategory(), userDefinedCategories.getCategory());;
     const sidePanelNode = sidePanel.getSidePanel();
     
-    const main = new Main(inboxCategoryItem);
+    const main = new Main(inboxCategoryItem, categoryItems);
     const mainNode = main.getMain();
 
     content.append(sidePanelNode);

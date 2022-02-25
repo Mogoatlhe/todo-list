@@ -93,6 +93,9 @@ export class Main{
                 this.#addTaskButton.classList.add("input-active");
                 this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
             }else{
+
+                this.#createToDo(toDoInputContainer, categoryItems);
+
                 return;
             }
 
@@ -102,6 +105,28 @@ export class Main{
             toDoNameInput.focus();
         });
 
+    }
+
+    #createToDo(toDoInputContainer, categoryItems){
+        const nameInput = toDoInputContainer.children[0].value;
+        const description = toDoInputContainer.children[1].value;
+        const buttonsContainer = toDoInputContainer.children[2];
+        const dueDate = buttonsContainer.children[0].value;
+        const categoryName = buttonsContainer.children[1].value;
+        const priorityFlagsContainer = buttonsContainer.children[2];
+
+        let priorityFlag = [...priorityFlagsContainer.children]
+            .find(flag => flag.classList.contains("fa-flag"));
+
+        let priorityClasses = priorityFlag.className;
+        let position = priorityClasses.indexOf("priority-");
+        priorityClasses = priorityClasses.slice(position, 10);
+        
+        const itemIndex = categoryItems
+        .findIndex(item => item.getName() === categoryName);
+        
+        categoryItems[itemIndex]
+            .createToDo(nameInput, description, dueDate, categoryName, priorityClasses);
     }
 
     #cancelTaskEvent(){
@@ -172,7 +197,6 @@ export class Main{
             
             if(e.keyCode === 13){
                 returnPressCount++;
-                console.log(node.value);
             }else{
                 returnPressCount = 0;
             }
@@ -210,8 +234,6 @@ export class Main{
             
             let emptyCharactersLength = spaceLength + newLineLength;
 
-            console.log([...value]);
-            console.log(`${emptyCharactersLength} ${value.length}`);
             if(value.length === 0 || emptyCharactersLength === value.length){
                 return true;
             }

@@ -1,6 +1,7 @@
 
 import { Element } from "../element";
 import { Attribute } from "../attribute";
+import { ToDo } from "./toDo";
 
 export class CategoryItem{
 
@@ -30,8 +31,14 @@ export class CategoryItem{
         return this.#name;
     }
 
+    createToDo(name, description, date, categoryName, priority){
+        const toDo = new ToDo(name, description, date, categoryName, priority);
+        this.addToDo(toDo);
+        console.log(toDo);
+    }
+
     addToDo(todo){
-        this.#todos.add(todo);
+        this.#todos.push(todo);
     }
 
     removeTodo(id){

@@ -92,6 +92,8 @@ export class Main{
                 this.#addTaskButton.classList.add("input-empty");
                 this.#addTaskButton.classList.add("input-active");
                 this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
+            }else{
+                return;
             }
 
             toDoInputContainer = this.#showToDoInput(categoryItems);
@@ -165,10 +167,9 @@ export class Main{
     #preventMultipleEmptyLine(node){
 
         let returnPressCount = 0;
-        let output;
-
+        
         node.addEventListener("keyup", (e) => {
-
+            
             if(e.keyCode === 13){
                 returnPressCount++;
                 console.log(node.value);
@@ -178,16 +179,63 @@ export class Main{
 
             if(returnPressCount === 3){
                 returnPressCount = 0;
-
+                
                 if(node.value.includes("\n\n\n")){
                     node.value = node.value.slice(0, node.value.length - 3);
                     node.blur();
                 }
             }
 
+            this.#checkEmptyFields(node);
+            
+        });
+
+    }
+
+    #checkEmptyFields(node){
+
+        let otherNode;
+        if(node.getAttribute("id") === "to-do-name-input"){
+            otherNode = document.getElementById("to-do-description-input");
+        }else{
+            otherNode = document.getElementById("to-do-name-input");
+        }
+
+        const nodes = [otherNode.value, node.value];
+
+        let empty = nodes.some(value => {
+
+            let spaceLength = [...value].filter(ch => ch === " ").length;
+            let newLineLength = [...value].filter(ch => ch === "\n").length;
+            
+            let emptyCharactersLength = spaceLength + newLineLength;
+
+            console.log([...value]);
+            console.log(`${emptyCharactersLength} ${value.length}`);
+            if(value.length === 0 || emptyCharactersLength === value.length){
+                return true;
+            }
+
+            return false;
 
         });
 
+        this.#preventEmptyInput(empty);
+
+    }
+
+    #preventEmptyInput(isEmpty){
+
+        if(isEmpty){
+
+            if(!this.#addTaskButton.classList.contains("input-empty")){
+                this.#addTaskButton.classList.add("input-empty");
+            }
+
+            return;
+        }
+
+        this.#addTaskButton.classList.remove("input-empty");
     }
 
 }

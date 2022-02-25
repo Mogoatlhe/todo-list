@@ -139,6 +139,9 @@ main{
     background-color: var(--russet);
     border-radius: 8px;
     color: var(--pale-spring-bud);
+}
+
+.input-empty{
     opacity: 0.5;
 }
 

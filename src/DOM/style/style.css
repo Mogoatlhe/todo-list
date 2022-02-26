@@ -302,3 +302,55 @@ main{
 .priority-4{
     color: white;
 }
+
+.to-do-container{
+    width: 500px;
+    justify-self: start;
+    display: grid;
+    grid-template-columns: 20px 30px 1fr;
+    align-items: center;
+}
+
+.to-do-container:hover .fa-grip-vertical{
+    visibility: visible;
+}
+
+.to-do-container .fa-grip-vertical{
+    visibility: hidden;
+}
+
+.fa-grip-vertical{
+    cursor: grabbing;
+}
+
+.is-complete-container{
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 2px solid var(--amazon);
+    display: inline-block;
+}
+
+.is-complete-container .fa-check{
+    visibility: hidden;
+}
+
+.is-complete-container:hover .fa-check{
+    visibility: visible;
+}
+
+.to-do-description{
+    grid-column: 3 / 4;
+}
+
+hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    grid-column: 1 / 4;
+    width: 95%;
+    justify-self: center;
+    background-color: var(--amazon);
+}

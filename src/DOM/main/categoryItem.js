@@ -60,4 +60,8 @@ export class CategoryItem{
         return this.#todos.length === 0 ? true : false;
     }
 
+    getToDos(){
+        return this.#todos;
+    }
+
 }

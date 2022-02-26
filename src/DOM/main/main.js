@@ -7,6 +7,7 @@ import { TodoButtons } from "./todoButtons";
 export class Main{
 
     #main;
+    #cleanToilet;
     #categoryName;
     #addTaskButton;
     #cancelTaskBtn;
@@ -41,8 +42,9 @@ export class Main{
 
         if(this.#currentCategoryItem.isToDosEmpty()){
             const cleanToilet = new CleanToilet();
+            this.#cleanToilet = cleanToilet.getCleanToilet();
 
-            this.#tasksContainer.append(cleanToilet.getCleanToilet());   
+            this.#tasksContainer.append(this.#cleanToilet);   
         }
 
         this.#addTaskEvent(categoryItems);
@@ -87,23 +89,57 @@ export class Main{
         let toDoNameInput;
 
         this.#addTaskButton.addEventListener("click", () => {
-
-            if(!this.#addTaskButton.classList.contains("input-active")){
-                this.#addTaskButton.classList.add("input-empty");
-                this.#addTaskButton.classList.add("input-active");
-                this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
-            }else{
-
+            
+            if(this.#addTaskButton.classList.contains("input-empty")){
+                return;
+            }
+            
+            if(this.#addTaskButton.classList.contains("input-active")){
+                
                 this.#createToDo(toDoInputContainer, categoryItems);
+                
+                if(this.#tasksContainer.contains(this.#cleanToilet)){
+                    this.#tasksContainer.removeChild(this.#cleanToilet);
+                }
+
+                this.#addTaskButton.classList.remove("input-active");
+                this.#main.removeChild(toDoInputContainer);
+                this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
+                // this.#showToDos();
+                this.#appendToDo();
 
                 return;
             }
+
+            this.#addTaskButton.classList.add("input-empty");
+            this.#addTaskButton.classList.add("input-active");
+            this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
 
             toDoInputContainer = this.#showToDoInput(categoryItems);
             toDoNameInput = toDoInputContainer.children[0];
             this.#main.insertBefore(toDoInputContainer, this.#addTaskButton);
             toDoNameInput.focus();
         });
+
+    }
+
+    #showToDos(){
+
+        if(this.#currentCategoryItem.isToDosEmpty()){
+            return;
+        }
+
+        this.#currentCategoryItem.getToDos().map(current => {
+            this.#tasksContainer.append(current.displayToDo());
+        });
+
+    }
+
+    #appendToDo(){
+
+        const toDos = this.#currentCategoryItem.getToDos();
+        const lastTodo = toDos[toDos.length - 1];
+        this.#tasksContainer.append(lastTodo.displayToDo());
 
     }
 

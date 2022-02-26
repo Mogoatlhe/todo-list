@@ -33,8 +33,11 @@ export class CategoryItem{
 
     createToDo(name, description, date, categoryName, priority){
         const toDo = new ToDo(name, description, date, categoryName, priority);
+        let id;
+        id = this.isToDosEmpty() ? 1 : this.#todos[this.#todos.length - 1].getID() + 1;
+        
+        toDo.setID(id);
         this.addToDo(toDo);
-        console.log(toDo);
     }
 
     addToDo(todo){

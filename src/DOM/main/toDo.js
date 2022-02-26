@@ -2,6 +2,7 @@
 
 export class ToDo{
 
+    #id;
     #name;
     #date;
     #priority;
@@ -18,6 +19,14 @@ export class ToDo{
         this.#date = date;
         this.#categoryName = categoryName;
         this.#priority = priority;
+    }
+
+    setID(id){
+        this.#id = id; 
+    }
+
+    getID(){
+        return this.#id
     }
 
     getName(){

@@ -4,56 +4,31 @@ import { Attribute } from "../attribute";
 
 export class ToDo{
 
-    #id;
-    #name;
-    #date;
-    #priority;
-    #description;
-    #categoryName;
+    #todo;
 
-    constructor(name, description, date, categoryName, priority){
-        this.setToDo(name, description, date, categoryName, priority);
+    constructor(id, name, description, date, categoryName, priority){
+        this.setToDo(id, name, description, date, categoryName, priority);
     }
 
-    setToDo(name, description, date, categoryName, priority){
-        this.#name = name;
-        this.#description = description;
-        this.#date = date;
-        this.#categoryName = categoryName;
-        this.#priority = priority;
+    setToDo(id, name, description, date, categoryName, priority){
+
+        this.#todo = {
+            "id": id,
+            "name": name,
+            "description": description,
+            "date": date,
+            "category": categoryName,
+            "priority": priority
+        }
     }
 
-    setID(id){
-        this.#id = id; 
-    }
-
-    getID(){
-        return this.#id
-    }
-
-    getName(){
-        return this.#name;
-    }
-
-    getDescription(){
-        return this.#description;
-    }
-
-    getDate(){
-        return this.#date;
-    }
-
-    getCategoryName(){
-        return this.#categoryName;
-    }
-
-    getPriority(){
-        return this.#priority;
+    getToDo(){
+        return this.#todo;
     }
 
     displayToDo(){
 
-        const toDoContainerId = new Attribute("data-id", this.getID());
+        const toDoContainerId = new Attribute("data-id", this.#todo.id);
         const toDoContainerAttrArr = [toDoContainerId]; 
         const toDoContainer = new Element("div", toDoContainerAttrArr, "to-do-container");
         const toDoContainerNode = toDoContainer.getElement();
@@ -67,10 +42,10 @@ export class ToDo{
         const check = new Element("i", [], "fa-solid fa-check");
         const checkNode = check.getElement();
 
-        const name = new Element("h5", [], "to-do-name", this.#name)
+        const name = new Element("h5", [], "to-do-name", this.#todo.name)
         const nameNode = name.getElement();
 
-        const description = new Element("h6", [], "to-do-description", this.#description);
+        const description = new Element("h6", [], "to-do-description", this.#todo.description);
         const descriptionNode = description.getElement();
 
         const hr = new Element("hr", []);

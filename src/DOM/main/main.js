@@ -40,11 +40,13 @@ export class Main{
         this.#main.append(this.#cancelTaskBtn);
 
 
-        if(this.#currentCategoryItem.isToDosEmpty()){
+        if(sessionStorage.getItem("todos") === null){
             const cleanToilet = new CleanToilet();
             this.#cleanToilet = cleanToilet.getCleanToilet();
 
             this.#tasksContainer.append(this.#cleanToilet);   
+        }else{
+            this.#showToDos();
         }
 
         this.#addTaskEvent(categoryItems);
@@ -125,13 +127,7 @@ export class Main{
 
     #showToDos(){
 
-        if(this.#currentCategoryItem.isToDosEmpty()){
-            return;
-        }
-
-        this.#currentCategoryItem.getToDos().map(current => {
-            this.#tasksContainer.append(current.displayToDo());
-        });
+        this.#currentCategoryItem.displayToDos(this.#tasksContainer);
 
     }
 

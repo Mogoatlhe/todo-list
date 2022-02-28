@@ -1,7 +1,6 @@
 import './DOM/style/style.css';
 import { CategoryItem } from './DOM/main/categoryItem';
 import { Category } from './DOM/side-panel/category';
-import { LogoContainer } from './DOM/side-panel/logo';
 import { SidePanel } from './DOM/side-panel/sidePanel';
 import { Main } from './DOM/main/main';
 
@@ -23,15 +22,13 @@ const LoadPages = (() => {
     const categoryItems = [inboxCategoryItem, hobbiesCategoryItem, workCategoryItem,
     familyCategoryItem, friendsCategoryItem, travelCategoryItem];
     
-    const logoContainer = new LogoContainer();
     const byTimeItems = new Array(inboxCategoryItem, todayCategoryItem, upcomingCategoryItem);
     const byTime = new Category("Time", byTimeItems);
     const userDefinedItems = new Array(allCategoryItem, hobbiesCategoryItem,workCategoryItem, 
         familyCategoryItem, friendsCategoryItem, travelCategoryItem);
     const userDefinedCategories = new Category("My Categories", userDefinedItems);
     
-    const sidePanel = new SidePanel(logoContainer.getLogoContainer(),
-    byTime.getCategory(), userDefinedCategories.getCategory());;
+    const sidePanel = new SidePanel(byTime.getCategory(), userDefinedCategories.getCategory());
     const sidePanelNode = sidePanel.getSidePanel();
     
     const main = new Main(inboxCategoryItem, categoryItems);
@@ -40,4 +37,5 @@ const LoadPages = (() => {
     content.append(sidePanelNode);
     content.append(mainNode);
 
+    main.removeToDo();
 })();

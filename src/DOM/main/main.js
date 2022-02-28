@@ -39,8 +39,7 @@ export class Main{
         this.#main.append(this.#addTaskButton);
         this.#main.append(this.#cancelTaskBtn);
 
-
-        if(sessionStorage.getItem("todos") === null){
+        if(sessionStorage.getItem("todos") === null || sessionStorage.getItem("todos") === ""){
             const cleanToilet = new CleanToilet();
             this.#cleanToilet = cleanToilet.getCleanToilet();
 
@@ -48,10 +47,10 @@ export class Main{
         }else{
             this.#showToDos();
         }
-
+        
         this.#addTaskEvent(categoryItems);
         this.#cancelTaskEvent();
-
+        
         this.#main.append(this.#tasksContainer);
     }
     
@@ -128,14 +127,16 @@ export class Main{
     #showToDos(){
 
         this.#currentCategoryItem.displayToDos(this.#tasksContainer);
-
+        this.removeToDo();
+        
     }
-
+    
     #appendToDo(){
-
+        
         const toDos = this.#currentCategoryItem.getToDos();
         const lastTodo = toDos[toDos.length - 1];
         this.#tasksContainer.append(lastTodo.displayToDo());
+        this.removeToDo();
 
     }
 
@@ -290,6 +291,22 @@ export class Main{
         }
 
         this.#addTaskButton.classList.remove("input-empty");
+    }
+
+    removeToDo(){
+
+        const isComplete = document.getElementsByClassName("is-complete-container");
+    
+        [...isComplete].map(check => {
+
+            check.addEventListener("click", () => {
+                const parent = check.parentNode;
+                const id = parent.dataset.id;
+                this.#currentCategoryItem.removeToDo(id);
+            })
+
+        });
+
     }
 
 }

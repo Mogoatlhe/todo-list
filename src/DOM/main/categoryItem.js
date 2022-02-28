@@ -50,16 +50,14 @@ export class CategoryItem{
 
     }
 
-    removeTodo(id){
-        if(this.isToDosEmpty()){
-            return;
-        }
-
+    removeToDo(id){
         this.#todos.map((todo, index) => {
-            if(todo.id === id){
+            if(todo.getToDo().id === id){
                 this.#todos.splice(index, 1);
             }
         });
+
+        sessionStorage.setItem("todos", this.#todos);
     }
 
     isToDosEmpty(){
@@ -68,52 +66,6 @@ export class CategoryItem{
 
     getToDos(){
         return this.#todos;
-    }
-
-    displayToDos(container){
-
-        console.log(sessionStorage.getItem("todos"));
-        const todos = JSON.parse(sessionStorage.getItem("todos"));
-
-        todos.map(todo => {
-            container.append(this.#displayToDo(todo.id, todo.name, todo.description));
-        });
-    }
-
-    #displayToDo(id, toDoName, toDoDescription){
-
-        const toDoContainerId = new Attribute("data-id", id);
-        const toDoContainerAttrArr = [toDoContainerId]; 
-        const toDoContainer = new Element("div", toDoContainerAttrArr, "to-do-container");
-        const toDoContainerNode = toDoContainer.getElement();
-
-        const gripDots = new Element("i", [], "fa-solid fa-grip-vertical");
-        const gripDotsNode = gripDots.getElement();
-
-        const isCompleteContainer = new Element("div", [], "is-complete-container");
-        const isCompleteContainerNode = isCompleteContainer.getElement();
-
-        const check = new Element("i", [], "fa-solid fa-check");
-        const checkNode = check.getElement();
-
-        const name = new Element("h5", [], "to-do-name", toDoName)
-        const nameNode = name.getElement();
-
-        const description = new Element("h6", [], "to-do-description", toDoDescription);
-        const descriptionNode = description.getElement();
-
-        const hr = new Element("hr", []);
-        const hrNode = hr.getElement();
-
-        isCompleteContainerNode.append(checkNode);
-        toDoContainerNode.append(gripDotsNode);
-        toDoContainerNode.append(isCompleteContainerNode);
-        toDoContainerNode.append(nameNode);
-        toDoContainerNode.append(descriptionNode);
-        toDoContainerNode.append(hrNode)
-        
-        return toDoContainerNode;
-
     }
 
 }

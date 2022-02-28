@@ -16,6 +16,8 @@ export class Main{
 
     constructor(currentCategoryItem, categoryItems){
         this.#currentCategoryItem = currentCategoryItem;
+        this.#currentCategoryItem.assignTodos();
+
         this.setMain(currentCategoryItem.getName(), categoryItems);
     }
 
@@ -32,26 +34,6 @@ export class Main{
         this.#setCancelTask();
 
         this.appendToMain(categotyItems);
-    }
-    
-    appendToMain(categoryItems){
-        this.#main.append(this.#categoryName);
-        this.#main.append(this.#addTaskButton);
-        this.#main.append(this.#cancelTaskBtn);
-
-        if(sessionStorage.getItem("todos") === null || sessionStorage.getItem("todos") === ""){
-            const cleanToilet = new CleanToilet();
-            this.#cleanToilet = cleanToilet.getCleanToilet();
-
-            this.#tasksContainer.append(this.#cleanToilet);   
-        }else{
-            this.#showToDos();
-        }
-        
-        this.#addTaskEvent(categoryItems);
-        this.#cancelTaskEvent();
-        
-        this.#main.append(this.#tasksContainer);
     }
     
     #setCategoryName(name){
@@ -83,6 +65,34 @@ export class Main{
 
         this.#cancelTaskBtn.append(cancelTaskTextNode);
     }
+    
+    appendToMain(categoryItems){
+        this.#main.append(this.#categoryName);
+        this.#main.append(this.#addTaskButton);
+        this.#main.append(this.#cancelTaskBtn);
+
+        if(sessionStorage.getItem("todos") === null || sessionStorage.getItem("todos") === ""){
+            const cleanToilet = new CleanToilet();
+            this.#cleanToilet = cleanToilet.getCleanToilet();
+
+            this.#tasksContainer.append(this.#cleanToilet);   
+        }else{
+            this.#showToDos();
+        }
+        
+        this.#addTaskEvent(categoryItems);
+        this.#cancelTaskEvent();
+        
+        this.#main.append(this.#tasksContainer);
+    }
+
+    #showToDos(){
+        
+        this.#currentCategoryItem.getToDos().map(todo => {
+            this.#tasksContainer.append(todo.displayToDo());
+        });
+        
+    }
 
     #addTaskEvent(categoryItems){
 
@@ -106,7 +116,6 @@ export class Main{
                 this.#addTaskButton.classList.remove("input-active");
                 this.#main.removeChild(toDoInputContainer);
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
-                // this.#showToDos();
                 this.#appendToDo();
 
                 return;
@@ -124,19 +133,23 @@ export class Main{
 
     }
 
-    #showToDos(){
+    #cancelTaskEvent(){
 
-        this.#currentCategoryItem.displayToDos(this.#tasksContainer);
-        this.removeToDo();
-        
-    }
-    
-    #appendToDo(){
-        
-        const toDos = this.#currentCategoryItem.getToDos();
-        const lastTodo = toDos[toDos.length - 1];
-        this.#tasksContainer.append(lastTodo.displayToDo());
-        this.removeToDo();
+        this.#cancelTaskBtn.addEventListener("click", () => {
+            const toDoInputContainer = document.getElementById("to-do-input-container");
+            const previousSibling = this.#cancelTaskBtn.previousSibling;
+            
+            if(toDoInputContainer === null){
+                return;
+            }
+
+            this.#main.removeChild(toDoInputContainer);
+
+            this.#cancelTaskBtn.classList.remove("display-cancel-btn");
+            previousSibling.classList.remove("input-empty");
+            previousSibling.classList.remove("input-active");
+
+        });
 
     }
 
@@ -161,29 +174,13 @@ export class Main{
         categoryItems[itemIndex]
             .createToDo(nameInput, description, dueDate, categoryName, priorityClasses);
     }
+    
+    #appendToDo(){
+        
+        const toDos = this.#currentCategoryItem.getToDos();
+        const lastTodo = toDos[toDos.length - 1];
+        this.#tasksContainer.append(lastTodo.displayToDo());
 
-    #cancelTaskEvent(){
-
-        this.#cancelTaskBtn.addEventListener("click", () => {
-            const toDoInputContainer = document.getElementById("to-do-input-container");
-            const previousSibling = this.#cancelTaskBtn.previousSibling;
-            
-            if(toDoInputContainer === null){
-                return;
-            }
-
-            this.#main.removeChild(toDoInputContainer);
-
-            this.#cancelTaskBtn.classList.remove("display-cancel-btn");
-            previousSibling.classList.remove("input-empty");
-            previousSibling.classList.remove("input-active");
-
-        });
-
-    }
-
-    getMain(){
-        return this.#main;
     }
 
     #showToDoInput(categoryItems){
@@ -216,9 +213,6 @@ export class Main{
         toDoInputContainerNode.append(toDoButtonsNode);
         
         return toDoInputContainerNode;
-
-        // https://www.speedtest.net/result/12796846649 - Monday
-        // https://www.speedtest.net/result/12800664713 - Tuesday
 
     }
 
@@ -307,6 +301,10 @@ export class Main{
 
         });
 
+    }
+
+    getMain(){
+        return this.#main;
     }
 
 }

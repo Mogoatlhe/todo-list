@@ -68,4 +68,21 @@ export class CategoryItem{
         return this.#todos;
     }
 
+    assignTodos(){
+
+        if(sessionStorage.getItem("todos") === null){
+            return;
+        }
+
+        const todos = JSON.parse(sessionStorage.getItem("todos"));
+
+        todos.map(todoData => {
+            const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
+                todoData.date, todoData.categoryName, todoData.priority);
+            
+            this.#todos.push(toDoObject);
+        });
+
+    }
+
 }

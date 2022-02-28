@@ -42,8 +42,13 @@ export class TodoButtons{
         this.#todoButtonsContainer.append(priorityFlagsNode);
     }
 
-    getToDoButtons(){
-        return this.#todoButtonsContainer;
+    #getTodayDate(){
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+
+        return `${year}-${month}-${day}T23:20`;
     }
 
     #setSelectionOptions(categories){
@@ -61,12 +66,7 @@ export class TodoButtons{
 
     }
 
-    #getTodayDate(){
-        const today = new Date();
-        const day = String(today.getDate()).padStart(2, '0');
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const year = today.getFullYear();
-
-        return `${year}-${month}-${day}T23:20`;
+    getToDoButtons(){
+        return this.#todoButtonsContainer;
     }
 }

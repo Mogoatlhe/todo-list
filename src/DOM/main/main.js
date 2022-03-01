@@ -200,6 +200,12 @@ export class Main{
         
         const toDos = this.#categoryItem.getToDos();
         const lastTodo = toDos[toDos.length - 1];
+        const lastTodoCategory = lastTodo.getToDo().category;
+
+        if(lastTodoCategory !== this.#categoryName){
+            return;
+        }
+
         this.#tasksContainer.append(lastTodo.displayToDo());
 
     }

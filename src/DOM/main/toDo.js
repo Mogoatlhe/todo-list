@@ -26,7 +26,11 @@ export class ToDo{
         return this.#todo;
     }
 
-    displayToDo(){
+    displayToDo(categoryName){
+
+        if(categoryName !== undefined && categoryName !== this.#todo.category){
+            return;
+        }
 
         const toDoContainerId = new Attribute("data-id", this.#todo.id);
         const toDoContainerAttrArr = [toDoContainerId]; 

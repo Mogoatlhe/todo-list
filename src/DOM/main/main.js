@@ -9,19 +9,25 @@ export class Main{
     #main;
     #cleanToilet;
     #categoryName;
+    #categoryItem;
+    #categoryItems;
     #addTaskButton;
     #cancelTaskBtn;
     #tasksContainer;
-    #currentCategoryItem;
+    #categoryNameNode;
 
     constructor(currentCategoryItem, categoryItems){
-        this.#currentCategoryItem = currentCategoryItem;
-        this.#currentCategoryItem.assignTodos();
+        this.#categoryName = currentCategoryItem.getName();
 
-        this.setMain(currentCategoryItem.getName(), categoryItems);
+        this.#categoryItems = categoryItems;
+        this.#categoryItem = this.getCurrentCategoryItem();
+        
+        this.#categoryItem.assignTodos();
+
+        this.setMain();
     }
 
-    setMain(name, categotyItems){
+    setMain(){
 
         const tasksContainer = new Attribute("id", "tasks-container");
         
@@ -29,16 +35,16 @@ export class Main{
         const todosDisplay = new Element("div", [tasksContainer]);
         this.#main = main.getElement();
         this.#tasksContainer = todosDisplay.getElement();
-        this.#setCategoryName(name);
+        this.#setCategoryName();
         this.#setAddTask();
         this.#setCancelTask();
 
-        this.appendToMain(categotyItems);
+        this.appendToMain();
     }
     
-    #setCategoryName(name){
-        const categoryName = new Element("h4", [], "current-category", name)
-        this.#categoryName = categoryName.getElement();
+    #setCategoryName(){
+        const categoryName = new Element("h4", [], "current-category", this.#categoryName);
+        this.#categoryNameNode = categoryName.getElement();
     }
 
     #setAddTask(){
@@ -66,8 +72,8 @@ export class Main{
         this.#cancelTaskBtn.append(cancelTaskTextNode);
     }
     
-    appendToMain(categoryItems){
-        this.#main.append(this.#categoryName);
+    appendToMain(){
+        this.#main.append(this.#categoryNameNode);
         this.#main.append(this.#addTaskButton);
         this.#main.append(this.#cancelTaskBtn);
 
@@ -80,21 +86,31 @@ export class Main{
             this.#showToDos();
         }
         
-        this.#addTaskEvent(categoryItems);
+        this.#addTaskEvent();
         this.#cancelTaskEvent();
         
         this.#main.append(this.#tasksContainer);
     }
 
     #showToDos(){
+
+        if(this.#categoryItem === undefined){
+            return;
+        }
         
-        this.#currentCategoryItem.getToDos().map(todo => {
-            this.#tasksContainer.append(todo.displayToDo());
+        this.#categoryItem.getToDos().map(todo => {
+            const toDoContainerNode = todo.displayToDo(this.#categoryName);
+            
+            if(toDoContainerNode === undefined){
+                return;
+            }
+
+            this.#tasksContainer.append(toDoContainerNode);
         });
         
     }
 
-    #addTaskEvent(categoryItems){
+    #addTaskEvent(){
 
         let toDoInputContainer;
         let toDoNameInput;
@@ -107,7 +123,7 @@ export class Main{
             
             if(this.#addTaskButton.classList.contains("input-active")){
                 
-                this.#createToDo(toDoInputContainer, categoryItems);
+                this.#createToDo(toDoInputContainer);
                 
                 if(this.#tasksContainer.contains(this.#cleanToilet)){
                     this.#tasksContainer.removeChild(this.#cleanToilet);
@@ -125,7 +141,7 @@ export class Main{
             this.#addTaskButton.classList.add("input-active");
             this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
 
-            toDoInputContainer = this.#showToDoInput(categoryItems);
+            toDoInputContainer = this.#showToDoInput();
             toDoNameInput = toDoInputContainer.children[0];
             this.#main.insertBefore(toDoInputContainer, this.#addTaskButton);
             toDoNameInput.focus();
@@ -153,7 +169,7 @@ export class Main{
 
     }
 
-    #createToDo(toDoInputContainer, categoryItems){
+    #createToDo(toDoInputContainer){
         const nameInput = toDoInputContainer.children[0].value;
         const description = toDoInputContainer.children[1].value;
         const buttonsContainer = toDoInputContainer.children[2];
@@ -168,24 +184,29 @@ export class Main{
         let position = priorityClasses.indexOf("priority-");
         priorityClasses = priorityClasses.slice(position, 10);
         
-        const itemIndex = categoryItems
-        .findIndex(item => item.getName() === categoryName);
+        this.#categoryItem
+        .createToDo(nameInput, description, dueDate, categoryName, priorityClasses);
         
-        categoryItems[itemIndex]
-            .createToDo(nameInput, description, dueDate, categoryName, priorityClasses);
+    }
+
+    getCurrentCategoryItem(){
+        const itemIndex = this.#categoryItems
+        .findIndex(item => item.getName() === this.#categoryName);
+        
+        return this.#categoryItems[itemIndex];
     }
     
     #appendToDo(){
         
-        const toDos = this.#currentCategoryItem.getToDos();
+        const toDos = this.#categoryItem.getToDos();
         const lastTodo = toDos[toDos.length - 1];
         this.#tasksContainer.append(lastTodo.displayToDo());
 
     }
 
-    #showToDoInput(categoryItems){
+    #showToDoInput(){
 
-        const toDoButtons = new TodoButtons(categoryItems);
+        const toDoButtons = new TodoButtons(this.#categoryItems);
         const toDoInputContainerId = new Attribute("id", "to-do-input-container");
         const toDoNameId = new Attribute("id", "to-do-name-input");
         const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym Membership");
@@ -296,7 +317,7 @@ export class Main{
             check.addEventListener("click", () => {
                 const parent = check.parentNode;
                 const id = parent.dataset.id;
-                this.#currentCategoryItem.removeToDo(id);
+                this.#categoryItem.removeToDo(id);
             })
 
         });

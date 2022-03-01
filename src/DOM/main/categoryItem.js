@@ -78,7 +78,7 @@ export class CategoryItem{
 
         todos.map(todoData => {
             const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
-                todoData.date, todoData.categoryName, todoData.priority);
+                todoData.date, todoData.category, todoData.priority);
             
             this.#todos.push(toDoObject);
         });

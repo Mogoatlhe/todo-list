@@ -133,6 +133,7 @@ export class Main{
                 this.#main.removeChild(toDoInputContainer);
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
                 this.#appendToDo();
+                this.removeLastToDo();
 
                 return;
             }
@@ -318,16 +319,27 @@ export class Main{
 
         const isComplete = document.getElementsByClassName("is-complete-container");
     
-        [...isComplete].map(check => {
+        [...isComplete].map(check => this.#removeToDoEvent(check, this.#categoryItem));
 
-            check.addEventListener("click", () => {
-                const parent = check.parentNode;
-                const id = parent.dataset.id;
-                this.#categoryItem.removeToDo(id);
-            })
+    }
 
+    removeLastToDo(){
+        const isComplete = document.getElementsByClassName("is-complete-container");
+        const todoArr = [...isComplete];
+        const lastTodo = todoArr[todoArr.length - 1];
+
+        this.#removeToDoEvent(lastTodo, this.#categoryItem);
+    }
+
+    #removeToDoEvent(check, categoryItem){
+
+        check.addEventListener("click", () => {
+            const parent = check.parentNode;
+            const grandparent = parent.parentNode;
+            const id = parent.dataset.id;
+            categoryItem.removeToDo(id);
+            grandparent.removeChild(parent);
         });
-
     }
 
     getMain(){

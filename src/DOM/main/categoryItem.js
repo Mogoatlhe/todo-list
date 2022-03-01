@@ -41,23 +41,24 @@ export class CategoryItem{
 
     addToDo(todo){
         this.#todos.push(todo);
-
-        const todos = [];
-
-        this.#todos.map(toDo => todos.push(toDo.getToDo()))
-
-        sessionStorage.setItem("todos", JSON.stringify(todos));
+        this.setSessionStorage();
 
     }
 
     removeToDo(id){
-        this.#todos.map((todo, index) => {
-            if(todo.getToDo().id === id){
-                this.#todos.splice(index, 1);
-            }
-        });
 
-        sessionStorage.setItem("todos", this.#todos);
+        const index = this.#todos.findIndex(todo => todo.getToDo().id == id);
+        this.#todos.splice(index, 1);
+        
+        this.setSessionStorage();
+    }
+
+    setSessionStorage(){
+        const todos = [];
+
+        this.#todos.map(toDo => todos.push(toDo.getToDo()))
+
+        sessionStorage.setItem("todos", JSON.stringify(todos));   
     }
 
     isToDosEmpty(){

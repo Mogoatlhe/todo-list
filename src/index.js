@@ -38,4 +38,5 @@ const LoadPages = (() => {
     content.append(mainNode);
 
     main.removeToDo();
+    // main.editToDosEvent();
 })();

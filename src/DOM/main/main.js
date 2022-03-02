@@ -15,6 +15,7 @@ export class Main{
     #cancelTaskBtn;
     #tasksContainer;
     #categoryNameNode;
+    #toDoInputContainer;
 
     constructor(currentCategoryItem, categoryItems){
         this.#categoryName = currentCategoryItem.getName();
@@ -106,16 +107,18 @@ export class Main{
             }
 
             this.#tasksContainer.append(toDoContainerNode);
+            this.#editToDoEvent(toDoContainerNode);
         });
         
     }
 
     #addTaskEvent(){
 
-        let toDoInputContainer;
         let toDoNameInput;
 
         this.#addTaskButton.addEventListener("click", () => {
+
+            this.preventDuplicateInputs();
             
             if(this.#addTaskButton.classList.contains("input-empty")){
                 return;
@@ -123,14 +126,14 @@ export class Main{
             
             if(this.#addTaskButton.classList.contains("input-active")){
                 
-                this.#createToDo(toDoInputContainer);
+                this.#createToDo(this.#toDoInputContainer);
                 
                 if(this.#tasksContainer.contains(this.#cleanToilet)){
                     this.#tasksContainer.removeChild(this.#cleanToilet);
                 }
 
                 this.#addTaskButton.classList.remove("input-active");
-                this.#main.removeChild(toDoInputContainer);
+                this.#main.removeChild(this.#toDoInputContainer);
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
                 this.#appendToDo();
                 this.removeLastToDo();
@@ -142,9 +145,9 @@ export class Main{
             this.#addTaskButton.classList.add("input-active");
             this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
 
-            toDoInputContainer = this.#showToDoInput();
-            toDoNameInput = toDoInputContainer.children[0];
-            this.#main.insertBefore(toDoInputContainer, this.#addTaskButton);
+            this.#toDoInputContainer = this.#showToDoInput();
+            toDoNameInput = this.#toDoInputContainer.children[0];
+            this.#main.insertBefore(this.#toDoInputContainer, this.#addTaskButton);
             toDoNameInput.focus();
         });
 
@@ -207,7 +210,9 @@ export class Main{
             return;
         }
 
-        this.#tasksContainer.append(lastTodo.displayToDo());
+        const lastTodoNode = lastTodo.displayToDo();
+        this.#tasksContainer.append(lastTodoNode);
+        this.#editToDoEvent(lastTodoNode);
 
     }
 
@@ -339,6 +344,72 @@ export class Main{
             const id = parent.dataset.id;
             categoryItem.removeToDo(id);
             grandparent.removeChild(parent);
+        });
+    }
+
+    #editToDoEvent(toDoContainer){
+
+        toDoContainer.addEventListener("click", () => {
+            
+            this.preventDuplicateInputs();
+
+            const todos = this.getCurrentCategoryItem().getToDos();
+            const index = todos.findIndex(todo => todo.getToDo().id == toDoContainer.dataset.id);
+
+            if(index === -1){
+                return;
+            }
+
+            const toDoData = todos[index].getToDo();
+
+            this.#toDoInputContainer = this.#showToDoInput();
+            this.#main.insertBefore(this.#toDoInputContainer, this.#addTaskButton);
+
+            this.#displayInputData(toDoData);
+        });
+
+    }
+
+    preventDuplicateInputs(){
+        if(this.#main.childNodes[1].id === "to-do-input-container"){
+            this.#main.removeChild(this.#toDoInputContainer);
+        }
+    }
+
+    #displayInputData(data){
+
+        document.getElementById("to-do-name-input").textContent = data.name;
+        document.getElementById("to-do-description-input").textContent = data.description;
+        document.getElementById("due-date").value = data.date;
+
+        this.#setSelectedCategoryIndex(data.category);
+
+        this.#setPriorityFlag(data.priority);
+    }
+
+    #setSelectedCategoryIndex(category){
+        const selection = document.getElementById("category-button");
+        const options = selection.options;
+
+        const option = [...options].find(option => option.value === category);
+
+        selection.index = option.index;
+    }
+
+    #setPriorityFlag(priority){
+
+        const flagsContainer = document.getElementById("priority-flags-container");
+        const flags = flagsContainer.children;
+
+        const selectedFlag = [...flags].find(flag => flag.classList.contains(`${priority}`));
+        const neutralFlags = [...flags].filter(flag => !flag.classList.contains(`${priority}`));
+
+        selectedFlag.classList.remove("fa-font-awesome");
+        selectedFlag.classList.add("fa-flag");
+        neutralFlags.forEach(flag => {
+            flag.classList.remove("fa-flag");
+            flag.classList.add("fa-font-awesome");
+
         });
     }
 

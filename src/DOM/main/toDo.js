@@ -60,7 +60,7 @@ export class ToDo{
         toDoContainerNode.append(isCompleteContainerNode);
         toDoContainerNode.append(nameNode);
         toDoContainerNode.append(descriptionNode);
-        toDoContainerNode.append(hrNode)
+        toDoContainerNode.append(hrNode);
         
         return toDoContainerNode;
 

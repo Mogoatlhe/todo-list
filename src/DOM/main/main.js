@@ -6,6 +6,7 @@ import { TodoButtons } from "./todoButtons";
 
 export class Main{
 
+    #toDoId;
     #main;
     #cleanToilet;
     #categoryName;
@@ -115,10 +116,16 @@ export class Main{
     #addTaskEvent(){
 
         this.#addTaskButton.addEventListener("click", () => {
-
+            const symbol = this.#addTaskButton.childNodes[0];
             this.preventDuplicateInputs();
             
             if(this.#addTaskButton.classList.contains("input-empty")){
+                return;
+            }
+
+            if(symbol.classList.contains("fa-edit")){
+                this.#resetButtons();
+                this.#editToDo();
                 return;
             }
             
@@ -131,7 +138,6 @@ export class Main{
                 }
 
                 this.#addTaskButton.classList.remove("input-active");
-                // this.#main.removeChild(this.#toDoInputContainer);
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
                 this.#appendToDo();
                 this.removeLastToDo();
@@ -182,20 +188,26 @@ export class Main{
 
     }
 
+    #getPriorityClass(container){
+        const priorityFlagsContainer = container.children[2];
+
+        const priorityFlag = [...priorityFlagsContainer.children]
+            .find(flag => flag.classList.contains("fa-flag"));
+
+        const priorityClasses = priorityFlag.className;
+        const position = priorityClasses.indexOf("priority-");
+
+        return priorityClasses.slice(position, 10);
+    }
+
     #createToDo(toDoInputContainer){
         const nameInput = toDoInputContainer.children[0].value;
         const description = toDoInputContainer.children[1].value;
         const buttonsContainer = toDoInputContainer.children[2];
         const dueDate = buttonsContainer.children[0].value;
         const categoryName = buttonsContainer.children[1].value;
-        const priorityFlagsContainer = buttonsContainer.children[2];
-
-        let priorityFlag = [...priorityFlagsContainer.children]
-            .find(flag => flag.classList.contains("fa-flag"));
-
-        let priorityClasses = priorityFlag.className;
-        let position = priorityClasses.indexOf("priority-");
-        priorityClasses = priorityClasses.slice(position, 10);
+        
+        const priorityClasses = this.#getPriorityClass(buttonsContainer);
         
         this.#categoryItem
         .createToDo(nameInput, description, dueDate, categoryName, priorityClasses);
@@ -362,8 +374,9 @@ export class Main{
             
             this.preventDuplicateInputs();
 
+            this.#toDoId = toDoContainer.dataset.id;
             const todos = this.getCurrentCategoryItem().getToDos();
-            const index = todos.findIndex(todo => todo.getToDo().id == toDoContainer.dataset.id);
+            const index = todos.findIndex(todo => todo.getToDo().id == this.#toDoId);
 
             if(index === -1){
                 return;
@@ -383,6 +396,28 @@ export class Main{
             this.#addTaskButton.childNodes[1].textContent = "Edit task";
         });
 
+    }
+
+    #editToDo(){
+
+        const todoData = this.#categoryItem.getToDos();
+        const index = todoData.findIndex(todo => todo.getToDo().id == this.#toDoId);
+
+        const toDoContainer = document.querySelector(`[data-id="${this.#toDoId}"]`);
+        const name = toDoContainer.getElementsByClassName("to-do-name")[0];
+        const description = toDoContainer.getElementsByClassName("to-do-description")[0];
+        
+        name.textContent = this.#toDoInputContainer.children[0].value;
+        description.textContent = this.#toDoInputContainer.children[1].value;
+        const buttonsContainer = this.#toDoInputContainer.children[2];
+
+        todoData[index].getToDo().name = name.textContent;
+        todoData[index].getToDo().description = description.textContent;
+        todoData[index].getToDo().date = buttonsContainer.children[0].value;
+        todoData[index].getToDo().category = buttonsContainer.children[1].value;
+        todoData[index].getToDo().priority = this.#getPriorityClass(buttonsContainer);
+
+        this.#categoryItem.setSessionStorage();
     }
 
     #resetButtons(){

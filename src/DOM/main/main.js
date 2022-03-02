@@ -430,6 +430,8 @@ export class Main{
         symbol.classList.remove("fa-edit");
         symbol.classList.add("fa-circle-plus");
         this.#addTaskButton.childNodes[1].textContent = "Add task";
+        this.#addTaskButton.classList.remove("input-active");
+        this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
     }
 
     preventDuplicateInputs(){

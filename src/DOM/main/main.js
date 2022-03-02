@@ -114,8 +114,6 @@ export class Main{
 
     #addTaskEvent(){
 
-        let toDoNameInput;
-
         this.#addTaskButton.addEventListener("click", () => {
 
             this.preventDuplicateInputs();
@@ -133,7 +131,7 @@ export class Main{
                 }
 
                 this.#addTaskButton.classList.remove("input-active");
-                this.#main.removeChild(this.#toDoInputContainer);
+                // this.#main.removeChild(this.#toDoInputContainer);
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
                 this.#appendToDo();
                 this.removeLastToDo();
@@ -141,9 +139,9 @@ export class Main{
                 return;
             }
 
-            this.#addTaskButton.classList.add("input-empty");
-            this.#addTaskButton.classList.add("input-active");
-            this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
+            this.#manageButtons();
+
+            let toDoNameInput;
 
             this.#toDoInputContainer = this.#showToDoInput();
             toDoNameInput = this.#toDoInputContainer.children[0];
@@ -153,9 +151,18 @@ export class Main{
 
     }
 
+    #manageButtons(){
+        
+        this.#addTaskButton.classList.add("input-empty");
+        this.#addTaskButton.classList.add("input-active");
+        this.#addTaskButton.nextSibling.classList.add("display-cancel-btn");
+        
+    }
+
     #cancelTaskEvent(){
 
         this.#cancelTaskBtn.addEventListener("click", () => {
+            
             const toDoInputContainer = document.getElementById("to-do-input-container");
             const previousSibling = this.#cancelTaskBtn.previousSibling;
             
@@ -168,6 +175,8 @@ export class Main{
             this.#cancelTaskBtn.classList.remove("display-cancel-btn");
             previousSibling.classList.remove("input-empty");
             previousSibling.classList.remove("input-active");
+
+            this.#resetButtons();
 
         });
 
@@ -366,8 +375,26 @@ export class Main{
             this.#main.insertBefore(this.#toDoInputContainer, this.#addTaskButton);
 
             this.#displayInputData(toDoData);
+            this.#manageButtons();
+
+            const symbol = this.#addTaskButton.childNodes[0];
+            symbol.classList.remove("fa-circle-plus");
+            symbol.classList.add("fa-edit");
+            this.#addTaskButton.childNodes[1].textContent = "Edit task";
         });
 
+    }
+
+    #resetButtons(){
+        const symbol = this.#addTaskButton.childNodes[0];
+
+        if(!symbol.classList.contains("fa-edit")){
+            return;
+        }
+
+        symbol.classList.remove("fa-edit");
+        symbol.classList.add("fa-circle-plus");
+        this.#addTaskButton.childNodes[1].textContent = "Add task";
     }
 
     preventDuplicateInputs(){

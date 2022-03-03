@@ -311,6 +311,10 @@ main{
     align-items: center;
 }
 
+.to-do-container:hover{
+    cursor: pointer;
+}
+
 .to-do-container:hover .fa-grip-vertical{
     visibility: visible;
 }

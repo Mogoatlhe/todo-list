@@ -404,17 +404,24 @@ export class Main{
         const index = todoData.findIndex(todo => todo.getToDo().id == this.#toDoId);
 
         const toDoContainer = document.querySelector(`[data-id="${this.#toDoId}"]`);
+        const buttonsContainer = this.#toDoInputContainer.children[2];
+        const category = buttonsContainer.children[1].value;
+        const tasksContainer = toDoContainer.parentNode;
+        
         const name = toDoContainer.getElementsByClassName("to-do-name")[0];
         const description = toDoContainer.getElementsByClassName("to-do-description")[0];
         
-        name.textContent = this.#toDoInputContainer.children[0].value;
-        description.textContent = this.#toDoInputContainer.children[1].value;
-        const buttonsContainer = this.#toDoInputContainer.children[2];
-
+        if(category !== this.#categoryName){
+            tasksContainer.removeChild(toDoContainer);
+        }else{
+            name.textContent = this.#toDoInputContainer.children[0].value;
+            description.textContent = this.#toDoInputContainer.children[1].value;
+        }
+        
         todoData[index].getToDo().name = name.textContent;
         todoData[index].getToDo().description = description.textContent;
         todoData[index].getToDo().date = buttonsContainer.children[0].value;
-        todoData[index].getToDo().category = buttonsContainer.children[1].value;
+        todoData[index].getToDo().category = category;
         todoData[index].getToDo().priority = this.#getPriorityClass(buttonsContainer);
 
         this.#categoryItem.setSessionStorage();

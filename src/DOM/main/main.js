@@ -4,6 +4,7 @@ import { Button } from "../button";
 import { Attribute } from "../attribute";
 import { CleanToilet } from "./cleanToilet";
 import { TodoButtons } from "./todoButtons";
+import { Paragraph } from "../paragraph";
 
 export class Main{
 
@@ -58,9 +59,10 @@ export class Main{
 
     #setAddTask(){
 
+        const addTaskAtrributes = [new Attribute("id", "add-task")];
         const addTaskButton = new Button("add-task-button");
         const addTaskIcon = new Element("i", [], "fa-solid fa-circle-plus");
-        const addTaskText = new Element("p", [new Attribute("id", "add-task")], undefined, "Add task");
+        const addTaskText = new Paragraph("Add task", addTaskAtrributes);
         
         this.#addTaskButton = addTaskButton.getElement();
         const addTaskIconNode = addTaskIcon.getElement();
@@ -73,7 +75,7 @@ export class Main{
     #setCancelTask(){
 
         const cancelTaskBtn = new Button("cancel-task-button");
-        const cancelTaskText = new Element("p", [], undefined, "Cancel");
+        const cancelTaskText = new Paragraph("Cancel");
 
         this.#cancelTaskBtn = cancelTaskBtn.getElement();
         const cancelTaskTextNode = cancelTaskText.getElement();

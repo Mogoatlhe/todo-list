@@ -1,6 +1,6 @@
 
-import { Element } from "../element";
-import { Attribute } from "../attribute";
+import { Paragraph } from "../paragraph";
+import { Button } from "../button";
 import { ToDo } from "./toDo";
 
 export class CategoryItem{
@@ -17,10 +17,12 @@ export class CategoryItem{
 
     setCategoryItem(itemName){
 
-        const item = new Element("input", new Array(new Attribute("type", "button"),
-        new Attribute("value", itemName)), `${itemName} category-item`);
+        const button = new Button(`${itemName} category-item`);
+        const paragraph = new Paragraph(itemName, [], "category-item-text");
 
-        this.#item = item.getElement();
+        const buttonNode = button.getButton();
+        buttonNode.append(paragraph.getParagraph());
+        this.#item = buttonNode;
     }
 
     getItem(){

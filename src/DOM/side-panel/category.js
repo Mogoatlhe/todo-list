@@ -1,6 +1,7 @@
 
 import { Element } from "../element";
 import { Button } from "../button";
+import { IdiomaticText } from "../idiomaticText";
 
 export class Category{
 
@@ -69,7 +70,12 @@ export class Category{
         this.#categoryItemContainer = categoryItemContainer.getElement();
 
         items.map((item) => {
-            this.#categoryItemContainer.append(item.getItem());
+            const idiomaticText = new IdiomaticText("fa-solid fa-minus");
+            const idiomaticTextNode = idiomaticText.getIdiomaticText();
+            const itemNode = item.getItem();
+
+            this.#categoryItemContainer.append(itemNode);
+            this.#categoryItemContainer.append(idiomaticTextNode);
             this.#items.push();
         });
 

@@ -21,7 +21,9 @@ export class CategoryItem{
         const paragraph = new Paragraph(itemName, [], "category-item-text");
 
         const buttonNode = button.getButton();
-        buttonNode.append(paragraph.getParagraph());
+        const paragraphNode = paragraph.getParagraph();
+
+        buttonNode.append(paragraphNode);
         this.#item = buttonNode;
     }
 

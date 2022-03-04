@@ -2,6 +2,7 @@
 import { Element } from "../element";
 import { Attribute } from "../attribute";
 import Logo from "./../images/logo.png";
+import { Paragraph } from "../paragraph";
 
 export class LogoContainer{
 
@@ -20,7 +21,7 @@ export class LogoContainer{
 
         const nameAttributes = [new Attribute("id", "name")];
         const logo = new Element("img", attrArr, "logo");
-        const name = new Element("doodoo-list", nameAttributes);
+        const name = new Paragraph("doodoo-list", nameAttributes);
         const tagline = new Element("h5", new Array(new Attribute("id", "tagline")),
         undefined, "Here to help you get your 💩 together");
 

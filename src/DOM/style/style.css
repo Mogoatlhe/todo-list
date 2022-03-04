@@ -76,6 +76,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 3.5%;
 }
 
 .category-heading{
@@ -105,10 +106,13 @@ body{
     display: grid;
     gap: 8%;
     padding: 4%;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 80% 20%;
+    align-items: center;
 }
 
 .category-item{
+    display: flex;
+    justify-content: space-between;
     border: solid 1px var(--tea-green);
     background-color: transparent;
     font-family: sans-serif;
@@ -119,7 +123,15 @@ body{
     width: 100%;
 }
 
-.category-item:hover{
+.category-items-container i{
+    border: solid 1px var(--tea-green);
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: var(--amazon);
+}
+
+.category-item:hover, .category-items-container i:hover{
     cursor: pointer;
     transform: scale(1.1);
 }

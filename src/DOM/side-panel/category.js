@@ -1,7 +1,6 @@
 
 import { Element } from "../element";
-import { CategoryItem } from "../main/categoryItem";
-
+import { Button } from "../button";
 
 export class Category{
 
@@ -40,13 +39,13 @@ export class Category{
     #addCategoryManagementButtons(){
 
         const categoryButtonsContainer = new Element("div", [], "category-buttons-container");
-        const removeCategoryButton = new Element("buttons", [], "remove-category-button");
-        const addCategoryButton = new Element("buttons", [], "add-category-button");
+        const removeCategoryButton = new Button("remove-category-button");
+        const addCategoryButton = new Button("add-category-button");
         const removeSymbol = new Element("i", [], "fa-solid fa-minus");
         const addSymbol = new Element("i", [], "fa-solid fa-plus");
 
         const categoryButtonsContainerNode = categoryButtonsContainer.getElement();
-        const removeCategoryButtonNode = removeCategoryButton.getElement();
+        const removeCategoryButtonNode = removeCategoryButton.getButton();
         const addCategoryButtonNode = addCategoryButton.getElement();
         const removeSymbolNode = removeSymbol.getElement();
         const addSymbolNode = addSymbol.getElement();

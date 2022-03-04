@@ -1,5 +1,6 @@
 
 import { Element } from "../element";
+import { Button } from "../button";
 import { Attribute } from "../attribute";
 import { CleanToilet } from "./cleanToilet";
 import { TodoButtons } from "./todoButtons";
@@ -31,7 +32,7 @@ export class Main{
 
     #changeCategoryEvent(item){
 
-        
+
 
     }
 
@@ -57,7 +58,7 @@ export class Main{
 
     #setAddTask(){
 
-        const addTaskButton = new Element("button", [], "add-task-button");
+        const addTaskButton = new Button("add-task-button");
         const addTaskIcon = new Element("i", [], "fa-solid fa-circle-plus");
         const addTaskText = new Element("p", [new Attribute("id", "add-task")], undefined, "Add task");
         
@@ -71,7 +72,7 @@ export class Main{
 
     #setCancelTask(){
 
-        const cancelTaskBtn = new Element("button", [], "cancel-task-button");
+        const cancelTaskBtn = new Button("cancel-task-button");
         const cancelTaskText = new Element("p", [], undefined, "Cancel");
 
         this.#cancelTaskBtn = cancelTaskBtn.getElement();

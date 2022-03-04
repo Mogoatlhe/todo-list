@@ -88,8 +88,12 @@ body{
 .category-buttons-container{
     display: flex;
     flex-direction: column;
+}
+
+.category-buttons-container *{
+    background-color: transparent;
     color: var(--russet);
-    font-weight: bold;
+    border: none;
 }
 
 .category-buttons-container *:hover{

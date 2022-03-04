@@ -1,6 +1,7 @@
 
 import { Element } from "../element";
 import { Attribute } from "../attribute";
+import { IdiomaticText } from "../idiomaticText";
 
 export class ToDo{
 
@@ -37,14 +38,14 @@ export class ToDo{
         const toDoContainer = new Element("div", toDoContainerAttrArr, "to-do-container");
         const toDoContainerNode = toDoContainer.getElement();
 
-        const gripDots = new Element("i", [], "fa-solid fa-grip-vertical");
-        const gripDotsNode = gripDots.getElement();
+        const gripDots = new IdiomaticText("fa-solid fa-grip-vertical");
+        const gripDotsNode = gripDots.getIdiomaticText();
 
         const isCompleteContainer = new Element("div", [], "is-complete-container");
         const isCompleteContainerNode = isCompleteContainer.getElement();
 
-        const check = new Element("i", [], "fa-solid fa-check");
-        const checkNode = check.getElement();
+        const check = new IdiomaticText("fa-solid fa-check");
+        const checkNode = check.getIdiomaticText();
 
         const name = new Element("h5", [], "to-do-name", this.#todo.name)
         const nameNode = name.getElement();

@@ -5,6 +5,7 @@ import { Attribute } from "../attribute";
 import { CleanToilet } from "./cleanToilet";
 import { TodoButtons } from "./todoButtons";
 import { Paragraph } from "../paragraph";
+import { IdiomaticText } from "../idiomaticText";
 
 export class Main{
 
@@ -61,11 +62,11 @@ export class Main{
 
         const addTaskAtrributes = [new Attribute("id", "add-task")];
         const addTaskButton = new Button("add-task-button");
-        const addTaskIcon = new Element("i", [], "fa-solid fa-circle-plus");
+        const addTaskIcon = new IdiomaticText("fa-solid fa-circle-plus");
         const addTaskText = new Paragraph("Add task", addTaskAtrributes);
         
         this.#addTaskButton = addTaskButton.getElement();
-        const addTaskIconNode = addTaskIcon.getElement();
+        const addTaskIconNode = addTaskIcon.getIdiomaticText();
         const addTaskTextNode = addTaskText.getElement();
         
         this.#addTaskButton.append(addTaskIconNode);

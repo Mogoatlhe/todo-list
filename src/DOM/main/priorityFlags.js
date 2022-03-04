@@ -1,6 +1,7 @@
 
 import { Element } from "../element";
 import { Attribute } from "../attribute";
+import { IdiomaticText } from "../idiomaticText";
 
 export class PriorityFlags{
 
@@ -22,12 +23,12 @@ export class PriorityFlags{
         for(let i = 1; i < 5; i++){
 
             if(i === 1){
-                priority = new Element("i", [], `priority-${i} fa-solid fa-flag`);
+                priority = new IdiomaticText(`priority-${i} fa-solid fa-flag`);
             }else{
-                priority = new Element("i", [], `priority-${i} ${fontAwesomeClass}`);
+                priority = new IdiomaticText(`priority-${i} ${fontAwesomeClass}`);
             }
 
-            priorityNode = priority.getElement();
+            priorityNode = priority.getIdiomaticText();
             this.#changePriority(priorityNode);
             this.#priorityFlags.append(priorityNode);
         }

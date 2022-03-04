@@ -42,8 +42,8 @@ export class Category{
         const categoryButtonsContainer = new Element("div", [], "category-buttons-container");
         const removeCategoryButton = new Button("remove-category-button");
         const addCategoryButton = new Button("add-category-button");
-        const removeSymbol = new Element("i", [], "fa-solid fa-minus");
-        const addSymbol = new Element("i", [], "fa-solid fa-plus");
+        const removeSymbol = new IdiomaticText("fa-solid fa-minus");
+        const addSymbol = new IdiomaticText("fa-solid fa-plus");
 
         const categoryButtonsContainerNode = categoryButtonsContainer.getElement();
         const removeCategoryButtonNode = removeCategoryButton.getButton();

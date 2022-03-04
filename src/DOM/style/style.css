@@ -72,11 +72,29 @@ body{
     padding: 3% 10%;
 }
 
+.category-heading-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .category-heading{
     font-weight: bold;
     font-family: sans-serif;
     color: var(--russet); 
     color: var(--amazon);
+}
+
+.category-buttons-container{
+    display: flex;
+    flex-direction: column;
+    color: var(--russet);
+    font-weight: bold;
+}
+
+.category-buttons-container *:hover{
+    transform: scale(1.2);
+    cursor: pointer;
 }
 
 .category-items-container{

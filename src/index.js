@@ -38,5 +38,12 @@ const LoadPages = (() => {
     content.append(mainNode);
 
     main.removeToDo();
-    // main.editToDosEvent();
+    
+    categoryItems.forEach(item => {
+        const node = item.getItem();
+        node.addEventListener("click", () => {
+            console.log(node);
+        });
+    });
+
 })();

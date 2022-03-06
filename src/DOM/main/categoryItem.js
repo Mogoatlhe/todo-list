@@ -56,7 +56,7 @@ export class CategoryItem{
 
         const todos = JSON.parse(sessionStorage.getItem("todos"));
 
-        todos.map(todoData => {
+        todos.forEach(todoData => {
             const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
                 todoData.date, todoData.category, todoData.priority);
             
@@ -73,28 +73,35 @@ export class CategoryItem{
         this.#toDos.push(toDo);
     }
 
-    // removeToDo(id){
+    removeToDo(id){
 
-    //     const index = this.#todos.findIndex(todo => todo.getToDo().id == id);
-    //     this.#todos.splice(index, 1);
+        const index = this.#toDos.findIndex(todo => todo.getToDo().id == id);
+        this.#toDos.splice(index, 1);
         
-    //     this.setSessionStorage();
-    // }
+        this.setSessionStorage();
+    }
 
-    // setSessionStorage(){
-    //     const todos = [];
+    setSessionStorage(){
+        const todos = [];
 
-    //     this.#todos.map(toDo => todos.push(toDo.getToDo()))
+        this.#toDos.map(toDo => todos.push(toDo.getToDo()))
 
-    //     sessionStorage.setItem("todos", JSON.stringify(todos));   
-    // }
+        sessionStorage.setItem("todos", JSON.stringify(todos));   
+    }
 
     isToDosEmpty(){
         return this.#toDos.length === 0 ? true : false;
     }
 
     getToDos(){
-        const myTodos = this.#toDos.filter(toDo => toDo.getToDo().category === this.#itemName);
+
+        let myTodos;
+        if(this.#itemName === "All"){
+            myTodos = this.#toDos;
+        }else{
+            myTodos = this.#toDos.filter(toDo => toDo.getToDo().category === this.#itemName);
+        }
+
         return myTodos;
     }
 

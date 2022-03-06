@@ -30,7 +30,8 @@ export class ToDo{
 
     displayToDo(categoryName){
 
-        if(categoryName !== undefined && categoryName !== this.#todo.category){
+        if((categoryName !== "All") && 
+            categoryName !== undefined && categoryName !== this.#todo.category){
             return;
         }
 

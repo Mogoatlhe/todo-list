@@ -124,7 +124,7 @@ export class Main{
             }
 
             if(symbol.classList.contains("fa-edit")){
-                this.#resetButtons();
+                this.#resetButtons(symbol);
                 this.#editToDo();
                 return;
             }
@@ -427,8 +427,7 @@ export class Main{
         this.#categoryItem.setSessionStorage();
     }
 
-    #resetButtons(){
-        const symbol = this.#addTaskButton.childNodes[0];
+    #resetButtons(symbol){
 
         if(!symbol.classList.contains("fa-edit")){
             return;
@@ -436,7 +435,7 @@ export class Main{
 
         symbol.classList.remove("fa-edit");
         symbol.classList.add("fa-circle-plus");
-        this.#addTaskButton.childNodes[1].textContent = "Add task";
+        symbol.nextSibling.textContent = "Add task";
         this.#addTaskButton.classList.remove("input-active");
         this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
     }

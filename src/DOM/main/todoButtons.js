@@ -54,13 +54,12 @@ export class TodoButtons{
 
     #setSelectionOptions(categories){
 
-        let categoryName, optionValue, optionArr, option, optionNode;
+        let optionValue, options, option, optionNode;
         
-        categories.map(category => {
-            categoryName = category.getName();
-            optionValue = new Attribute("value", categoryName);
-            optionArr = [optionValue];
-            option = new Element("option", optionArr, undefined, categoryName);
+        categories.forEach(category => {
+            optionValue = new Attribute("value", category);
+            options = [optionValue];
+            option = new Element("option", options, undefined, category);
             optionNode = option.getElement();
             this.#categoryButton.append(optionNode);
         });

@@ -239,7 +239,7 @@ export class Main{
 
     #showToDoInput(){
 
-        const toDoButtons = new TodoButtons(this.#categoryItems);
+        const toDoButtons = new TodoButtons(this.#categories.getAllItems());
         const toDoInputContainerId = new Attribute("id", "to-do-input-container");
         const toDoNameId = new Attribute("id", "to-do-name-input");
         const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym Membership");
@@ -375,7 +375,7 @@ export class Main{
             this.preventDuplicateInputs();
 
             this.#toDoId = toDoContainer.dataset.id;
-            const todos = this.getCurrentCategoryItem().getToDos();
+            const todos = this.#categoryItem.getToDos();
             const index = todos.findIndex(todo => todo.getToDo().id == this.#toDoId);
 
             if(index === -1){

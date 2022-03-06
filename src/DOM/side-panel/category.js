@@ -102,6 +102,16 @@ export class Categories{
         return this.#categoryItem;
     }
 
+    getAllItems(){
+        const items = [];
+
+        this.#categories.forEach(category => {
+            category.items.forEach(item => items.push(item));
+        });
+
+        return items;
+    }
+
     getCategories(){
         return this.#categoriesContainer;
     }

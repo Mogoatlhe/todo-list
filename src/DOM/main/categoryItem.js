@@ -1,19 +1,13 @@
 
-import { Paragraph } from "../paragraph";
-import { Button } from "../button";
+import { Paragraph } from "../html-elements/paragraph";
+import { Button } from "../html-elements/button";
 import { ToDo } from "./toDo";
 
 export class CategoryItem{
 
-    #name;
     #item;
-    #todos;
-
-    constructor(itemName){
-        this.#name = itemName;
-        this.#todos = new Array();
-        this.setCategoryItem(itemName);
-    }
+    
+    constructor(){}
 
     setCategoryItem(itemName){
 
@@ -31,63 +25,59 @@ export class CategoryItem{
         return this.#item;
     }
 
-    getName(){
-        return this.#name;
-    }
-
-    createToDo(name, description, date, categoryName, priority){
-        let id;
-        id = this.isToDosEmpty() ? 1 : this.#todos[this.#todos.length - 1].getToDo().id + 1;
-        const toDo = new ToDo(id, name, description, date, categoryName, priority);
+    // createToDo(name, description, date, categoryName, priority){
+    //     let id;
+    //     id = this.isToDosEmpty() ? 1 : this.#todos[this.#todos.length - 1].getToDo().id + 1;
+    //     const toDo = new ToDo(id, name, description, date, categoryName, priority);
         
-        this.addToDo(toDo);
-    }
+    //     this.addToDo(toDo);
+    // }
 
-    addToDo(todo){
-        this.#todos.push(todo);
-        this.setSessionStorage();
+    // addToDo(todo){
+    //     this.#todos.push(todo);
+    //     this.setSessionStorage();
 
-    }
+    // }
 
-    removeToDo(id){
+    // removeToDo(id){
 
-        const index = this.#todos.findIndex(todo => todo.getToDo().id == id);
-        this.#todos.splice(index, 1);
+    //     const index = this.#todos.findIndex(todo => todo.getToDo().id == id);
+    //     this.#todos.splice(index, 1);
         
-        this.setSessionStorage();
-    }
+    //     this.setSessionStorage();
+    // }
 
-    setSessionStorage(){
-        const todos = [];
+    // setSessionStorage(){
+    //     const todos = [];
 
-        this.#todos.map(toDo => todos.push(toDo.getToDo()))
+    //     this.#todos.map(toDo => todos.push(toDo.getToDo()))
 
-        sessionStorage.setItem("todos", JSON.stringify(todos));   
-    }
+    //     sessionStorage.setItem("todos", JSON.stringify(todos));   
+    // }
 
-    isToDosEmpty(){
-        return this.#todos.length === 0 ? true : false;
-    }
+    // isToDosEmpty(){
+    //     return this.#todos.length === 0 ? true : false;
+    // }
 
-    getToDos(){
-        return this.#todos;
-    }
+    // getToDos(){
+    //     return this.#todos;
+    // }
 
-    assignTodos(){
+    // assignTodos(){
 
-        if(sessionStorage.getItem("todos") === null){
-            return;
-        }
+    //     if(sessionStorage.getItem("todos") === null){
+    //         return;
+    //     }
 
-        const todos = JSON.parse(sessionStorage.getItem("todos"));
+    //     const todos = JSON.parse(sessionStorage.getItem("todos"));
 
-        todos.map(todoData => {
-            const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
-                todoData.date, todoData.category, todoData.priority);
+    //     todos.map(todoData => {
+    //         const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
+    //             todoData.date, todoData.category, todoData.priority);
             
-            this.#todos.push(toDoObject);
-        });
+    //         this.#todos.push(toDoObject);
+    //     });
 
-    }
+    // }
 
 }

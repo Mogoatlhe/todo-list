@@ -1,5 +1,5 @@
 
-import { Element } from "./element";
+import { Element } from "../element";
 
 export class Paragraph extends Element{
 

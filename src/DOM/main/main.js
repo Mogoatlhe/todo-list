@@ -1,11 +1,11 @@
 
 import { Element } from "../element";
-import { Button } from "../button";
+import { Button } from "../html-elements/button";
 import { Attribute } from "../attribute";
 import { CleanToilet } from "./cleanToilet";
 import { TodoButtons } from "./todoButtons";
-import { Paragraph } from "../paragraph";
-import { IdiomaticText } from "../idiomaticText";
+import { Paragraph } from "../html-elements/paragraph";
+import { IdiomaticText } from "../html-elements/idiomaticText";
 
 export class Main{
 

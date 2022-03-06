@@ -2,7 +2,7 @@
 import { Element } from "../element";
 import { Attribute } from "../attribute";
 import Logo from "./../images/logo.png";
-import { Paragraph } from "../paragraph";
+import { Paragraph } from "../html-elements/paragraph";
 
 export class LogoContainer{
 

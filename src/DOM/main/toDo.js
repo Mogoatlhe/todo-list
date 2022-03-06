@@ -1,7 +1,7 @@
 
 import { Element } from "../element";
 import { Attribute } from "../attribute";
-import { IdiomaticText } from "../idiomaticText";
+import { IdiomaticText } from "../html-elements/idiomaticText";
 
 export class ToDo{
 

@@ -1,51 +1,66 @@
 
 import { Element } from "../element";
-import { Button } from "../button";
-import { IdiomaticText } from "../idiomaticText";
+import { Button } from "../html-elements/button";
+import { IdiomaticText } from "../html-elements/idiomaticText";
+import { Div } from "../html-elements/div";
+import { CategoryItem } from "../main/categoryItem";
 
-export class Category{
+export class Categories{
 
-    #items;
-    #category;
-    #categoryContainer;
-    #categoryItemContainer;
+    #itemContainer;
+    #categoriesContainer;
 
-    constructor(textContent, items){
-        this.#items = new Array();
-        this.setCategory(textContent, items);
+    #categories = [
+        {
+            "category": "Time",
+            "items": ["Inbox", "Today", "Upcoming"]
+        },{
+            "category": "My Categories",
+            "items": ["All", "Hobbies", "Work", "Family", "Friends", "Travel"]
+        }
+    ];
+
+    constructor(){
+        this.#setCategories();
     }
+    
+    #setCategories(){
+        const categories = [`Time`, `My Categories`];
+        const categoriesContainer = new Div();
+        this.#categoriesContainer = categoriesContainer.getDiv();
 
-    setCategory(textContent, items){
-        const categoryHeadingContainer = new Element("div", [], `category-heading-container`);
-        const categoryHeading = new Element("h5", [], `category-heading`, textContent);
-        const categoryContainer = new Element("div", [], "category-container");
-        this.#categoryContainer = categoryContainer.getElement();
-        
-        const categoryHeadingContainerNode = categoryHeadingContainer.getElement();
-        categoryHeadingContainerNode.append(categoryHeading.getElement());
+        categories.forEach((category, index) => {
+            const headingContainer = new Div(`category-heading-container`);
+            const headingText = new Element("h5", [], "category-heading", category);
+            const container = new Div("category-container");
+            
+            const headingContainerNode = headingContainer.getDiv();
+            const headingTextNode = headingText.getElement();
+            const containerNode = container.getDiv();
 
-        if(textContent === "My Categories"){
-            categoryHeadingContainerNode.append(this.#addCategoryManagementButtons());
-        }
+            headingContainerNode.append(headingTextNode);
 
-        this.#category = this.#categoryContainer;
-        this.#category.append(categoryHeadingContainerNode);
-        
-        if(items !== undefined){
-            this.setCategoryItems(items);
-            this.#categoryContainer.append(this.#categoryItemContainer);
-        }
+            if(category === "My Categories"){
+                headingContainerNode.append(this.#addCategoryManagementButtons());
+            }
+
+            containerNode.append(headingContainerNode);
+            this.#setInitialItems(this.#categories[index]);
+            containerNode.append(this.#itemContainer);
+            
+            this.#categoriesContainer.append(containerNode);
+        });
     }
 
     #addCategoryManagementButtons(){
 
-        const categoryButtonsContainer = new Element("div", [], "category-buttons-container");
+        const buttonsContainer = new Div("category-buttons-container");
         const removeCategoryButton = new Button("remove-category-button");
         const addCategoryButton = new Button("add-category-button");
         const removeSymbol = new IdiomaticText("fa-solid fa-minus");
         const addSymbol = new IdiomaticText("fa-solid fa-plus");
 
-        const categoryButtonsContainerNode = categoryButtonsContainer.getElement();
+        const buttonsContainerNode = buttonsContainer.getDiv();
         const removeCategoryButtonNode = removeCategoryButton.getButton();
         const addCategoryButtonNode = addCategoryButton.getElement();
         const removeSymbolNode = removeSymbol.getElement();
@@ -53,31 +68,32 @@ export class Category{
 
         removeCategoryButtonNode.append(removeSymbolNode);
         addCategoryButtonNode.append(addSymbolNode);
-        categoryButtonsContainerNode.append(removeCategoryButtonNode);
-        categoryButtonsContainerNode.append(addCategoryButtonNode);
+        buttonsContainerNode.append(removeCategoryButtonNode);
+        buttonsContainerNode.append(addCategoryButtonNode);
 
-        return categoryButtonsContainerNode;
+        return buttonsContainerNode;
     }
 
-    getCategory(){
-        return this.#category;
-    }
+    #setInitialItems(category){
+        
+        const categoryItem = new CategoryItem();
+        const itemContainer = new Div("category-items-container");
+        this.#itemContainer = itemContainer.getDiv();
 
-    setCategoryItems(items){
-
-        const categoryItemContainer = new Element("div", [],
-        "category-items-container");
-        this.#categoryItemContainer = categoryItemContainer.getElement();
-
-        items.map((item) => {
+        
+        
+        category.items.forEach(item => {
             const idiomaticText = new IdiomaticText("fa-solid fa-minus");
             const idiomaticTextNode = idiomaticText.getIdiomaticText();
-            const itemNode = item.getItem();
-
-            this.#categoryItemContainer.append(itemNode);
-            this.#categoryItemContainer.append(idiomaticTextNode);
-            this.#items.push();
+            this.#itemContainer.append(idiomaticTextNode);
+            categoryItem.setCategoryItem(item);
+            const itemNode = categoryItem.getItem();
+            this.#itemContainer.append(itemNode);
         });
 
+    }
+
+    getCategories(){
+        return this.#categoriesContainer;
     }
 }

@@ -106,7 +106,7 @@ body{
     display: grid;
     gap: 8%;
     padding: 4%;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 20% 80%;
     align-items: center;
 }
 

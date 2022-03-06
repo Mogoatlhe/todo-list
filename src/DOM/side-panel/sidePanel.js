@@ -1,6 +1,7 @@
 
 import { Attribute } from "../attribute";
 import { Element } from "../element";
+import { Div } from "../html-elements/div";
 import { LogoContainer } from './logo';
 
 export class SidePanel{
@@ -8,20 +9,20 @@ export class SidePanel{
     #sidePanel;
     #logoContainer;
 
-    constructor(byTime, userDefinedCategory){
-        const logoContainer = new LogoContainer();
-        this.#logoContainer  = logoContainer.getLogoContainer();
-        this.setSidePanel(byTime, userDefinedCategory);
+    constructor(categories){
+        this.setSidePanel(categories);
     }
 
-    setSidePanel(byTime, userDefinedCategory){
+    setSidePanel(categories){
+        const logoContainer = new LogoContainer();
+        this.#logoContainer  = logoContainer.getLogoContainer();
         const sidePanelAttribute = new Attribute("id", "side-panel");
-        const sidePanel = new Element("div", new Array(sidePanelAttribute));
+        const sidePanelAttributes = [sidePanelAttribute];
+        const sidePanel = new Div(undefined, sidePanelAttributes);
 
-        this.#sidePanel = sidePanel.getElement();
+        this.#sidePanel = sidePanel.getDiv();
         this.#sidePanel.append(this.#logoContainer);
-        this.#sidePanel.append(byTime);
-        this.#sidePanel.append(userDefinedCategory);
+        this.#sidePanel.append(categories.getCategories());
     }
 
     getSidePanel(){

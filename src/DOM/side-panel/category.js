@@ -13,10 +13,12 @@ export class Categories{
     #categories = [
         {
             "category": "Time",
-            "items": ["Inbox", "Today", "Upcoming"]
+            "items": ["Inbox", "Today", "Upcoming"],
+            "current": -1
         },{
             "category": "My Categories",
-            "items": ["All", "Hobbies", "Work", "Family", "Friends", "Travel"]
+            "items": ["All", "Hobbies", "Work", "Family", "Friends", "Travel"],
+            "current": 0
         }
     ];
 

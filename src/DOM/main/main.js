@@ -33,12 +33,6 @@ export class Main{
         this.setMain();
     }
 
-    #changeCategoryEvent(item){
-
-
-
-    }
-
     setMain(){
 
         const tasksContainer = new Attribute("id", "tasks-container");

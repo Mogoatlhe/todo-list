@@ -13,20 +13,22 @@ export class Main{
     #toDoId;
     #main;
     #cleanToilet;
-    #categoryName;
-    #categoryItem;
     #categoryItems;
-    #addTaskButton;
     #cancelTaskBtn;
     #tasksContainer;
-    #categoryNameNode;
     #toDoInputContainer;
+    
+    #categories;
+    #categoryName;
+    #categoryItem;
+    #addTaskButton;
+    #categoryNameNode;
 
-    constructor(currentCategoryItem, categoryItems){
-        this.#categoryName = currentCategoryItem.getName();
+    constructor(categories){
 
-        this.#categoryItems = categoryItems;
-        this.#categoryItem = this.getCurrentCategoryItem();
+        this.#categories = categories;
+        this.#categoryItem = this.#categories.getCategoryItem();
+        this.#categoryName = this.#categoryItem.getCurrentItem();
         
         this.#categoryItem.assignTodos();
 
@@ -60,9 +62,9 @@ export class Main{
         const addTaskIcon = new IdiomaticText("fa-solid fa-circle-plus");
         const addTaskText = new Paragraph("Add task", addTaskAtrributes);
         
-        this.#addTaskButton = addTaskButton.getElement();
+        this.#addTaskButton = addTaskButton.getButton();
         const addTaskIconNode = addTaskIcon.getIdiomaticText();
-        const addTaskTextNode = addTaskText.getElement();
+        const addTaskTextNode = addTaskText.getParagraph();
         
         this.#addTaskButton.append(addTaskIconNode);
         this.#addTaskButton.append(addTaskTextNode);
@@ -73,8 +75,8 @@ export class Main{
         const cancelTaskBtn = new Button("cancel-task-button");
         const cancelTaskText = new Paragraph("Cancel");
 
-        this.#cancelTaskBtn = cancelTaskBtn.getElement();
-        const cancelTaskTextNode = cancelTaskText.getElement();
+        this.#cancelTaskBtn = cancelTaskBtn.getButton();
+        const cancelTaskTextNode = cancelTaskText.getParagraph();
 
         this.#cancelTaskBtn.append(cancelTaskTextNode);
     }

@@ -2,6 +2,7 @@
 import { Attribute } from "../attribute";
 import { Element } from "../element";
 import { Div } from "../html-elements/div";
+import { Image } from "../html-elements/image";
 import CleanToiletImageSrc from "./../images/clean-toilet.png";
 
 export class CleanToilet{
@@ -27,11 +28,11 @@ export class CleanToilet{
 
         const cleanToiletContainer = new Div(undefined, cleanToiletContainerAttrArr);
         const cleanToiletHeading = new Element("h3", cleanToiletHeadingAttrArr, undefined, headingText);
-        const cleanToiletImage = new Element("img", cleanToiletAttrArr);
+        const cleanToiletImage = new Image(cleanToiletAttrArr);
         
         this.#cleanToiletContainer = cleanToiletContainer.getDiv();
         const cleanToiletHeadingNode = cleanToiletHeading.getElement();
-        const cleanToiletImageNode = cleanToiletImage.getElement();
+        const cleanToiletImageNode = cleanToiletImage.getImage();
 
         this.#cleanToiletContainer.append(cleanToiletHeadingNode);
         this.#cleanToiletContainer.append(cleanToiletImageNode);

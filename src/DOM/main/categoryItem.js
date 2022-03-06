@@ -25,6 +25,41 @@ export class CategoryItem{
         return this.#item;
     }
 
+    #getItems(){
+        return JSON.parse(sessionStorage.getItem("categories"));
+    }
+
+    getCurrentItem(){
+        const categories = this.#getItems();
+        let currentItem;
+
+        categories.forEach(category => {
+
+            if(category.current !== -1){
+                currentItem = categories.items[category.current];
+            }
+        });
+
+        return currentItem;
+    }
+
+    assignTodos(){
+
+        if(sessionStorage.getItem("todos") === null){
+            return;
+        }
+
+        const todos = JSON.parse(sessionStorage.getItem("todos"));
+
+        // todos.map(todoData => {
+        //     const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
+        //         todoData.date, todoData.category, todoData.priority);
+            
+        //     this.#todos.push(toDoObject);
+        // });
+
+    }
+
     // createToDo(name, description, date, categoryName, priority){
     //     let id;
     //     id = this.isToDosEmpty() ? 1 : this.#todos[this.#todos.length - 1].getToDo().id + 1;
@@ -61,23 +96,6 @@ export class CategoryItem{
 
     // getToDos(){
     //     return this.#todos;
-    // }
-
-    // assignTodos(){
-
-    //     if(sessionStorage.getItem("todos") === null){
-    //         return;
-    //     }
-
-    //     const todos = JSON.parse(sessionStorage.getItem("todos"));
-
-    //     todos.map(todoData => {
-    //         const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
-    //             todoData.date, todoData.category, todoData.priority);
-            
-    //         this.#todos.push(toDoObject);
-    //     });
-
     // }
 
 }

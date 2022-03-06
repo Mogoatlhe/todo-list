@@ -4,6 +4,7 @@ import { Attribute } from "../attribute";
 import Logo from "./../images/logo.png";
 import { Paragraph } from "../html-elements/paragraph";
 import { Div } from "../html-elements/div";
+import { Image } from "../html-elements/image";
 
 export class LogoContainer{
 
@@ -21,14 +22,14 @@ export class LogoContainer{
         new Attribute("alt", "doodoo-list logo")); 
 
         const nameAttributes = [new Attribute("id", "name")];
-        const logo = new Element("img", attrArr, "logo");
+        const logo = new Image(attrArr, "logo");
         const name = new Paragraph("doodoo-list", nameAttributes);
         const tagline = new Element("h5", new Array(new Attribute("id", "tagline")),
         undefined, "Here to help you get your 💩 together");
 
         this.#logoContainer = logoContainer.getDiv();
 
-        this.#logoContainer.append(logo.getElement());
+        this.#logoContainer.append(logo.getImage());
         this.#logoContainer.append(name.getElement());
         this.#logoContainer.append(tagline.getElement());
     }

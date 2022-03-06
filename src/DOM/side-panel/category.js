@@ -7,22 +7,28 @@ import { CategoryItem } from "../main/categoryItem";
 
 export class Categories{
 
+    #categories;
+    #categoryItem;
     #itemContainer;
     #categoriesContainer;
 
-    #categories = [
-        {
-            "category": "Time",
-            "items": ["Inbox", "Today", "Upcoming"],
-            "current": -1
-        },{
-            "category": "My Categories",
-            "items": ["All", "Hobbies", "Work", "Family", "Friends", "Travel"],
-            "current": 0
-        }
-    ];
-
     constructor(){
+        this.#categories = [
+            {
+                "category": "Time",
+                "items": ["Inbox", "Today", "Upcoming"],
+                "current": -1
+            },{
+                "category": "My Categories",
+                "items": ["All", "Hobbies", "Work", "Family", "Friends", "Travel"],
+                "current": 0
+            }
+        ];
+        
+
+        sessionStorage.setItem("categories", JSON.stringify(this.#categories));
+        
+        this.#categoryItem = new CategoryItem();
         this.#setCategories();
     }
     
@@ -77,22 +83,23 @@ export class Categories{
     }
 
     #setInitialItems(category){
-        
-        const categoryItem = new CategoryItem();
+
         const itemContainer = new Div("category-items-container");
         this.#itemContainer = itemContainer.getDiv();
-
-        
         
         category.items.forEach(item => {
             const idiomaticText = new IdiomaticText("fa-solid fa-minus");
             const idiomaticTextNode = idiomaticText.getIdiomaticText();
             this.#itemContainer.append(idiomaticTextNode);
-            categoryItem.setCategoryItem(item);
-            const itemNode = categoryItem.getItem();
+            this.#categoryItem.setCategoryItem(item);
+            const itemNode = this.#categoryItem.getItem();
             this.#itemContainer.append(itemNode);
         });
 
+    }
+
+    getCategoryItem(){
+        return this.#categoryItem;
     }
 
     getCategories(){

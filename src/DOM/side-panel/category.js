@@ -21,7 +21,7 @@ export class Categories{
             },{
                 "category": "My Categories",
                 "items": ["All", "Hobbies", "Work", "Family", "Friends", "Travel"],
-                "current": 0
+                "current": 4
             }
         ];
         

@@ -12,11 +12,11 @@ const LoadPages = (() => {
     const sidePanel = new SidePanel(categories);
     const sidePanelNode = sidePanel.getSidePanel();
     
-    // const main = new Main();
-    // const mainNode = main.getMain();
+    const main = new Main(categories);
+    const mainNode = main.getMain();
 
     content.append(sidePanelNode);
-    // content.append(mainNode);
+    content.append(mainNode);
 
     // main.removeToDo();
 

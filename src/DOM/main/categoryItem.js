@@ -6,8 +6,13 @@ import { ToDo } from "./toDo";
 export class CategoryItem{
 
     #item;
+    #toDos;
+    #itemName;
     
-    constructor(){}
+    constructor(){
+        this.#toDos = [];
+        this.#itemName = this.getCurrentItem();
+    }
 
     setCategoryItem(itemName){
 
@@ -36,7 +41,7 @@ export class CategoryItem{
         categories.forEach(category => {
 
             if(category.current !== -1){
-                currentItem = categories.items[category.current];
+                currentItem = category.items[category.current];
             }
         });
 
@@ -51,28 +56,22 @@ export class CategoryItem{
 
         const todos = JSON.parse(sessionStorage.getItem("todos"));
 
-        // todos.map(todoData => {
-        //     const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
-        //         todoData.date, todoData.category, todoData.priority);
+        todos.map(todoData => {
+            const toDoObject = new ToDo(todoData.id, todoData.name, todoData.description,
+                todoData.date, todoData.category, todoData.priority);
             
-        //     this.#todos.push(toDoObject);
-        // });
+            this.#toDos.push(toDoObject);
+        });
 
     }
 
-    // createToDo(name, description, date, categoryName, priority){
-    //     let id;
-    //     id = this.isToDosEmpty() ? 1 : this.#todos[this.#todos.length - 1].getToDo().id + 1;
-    //     const toDo = new ToDo(id, name, description, date, categoryName, priority);
+    createToDo(name, description, date, categoryName, priority){
+        let id;
+        id = this.isToDosEmpty() ? 1 : this.#toDos[this.#toDos.length - 1].getToDo().id + 1;
+        const toDo = new ToDo(id, name, description, date, categoryName, priority);
         
-    //     this.addToDo(toDo);
-    // }
-
-    // addToDo(todo){
-    //     this.#todos.push(todo);
-    //     this.setSessionStorage();
-
-    // }
+        this.#toDos.push(toDo);
+    }
 
     // removeToDo(id){
 
@@ -90,12 +89,19 @@ export class CategoryItem{
     //     sessionStorage.setItem("todos", JSON.stringify(todos));   
     // }
 
-    // isToDosEmpty(){
-    //     return this.#todos.length === 0 ? true : false;
-    // }
+    isToDosEmpty(){
+        return this.#toDos.length === 0 ? true : false;
+    }
 
-    // getToDos(){
-    //     return this.#todos;
-    // }
+    getToDos(){
+        const myTodos = this.#toDos.filter(toDo => toDo.getToDo().category === this.#itemName);
+        return myTodos;
+    }
+
+    displayToDos(tasksContainer){
+        const myTodos = this.getToDos();
+
+        myTodos.forEach(toDo => tasksContainer.append(toDo.displayToDo(this.#itemName)));
+    }
 
 }

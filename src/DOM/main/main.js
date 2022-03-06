@@ -15,13 +15,13 @@ export class Main{
     #cleanToilet;
     #categoryItems;
     #cancelTaskBtn;
-    #tasksContainer;
     #toDoInputContainer;
     
     #categories;
     #categoryName;
     #categoryItem;
     #addTaskButton;
+    #tasksContainer;
     #categoryNameNode;
 
     constructor(categories){
@@ -106,18 +106,11 @@ export class Main{
         if(this.#categoryItem === undefined){
             return;
         }
-        
-        this.#categoryItem.getToDos().map(todo => {
-            const toDoContainerNode = todo.displayToDo(this.#categoryName);
-            
-            if(toDoContainerNode === undefined){
-                return;
-            }
 
-            this.#tasksContainer.append(toDoContainerNode);
-            this.#editToDoEvent(toDoContainerNode);
-        });
+        this.#categoryItem.displayToDos(this.#tasksContainer);
         
+        [...this.#tasksContainer.childNodes]
+            .forEach(toDoContainerNode => this.#editToDoEvent(toDoContainerNode));
     }
 
     #addTaskEvent(){

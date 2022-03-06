@@ -2,6 +2,7 @@
 import { Element } from "../element";
 import { Attribute } from "../attribute";
 import { PriorityFlags } from "./priorityFlags";
+import { Div } from "../html-elements/div";
 
 export class TodoButtons{
 
@@ -27,11 +28,11 @@ export class TodoButtons{
         const dueDateAttrArr = [dueDateId, dueDateType, dueDateValue, dueDateMin];
         const categoryButtonAttrArr = [categoryButtonId];
 
-        const toDoButtonsContainer = new Element("div", toDoButtonsAttrArr);
+        const toDoButtonsContainer = new Div(undefined, toDoButtonsAttrArr);
         const dueDate = new Element("input", dueDateAttrArr);
         const categoryButton = new Element("select", categoryButtonAttrArr);
         
-        this.#todoButtonsContainer = toDoButtonsContainer.getElement();
+        this.#todoButtonsContainer = toDoButtonsContainer.getDiv();
         const dueDateNode = dueDate.getElement();
         this.#categoryButton = categoryButton.getElement();
         const priorityFlagsNode = priorityFlags.getPriorityFlags();

@@ -3,6 +3,7 @@ import { Element } from "../element";
 import { Attribute } from "../attribute";
 import Logo from "./../images/logo.png";
 import { Paragraph } from "../html-elements/paragraph";
+import { Div } from "../html-elements/div";
 
 export class LogoContainer{
 
@@ -14,7 +15,7 @@ export class LogoContainer{
 
     setLogoDetails(){
         const logoContainerAttribute = new  Attribute("id", "logo-container");
-        const logoContainer = new Element("div", new Array(logoContainerAttribute));
+        const logoContainer = new Div(undefined, new Array(logoContainerAttribute));
 
         const attrArr = new Array(new Attribute("src", Logo),
         new Attribute("alt", "doodoo-list logo")); 
@@ -25,7 +26,7 @@ export class LogoContainer{
         const tagline = new Element("h5", new Array(new Attribute("id", "tagline")),
         undefined, "Here to help you get your 💩 together");
 
-        this.#logoContainer = logoContainer.getElement();
+        this.#logoContainer = logoContainer.getDiv();
 
         this.#logoContainer.append(logo.getElement());
         this.#logoContainer.append(name.getElement());

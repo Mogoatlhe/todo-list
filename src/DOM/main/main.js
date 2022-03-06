@@ -6,6 +6,7 @@ import { CleanToilet } from "./cleanToilet";
 import { TodoButtons } from "./todoButtons";
 import { Paragraph } from "../html-elements/paragraph";
 import { IdiomaticText } from "../html-elements/idiomaticText";
+import { Div } from "../html-elements/div";
 
 export class Main{
 
@@ -43,9 +44,9 @@ export class Main{
         const tasksContainer = new Attribute("id", "tasks-container");
         
         const main = new Element("main", []);
-        const todosDisplay = new Element("div", [tasksContainer]);
+        const todosDisplay = new Div(undefined, [tasksContainer]);
         this.#main = main.getElement();
-        this.#tasksContainer = todosDisplay.getElement();
+        this.#tasksContainer = todosDisplay.getDiv();
         this.#setCategoryName();
         this.#setAddTask();
         this.#setCancelTask();
@@ -260,11 +261,11 @@ export class Main{
         const todoNameAttrArr = [toDoNameId, toDoNamePlaceholder];
         const todoDescriptionAttrArr = [toDoDescriptionId, toDoDescriptionPlaceholder];
 
-        const toDoInputContainer = new Element("div", toDoInputAttrArr);
+        const toDoInputContainer = new Div(undefined, toDoInputAttrArr);
         const toDoName = new Element("textarea", todoNameAttrArr);
         const toDoDescription = new Element("textarea", todoDescriptionAttrArr);
 
-        const toDoInputContainerNode = toDoInputContainer.getElement();
+        const toDoInputContainerNode = toDoInputContainer.getDiv();
         const toDoNameNode = toDoName.getElement();
         const toDoDescriptionNode = toDoDescription.getElement();
         const toDoButtonsNode = toDoButtons.getToDoButtons();

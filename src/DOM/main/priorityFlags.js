@@ -2,6 +2,7 @@
 import { Element } from "../element";
 import { Attribute } from "../attribute";
 import { IdiomaticText } from "../html-elements/idiomaticText";
+import { Div } from "../html-elements/div";
 
 export class PriorityFlags{
 
@@ -17,8 +18,8 @@ export class PriorityFlags{
         const fontAwesomeClass = "fa-solid fa-font-awesome";
         const containerId = new Attribute("id", "priority-flags-container");
         const containerAttributes = [containerId];
-        const priorityFlagsContainer = new Element("div", containerAttributes);
-        this.#priorityFlags = priorityFlagsContainer.getElement();
+        const priorityFlagsContainer = new Div(undefined, containerAttributes);
+        this.#priorityFlags = priorityFlagsContainer.getDiv();
 
         for(let i = 1; i < 5; i++){
 

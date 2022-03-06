@@ -2,6 +2,7 @@
 import { Element } from "../element";
 import { Attribute } from "../attribute";
 import { IdiomaticText } from "../html-elements/idiomaticText";
+import { Div } from "../html-elements/div";
 
 export class ToDo{
 
@@ -35,14 +36,14 @@ export class ToDo{
 
         const toDoContainerId = new Attribute("data-id", this.#todo.id);
         const toDoContainerAttrArr = [toDoContainerId]; 
-        const toDoContainer = new Element("div", toDoContainerAttrArr, "to-do-container");
-        const toDoContainerNode = toDoContainer.getElement();
+        const toDoContainer = new Div("to-do-container", toDoContainerAttrArr);
+        const toDoContainerNode = toDoContainer.getDiv();
 
         const gripDots = new IdiomaticText("fa-solid fa-grip-vertical");
         const gripDotsNode = gripDots.getIdiomaticText();
 
-        const isCompleteContainer = new Element("div", [], "is-complete-container");
-        const isCompleteContainerNode = isCompleteContainer.getElement();
+        const isCompleteContainer = new Div("is-complete-container");
+        const isCompleteContainerNode = isCompleteContainer.getDiv();
 
         const check = new IdiomaticText("fa-solid fa-check");
         const checkNode = check.getIdiomaticText();

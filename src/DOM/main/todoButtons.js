@@ -56,13 +56,18 @@ export class TodoButtons{
 
         let optionValue, options, option, optionNode;
         
-        categories.forEach(category => {
+        for (const category of categories) {
+
+            if(category === "All"){
+                continue;
+            }
+
             optionValue = new Attribute("value", category);
             options = [optionValue];
             option = new Element("option", options, undefined, category);
             optionNode = option.getElement();
             this.#categoryButton.append(optionNode);
-        });
+        }
 
     }
 

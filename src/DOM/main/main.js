@@ -124,7 +124,7 @@ export class Main{
             }
 
             if(symbol.classList.contains("fa-edit")){
-                this.#resetButtons(symbol);
+                this.#resetButtons();
                 this.#editToDo();
                 return;
             }
@@ -227,7 +227,11 @@ export class Main{
         const lastTodo = toDos[toDos.length - 1];
         const lastTodoCategory = lastTodo.getToDo().category;
 
-        if(lastTodoCategory !== this.#categoryName){
+        const allowedItems = ["Today", "Upcoming", "Inbox", "All", lastTodoCategory];
+
+        const isAllowedItem = allowedItems.every(item => item !== this.#categoryName);
+
+        if(isAllowedItem){
             return;
         }
 
@@ -345,7 +349,7 @@ export class Main{
 
         const isComplete = document.getElementsByClassName("is-complete-container");
     
-        [...isComplete].map(check => this.#removeToDoEvent(check, this.#categoryItem));
+        [...isComplete].forEach(check => this.#removeToDoEvent(check, this.#categoryItem));
 
     }
 
@@ -427,7 +431,8 @@ export class Main{
         this.#categoryItem.setSessionStorage();
     }
 
-    #resetButtons(symbol){
+    #resetButtons(){
+        const symbol = this.#addTaskButton.childNodes[0];
 
         if(!symbol.classList.contains("fa-edit")){
             return;
@@ -452,7 +457,9 @@ export class Main{
         document.getElementById("to-do-description-input").textContent = data.description;
         document.getElementById("due-date").value = data.date;
 
-        this.#setSelectedCategoryIndex(data.category);
+        if(this.#categoryName !== "All"){
+            this.#setSelectedCategoryIndex(data.category);
+        }
 
         this.#setPriorityFlag(data.priority);
     }

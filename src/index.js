@@ -18,6 +18,6 @@ const LoadPages = (() => {
     content.append(sidePanelNode);
     content.append(mainNode);
 
-    // main.removeToDo();
+    main.removeToDo();
 
 })();

@@ -71,6 +71,7 @@ export class CategoryItem{
         const toDo = new ToDo(id, name, description, date, categoryName, priority);
         
         this.#toDos.push(toDo);
+        this.setSessionStorage();
     }
 
     removeToDo(id){

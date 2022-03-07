@@ -32,6 +32,8 @@ export class CategoryItem{
 
     selectItem(){
 
+        this.#setInitialItem();
+
         this.#items.forEach(item => {
             item.addEventListener("click", () => {
 
@@ -47,6 +49,33 @@ export class CategoryItem{
                 item.previousSibling.classList.add("selected-category-item");
             });
         });
+    }
+
+    #getCategories(){
+        return JSON.parse(sessionStorage.getItem("categories"));
+    }
+
+    #setInitialItem(){const categories = this.#getCategories();
+        let initialItem;
+        for (const category of categories) {
+            if(category.current === -1){
+                continue;
+            }
+
+            initialItem = category.items[category.current];
+            break;
+
+        }
+
+        for (const item of this.#items) {
+            if(!item.classList.contains(initialItem)){
+                continue;
+            }
+
+            item.classList.add("selected-category-item");
+            item.previousSibling.classList.add("selected-category-item");
+            break;
+        }
     }
 
     getItem(){

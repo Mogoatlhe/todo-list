@@ -131,6 +131,12 @@ body{
     color: var(--amazon);
 }
 
+.selected-category-item, .selected-category-item.fa-minus{
+    background-color: var(--russet);
+    border-color: var(--amazon);
+    color: var(--pale-spring-bud);
+}
+
 .category-item:hover, .category-items-container i:hover{
     cursor: pointer;
     transform: scale(1.1);

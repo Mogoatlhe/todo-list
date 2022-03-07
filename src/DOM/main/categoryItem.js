@@ -34,7 +34,8 @@ export class CategoryItem{
 
         this.#items.forEach(item => {
             item.addEventListener("click", () => {
-                console.log(this.#items);
+                item.classList.add("selected-category-item");
+                item.previousSibling.classList.add("selected-category-item");
             });
         });
     }

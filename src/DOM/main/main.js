@@ -220,6 +220,14 @@ export class Main{
         
         return this.#categoryItems[itemIndex];
     }
+
+    #isAllowedItem(category){
+
+        const allowedItems = ["Today", "Upcoming", "Inbox", "All", category];
+
+        return allowedItems.every(item => item !== this.#categoryName);
+
+    }
     
     #appendToDo(){
         
@@ -227,11 +235,7 @@ export class Main{
         const lastTodo = toDos[toDos.length - 1];
         const lastTodoCategory = lastTodo.getToDo().category;
 
-        const allowedItems = ["Today", "Upcoming", "Inbox", "All", lastTodoCategory];
-
-        const isAllowedItem = allowedItems.every(item => item !== this.#categoryName);
-
-        if(isAllowedItem){
+        if(this.#isAllowedItem(lastTodoCategory)){
             return;
         }
 
@@ -415,7 +419,7 @@ export class Main{
         const name = toDoContainer.getElementsByClassName("to-do-name")[0];
         const description = toDoContainer.getElementsByClassName("to-do-description")[0];
         
-        if(category !== this.#categoryName){
+        if(this.#isAllowedItem(category)){
             tasksContainer.removeChild(toDoContainer);
         }else{
             name.textContent = this.#toDoInputContainer.children[0].value;

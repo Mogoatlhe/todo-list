@@ -34,6 +34,15 @@ export class CategoryItem{
 
         this.#items.forEach(item => {
             item.addEventListener("click", () => {
+
+                if(item.classList.contains("selected-category-item")){
+                    return;
+                }
+
+                const prevSelected = document.getElementsByClassName("selected-category-item");
+
+                [...prevSelected].forEach(curr => curr.classList.remove("selected-category-item"));
+
                 item.classList.add("selected-category-item");
                 item.previousSibling.classList.add("selected-category-item");
             });

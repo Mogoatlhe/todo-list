@@ -6,10 +6,12 @@ import { ToDo } from "./toDo";
 export class CategoryItem{
 
     #item;
+    #items;
     #toDos;
     #itemName;
     
     constructor(){
+        this.#items = [];
         this.#toDos = [];
         this.#itemName = this.getCurrentItem();
     }
@@ -24,6 +26,17 @@ export class CategoryItem{
 
         buttonNode.append(paragraphNode);
         this.#item = buttonNode;
+        this.#items.push(this.#item);
+
+    }
+
+    selectItem(){
+
+        this.#items.forEach(item => {
+            item.addEventListener("click", () => {
+                console.log(this.#items);
+            });
+        });
     }
 
     getItem(){

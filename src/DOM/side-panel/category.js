@@ -96,6 +96,10 @@ export class Categories{
             this.#itemContainer.append(itemNode);
         });
 
+        if(category === this.#categories[1]){
+            this.#categoryItem.selectItem();
+        }
+
     }
 
     getCategoryItem(){

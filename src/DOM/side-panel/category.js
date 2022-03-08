@@ -13,7 +13,7 @@ export class Categories{
     #categoriesContainer;
 
     constructor(){
-        this.#categories = [
+        let categories = [
             {
                 "category": "Time",
                 "items": ["Inbox", "Today", "Upcoming"],
@@ -24,6 +24,10 @@ export class Categories{
                 "current": 0
             }
         ];
+
+        let sessionCategories = JSON.parse(sessionStorage.getItem("categories"));
+
+        this.#categories = sessionCategories === null ? categories: sessionCategories;
         
 
         sessionStorage.setItem("categories", JSON.stringify(this.#categories));

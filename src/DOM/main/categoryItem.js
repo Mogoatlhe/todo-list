@@ -32,7 +32,7 @@ export class CategoryItem{
 
     selectItem(){
 
-        this.#setInitialItem();
+        this.#setItem();
 
         this.#items.forEach(item => {
             item.addEventListener("click", () => {
@@ -41,12 +41,14 @@ export class CategoryItem{
                     return;
                 }
 
+                this.#changeCurrentItem(item.classList[0]);
                 const prevSelected = document.getElementsByClassName("selected-category-item");
 
                 [...prevSelected].forEach(curr => curr.classList.remove("selected-category-item"));
 
                 item.classList.add("selected-category-item");
                 item.previousSibling.classList.add("selected-category-item");
+                window.location = window.location;
             });
         });
     }
@@ -55,7 +57,8 @@ export class CategoryItem{
         return JSON.parse(sessionStorage.getItem("categories"));
     }
 
-    #setInitialItem(){const categories = this.#getCategories();
+    #setItem(){
+        const categories = this.#getCategories();
         let initialItem;
         for (const category of categories) {
             if(category.current === -1){
@@ -76,6 +79,18 @@ export class CategoryItem{
             item.previousSibling.classList.add("selected-category-item");
             break;
         }
+    }
+
+    #changeCurrentItem(category){
+        const categories = this.#getCategories();
+
+        categories.forEach(c => {
+            const currentIndex = c.items.findIndex(item => item === category);
+            c.current = currentIndex;
+        });
+
+        this.#setItem();
+        sessionStorage.setItem("categories", JSON.stringify(categories));
     }
 
     getItem(){

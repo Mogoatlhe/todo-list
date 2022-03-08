@@ -86,7 +86,7 @@ export class Main{
         this.#main.append(this.#addTaskButton);
         this.#main.append(this.#cancelTaskBtn);
 
-        if(sessionStorage.getItem("todos") === null || sessionStorage.getItem("todos") === ""){
+        if(this.#categoryItem.getToDos().length === 0){
             const cleanToilet = new CleanToilet();
             this.#cleanToilet = cleanToilet.getCleanToilet();
 
@@ -373,6 +373,13 @@ export class Main{
             const id = parent.dataset.id;
             categoryItem.removeToDo(id);
             grandparent.removeChild(parent);
+
+            if(this.#categoryItem.getToDos().length === 0){
+                const cleanToilet = new CleanToilet();
+                this.#cleanToilet = cleanToilet.getCleanToilet();
+    
+                this.#tasksContainer.append(this.#cleanToilet);
+            }
         });
     }
 

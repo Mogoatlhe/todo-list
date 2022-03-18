@@ -122,6 +122,10 @@ export class Main{
         
         [...this.#tasksContainer.childNodes]
             .forEach(toDoContainerNode => this.#editToDoEvent(toDoContainerNode));
+
+        if(this.#tasksContainer.childNodes.length === 0){
+            this.#tasksContainer.append(this.#cleanToilet);
+        }
     }
 
     #addTaskEvent(){

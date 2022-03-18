@@ -12,7 +12,7 @@ export class Categories{
     #itemContainer;
     #categoriesContainer;
 
-    constructor(){
+    constructor(category){
         let categories = [
             {
                 "category": "Time",
@@ -28,12 +28,14 @@ export class Categories{
         let sessionCategories = JSON.parse(sessionStorage.getItem("categories"));
 
         this.#categories = sessionCategories === null ? categories: sessionCategories;
-        
-
         sessionStorage.setItem("categories", JSON.stringify(this.#categories));
         
-        this.#categoryItem = new CategoryItem();
+        this.#categoryItem = category;
         this.#setCategories();
+    }
+
+    getCategories(){
+        return this.#categoriesContainer;
     }
     
     #setCategories(){
@@ -74,9 +76,9 @@ export class Categories{
 
         const buttonsContainerNode = buttonsContainer.getDiv();
         const removeCategoryButtonNode = removeCategoryButton.getButton();
-        const addCategoryButtonNode = addCategoryButton.getElement();
-        const removeSymbolNode = removeSymbol.getElement();
-        const addSymbolNode = addSymbol.getElement();
+        const addCategoryButtonNode = addCategoryButton.getButton();
+        const removeSymbolNode = removeSymbol.getIdiomaticText();
+        const addSymbolNode = addSymbol.getIdiomaticText();
 
         removeCategoryButtonNode.append(removeSymbolNode);
         addCategoryButtonNode.append(addSymbolNode);
@@ -94,15 +96,20 @@ export class Categories{
         category.items.forEach(item => {
             const idiomaticText = new IdiomaticText("fa-solid fa-minus");
             const idiomaticTextNode = idiomaticText.getIdiomaticText();
+
+            idiomaticTextNode.addEventListener("click", () => {
+                this.#categoryItem.removeItem(idiomaticTextNode);
+            });
+
             this.#itemContainer.append(idiomaticTextNode);
             this.#categoryItem.setCategoryItem(item);
             const itemNode = this.#categoryItem.getItem();
             this.#itemContainer.append(itemNode);
         });
 
-        if(category === this.#categories[1]){
-            this.#categoryItem.selectItem();
-        }
+        // if(category === this.#categories[1]){
+            // this.#categoryItem.selectItem();
+        // }
 
     }
 
@@ -118,9 +125,5 @@ export class Categories{
         });
 
         return items;
-    }
-
-    getCategories(){
-        return this.#categoriesContainer;
     }
 }

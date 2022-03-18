@@ -16,62 +16,80 @@ export class CategoryItem{
         this.#itemName = this.getCurrentItem();
     }
 
-    setCategoryItem(itemName){
+    getCurrentItem(){
+        const categories = this.getCategories();
+        let currentItem;
 
-        const button = new Button(`${itemName} category-item`);
-        const paragraph = new Paragraph(itemName, [], "category-item-text");
+        if(categories === null){
+            return;
+        }
 
-        const buttonNode = button.getButton();
-        const paragraphNode = paragraph.getParagraph();
-
-        buttonNode.append(paragraphNode);
-        this.#item = buttonNode;
-        this.#items.push(this.#item);
-
-    }
-
-    selectItem(){
-
-        this.#setItem();
-
-        this.#items.forEach(item => {
-            item.addEventListener("click", () => {
-
-                if(item.classList.contains("selected-category-item")){
-                    return;
-                }
-
-                this.#changeCurrentItem(item.classList[0]);
-                const prevSelected = document.getElementsByClassName("selected-category-item");
-
-                [...prevSelected].forEach(curr => curr.classList.remove("selected-category-item"));
-
-                item.classList.add("selected-category-item");
-                item.previousSibling.classList.add("selected-category-item");
-                window.location = window.location;
-            });
+        categories.forEach(category => {
+            if(category.current !== -1){
+                currentItem = category.items[category.current];
+            }
         });
+
+        return currentItem;
     }
 
-    #getCategories(){
-        return JSON.parse(sessionStorage.getItem("categories"));
+    removeItem(node){
+        const parent = node.parentNode;
+        const sibling = node.nextSibling;
+        const siblingName = sibling.classList[0];
+        const categories = this.getCategories();
+        const unRemovables = ["Inbox", "Today", "Upcoming", "All"];
+
+        for (const category of categories) {
+            const index = category.items.findIndex(item => item === siblingName);
+
+            if(index === -1){
+                continue;
+            }
+
+            this.#removeToDoByCategory(siblingName);
+
+            if(siblingName === this.getCurrentItem()){
+                this.changeCurrentItem("All");
+            }
+
+            if(!unRemovables.some(unRemovable => unRemovable === siblingName)){
+                category.items.splice(index, 1);
+                sessionStorage.setItem("categories", JSON.stringify(categories));
+                parent.removeChild(node);
+                parent.removeChild(sibling);
+            }
+
+        }
     }
 
-    #setItem(){
-        const categories = this.#getCategories();
-        let initialItem;
+    changeCurrentItem(category){
+        const categories = this.getCategories();
+
+        categories.forEach(c => {
+            const currentIndex = c.items.findIndex(item => item === category);
+            c.current = currentIndex;
+        });
+
+        sessionStorage.setItem("categories", JSON.stringify(categories));
+        this.setItem();
+    }
+
+    setItem(){
+        this.#itemName = this.getCurrentItem();
+        const categories = this.getCategories();
+        
         for (const category of categories) {
             if(category.current === -1){
                 continue;
             }
 
-            initialItem = category.items[category.current];
+            this.#itemName = category.items[category.current];
             break;
-
         }
 
         for (const item of this.#items) {
-            if(!item.classList.contains(initialItem)){
+            if(!item.classList.contains(this.#itemName)){
                 continue;
             }
 
@@ -81,38 +99,16 @@ export class CategoryItem{
         }
     }
 
-    #changeCurrentItem(category){
-        const categories = this.#getCategories();
+    setCategoryItem(itemName){
+        const button = new Button(`${itemName} category-item`);
+        const paragraph = new Paragraph(itemName, [], "category-item-text");
 
-        categories.forEach(c => {
-            const currentIndex = c.items.findIndex(item => item === category);
-            c.current = currentIndex;
-        });
+        const buttonNode = button.getButton();
+        const paragraphNode = paragraph.getParagraph();
 
-        this.#setItem();
-        sessionStorage.setItem("categories", JSON.stringify(categories));
-    }
-
-    getItem(){
-        return this.#item;
-    }
-
-    #getItems(){
-        return JSON.parse(sessionStorage.getItem("categories"));
-    }
-
-    getCurrentItem(){
-        const categories = this.#getItems();
-        let currentItem;
-
-        categories.forEach(category => {
-
-            if(category.current !== -1){
-                currentItem = category.items[category.current];
-            }
-        });
-
-        return currentItem;
+        buttonNode.append(paragraphNode);
+        this.#item = buttonNode;
+        this.#items.push(this.#item);
     }
 
     assignTodos(){
@@ -130,6 +126,50 @@ export class CategoryItem{
             this.#toDos.push(toDoObject);
         });
 
+    }
+
+    displayToDos(tasksContainer){
+        const myTodos = this.getToDos();
+
+        myTodos.forEach(toDo => tasksContainer.append(toDo.displayToDo(this.#itemName)));
+    }
+
+    getToDos(){
+        let myTodos;
+        if(this.#itemName === "All"){
+            myTodos = this.#toDos;
+        }else{
+            myTodos = this.#toDos.filter(toDo => toDo.getToDo().category === this.#itemName);
+        }
+
+        return myTodos;
+    }
+
+    getCategories(){
+        return JSON.parse(sessionStorage.getItem("categories"));
+    }
+
+    #removeToDoByCategory(category){
+        
+        let index;
+        while((index = this.#toDos.findIndex(toDo => toDo.getToDo().category === category)) > 0){
+            this.#toDos.splice(index, 1);
+        }
+
+        sessionStorage.setItem("todos", JSON.stringify(this.#toDos));
+
+    }
+
+    getItemNodes(){
+        return this.#items;
+    }
+
+    getItem(){
+        return this.#item;
+    }
+
+    getItemsNodes(){
+        return this.#items;
     }
 
     createToDo(name, description, date, categoryName, priority){
@@ -159,24 +199,6 @@ export class CategoryItem{
 
     isToDosEmpty(){
         return this.#toDos.length === 0 ? true : false;
-    }
-
-    getToDos(){
-
-        let myTodos;
-        if(this.#itemName === "All"){
-            myTodos = this.#toDos;
-        }else{
-            myTodos = this.#toDos.filter(toDo => toDo.getToDo().category === this.#itemName);
-        }
-
-        return myTodos;
-    }
-
-    displayToDos(tasksContainer){
-        const myTodos = this.getToDos();
-
-        myTodos.forEach(toDo => tasksContainer.append(toDo.displayToDo(this.#itemName)));
     }
 
 }

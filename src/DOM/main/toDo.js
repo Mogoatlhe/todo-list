@@ -13,7 +13,6 @@ export class ToDo{
     }
 
     setToDo(id, name, description, date, categoryName, priority){
-
         this.#todo = {
             "id": id,
             "name": name,

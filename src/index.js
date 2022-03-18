@@ -2,12 +2,14 @@ import './DOM/style/style.css';
 import { Categories } from './DOM/side-panel/category';
 import { SidePanel } from './DOM/side-panel/sidePanel';
 import { Main } from './DOM/main/main';
+import { CategoryItem } from './DOM/main/categoryItem';
 
 const LoadPages = (() => {
 
     const content = document.getElementById("content");
     
-    const categories = new Categories();
+    const categoryItem = new CategoryItem();
+    const categories = new Categories(categoryItem);
     
     const sidePanel = new SidePanel(categories);
     const sidePanelNode = sidePanel.getSidePanel();
@@ -19,5 +21,6 @@ const LoadPages = (() => {
     content.append(mainNode);
 
     main.removeToDo();
+    main.changeItem();
 
 })();

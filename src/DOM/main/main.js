@@ -29,6 +29,9 @@ export class Main{
         this.#categories = categories;
         this.#categoryItem = this.#categories.getCategoryItem();
         this.#categoryName = this.#categoryItem.getCurrentItem();
+
+        const cleanToilet = new CleanToilet();
+        this.#cleanToilet = cleanToilet.getCleanToilet();
         
         this.#categoryItem.assignTodos();
 
@@ -47,7 +50,13 @@ export class Main{
         this.#setAddTask();
         this.#setCancelTask();
 
-        this.appendToMain();
+        this.#appendToMain();
+    }
+    
+    preventDuplicateInputs(){
+        if(this.#main.childNodes[1].id === "to-do-input-container"){
+            this.#main.removeChild(this.#toDoInputContainer);
+        }
     }
     
     #setCategoryName(){
@@ -56,7 +65,6 @@ export class Main{
     }
 
     #setAddTask(){
-
         const addTaskAtrributes = [new Attribute("id", "add-task")];
         const addTaskButton = new Button("add-task-button");
         const addTaskIcon = new IdiomaticText("fa-solid fa-circle-plus");
@@ -81,15 +89,12 @@ export class Main{
         this.#cancelTaskBtn.append(cancelTaskTextNode);
     }
     
-    appendToMain(){
+    #appendToMain(){
         this.#main.append(this.#categoryNameNode);
         this.#main.append(this.#addTaskButton);
         this.#main.append(this.#cancelTaskBtn);
 
         if(this.#categoryItem.getToDos().length === 0){
-            const cleanToilet = new CleanToilet();
-            this.#cleanToilet = cleanToilet.getCleanToilet();
-
             this.#tasksContainer.append(this.#cleanToilet);   
         }else{
             this.#showToDos();
@@ -102,9 +107,15 @@ export class Main{
     }
 
     #showToDos(){
-
         if(this.#categoryItem === undefined){
             return;
+        }
+
+        if(this.#toDoInputContainer !== undefined){
+            const todosNodes = this.#toDoInputContainer.childNodes;
+            if(todosNodes !== null && todosNodes.length > 0){
+                [...todosNodes].forEach(todoNode => this.#toDoInputContainer.removeChild(todoNode));
+            }
         }
 
         this.#categoryItem.displayToDos(this.#tasksContainer);
@@ -456,17 +467,12 @@ export class Main{
         this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
     }
 
-    preventDuplicateInputs(){
-        if(this.#main.childNodes[1].id === "to-do-input-container"){
-            this.#main.removeChild(this.#toDoInputContainer);
-        }
-    }
-
     #displayInputData(data){
 
         document.getElementById("to-do-name-input").textContent = data.name;
         document.getElementById("to-do-description-input").textContent = data.description;
         document.getElementById("due-date").value = data.date;
+        
 
         if(this.#categoryName !== "All"){
             this.#setSelectedCategoryIndex(data.category);
@@ -503,6 +509,39 @@ export class Main{
 
     getMain(){
         return this.#main;
+    }
+
+    changeItem(){
+        const itemNodes = this.#categoryItem.getItemNodes();
+
+        [...itemNodes].forEach(itemNode => this.#changeItemEvent(itemNode));
+    }
+
+    #changeItemEvent(item){
+
+        if(item.classList.contains(this.#categoryName)){
+            item.classList.add("selected-category-item");
+            item.previousSibling.classList.add("selected-category-item");
+            this.#showToDos();
+        }
+
+        item.addEventListener("click", () => {
+            if(item.classList.contains("selected-category-item")){
+                return;
+            }
+
+            
+            this.#categoryItem.changeCurrentItem(item.classList[0]);
+            this.#categoryName = this.#categoryItem.getCurrentItem();
+            this.#categoryNameNode.textContent = this.#categoryName;
+            const prevSelected = document.getElementsByClassName("selected-category-item");
+
+            [...prevSelected].forEach(curr => curr.classList.remove("selected-category-item"));
+
+            item.classList.add("selected-category-item");
+            item.previousSibling.classList.add("selected-category-item");
+            this.#showToDos();
+        });
     }
 
 }

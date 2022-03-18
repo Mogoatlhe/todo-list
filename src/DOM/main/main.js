@@ -111,10 +111,10 @@ export class Main{
             return;
         }
 
-        if(this.#toDoInputContainer !== undefined){
-            const todosNodes = this.#toDoInputContainer.childNodes;
+        if(this.#tasksContainer !== undefined){
+            const todosNodes = this.#tasksContainer.childNodes;
             if(todosNodes !== null && todosNodes.length > 0){
-                [...todosNodes].forEach(todoNode => this.#toDoInputContainer.removeChild(todoNode));
+                [...todosNodes].forEach(todoNode => this.#tasksContainer.removeChild(todoNode));
             }
         }
 
@@ -243,6 +243,11 @@ export class Main{
     #appendToDo(){
         
         const toDos = this.#categoryItem.getToDos();
+
+        if(toDos.length === 0){
+            return;
+        }
+
         const lastTodo = toDos[toDos.length - 1];
         const lastTodoCategory = lastTodo.getToDo().category;
 
@@ -522,7 +527,6 @@ export class Main{
         if(item.classList.contains(this.#categoryName)){
             item.classList.add("selected-category-item");
             item.previousSibling.classList.add("selected-category-item");
-            this.#showToDos();
         }
 
         item.addEventListener("click", () => {
@@ -530,7 +534,6 @@ export class Main{
                 return;
             }
 
-            
             this.#categoryItem.changeCurrentItem(item.classList[0]);
             this.#categoryName = this.#categoryItem.getCurrentItem();
             this.#categoryNameNode.textContent = this.#categoryName;

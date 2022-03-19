@@ -134,12 +134,13 @@ export class Main{
 
         this.#addTaskButton.addEventListener("click", () => {
             const symbol = this.#addTaskButton.childNodes[0];
-            this.preventDuplicateInputs();
             
             if(this.#addTaskButton.classList.contains("input-empty")){
                 return;
             }
+            this.preventDuplicateInputs();
 
+            this.#tasksContainer.style.display = "grid";
             if(symbol.classList.contains("fa-edit")){
                 this.#resetButtons();
                 this.#editToDo();
@@ -157,6 +158,7 @@ export class Main{
                 this.#addTaskButton.classList.remove("input-active");
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
                 this.#showToDos();
+                this.#tasksContainer.style.display = "grid";
 
                 return;
             }
@@ -169,6 +171,7 @@ export class Main{
             toDoNameInput = this.#toDoInputContainer.children[0];
             this.#main.insertBefore(this.#toDoInputContainer, this.#addTaskButton);
             toDoNameInput.focus();
+            this.#tasksContainer.style.display = "none";
         });
 
     }
@@ -199,6 +202,7 @@ export class Main{
             previousSibling.classList.remove("input-active");
 
             this.#resetButtons();
+            this.#tasksContainer.style.display = "grid";
 
         });
 
@@ -274,6 +278,8 @@ export class Main{
         toDoInputContainerNode.append(toDoDescriptionNode);
         toDoInputContainerNode.append(toDoButtonsNode);
         
+        this.#tasksContainer.style.display = "none";
+
         return toDoInputContainerNode;
 
     }

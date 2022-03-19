@@ -357,14 +357,6 @@ export class Main{
 
     }
 
-    removeLastToDo(){
-        const isComplete = document.getElementsByClassName("is-complete-container");
-        const todoArr = [...isComplete];
-        const lastTodo = todoArr[todoArr.length - 1];
-
-        this.#removeToDoEvent(lastTodo, this.#categoryItem);
-    }
-
     #removeToDoEvent(check, categoryItem){
 
         check.addEventListener("click", () => {

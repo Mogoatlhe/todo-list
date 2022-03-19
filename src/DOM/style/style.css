@@ -221,6 +221,10 @@ main{
     overflow-y: auto;
 }
 
+.hide-tasks-container{
+    display: none;
+}
+
 #clean-toilet-container{
     margin-top: 2vh;
     display: flex;

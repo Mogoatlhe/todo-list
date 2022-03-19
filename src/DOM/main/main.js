@@ -126,6 +126,8 @@ export class Main{
         if(this.#tasksContainer.childNodes.length === 0){
             this.#tasksContainer.append(this.#cleanToilet);
         }
+        
+        this.removeToDo();
     }
 
     #addTaskEvent(){
@@ -155,7 +157,6 @@ export class Main{
                 this.#addTaskButton.classList.remove("input-active");
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
                 this.#showToDos();
-                this.removeLastToDo();
 
                 return;
             }

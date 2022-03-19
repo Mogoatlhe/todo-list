@@ -126,6 +126,8 @@ export class Main{
         if(this.#tasksContainer.childNodes.length === 0){
             this.#tasksContainer.append(this.#cleanToilet);
         }
+        
+        this.removeToDo();
     }
 
     #addTaskEvent(){
@@ -154,8 +156,7 @@ export class Main{
 
                 this.#addTaskButton.classList.remove("input-active");
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
-                this.#appendToDo();
-                this.removeLastToDo();
+                this.#showToDos();
 
                 return;
             }
@@ -241,27 +242,6 @@ export class Main{
         const allowedItems = ["Today", "Upcoming", "Inbox", "All", category];
 
         return allowedItems.every(item => item !== this.#categoryName);
-
-    }
-    
-    #appendToDo(){
-        
-        const toDos = this.#categoryItem.getToDos();
-
-        if(toDos.length === 0){
-            return;
-        }
-
-        const lastTodo = toDos[toDos.length - 1];
-        const lastTodoCategory = lastTodo.getToDo().category;
-
-        if(this.#isAllowedItem(lastTodoCategory)){
-            return;
-        }
-
-        const lastTodoNode = lastTodo.displayToDo();
-        this.#tasksContainer.append(lastTodoNode);
-        this.#editToDoEvent(lastTodoNode);
 
     }
 

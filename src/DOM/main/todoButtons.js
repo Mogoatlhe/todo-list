@@ -79,7 +79,6 @@ export class TodoButtons{
             return;
         }
 
-        console.log("here");
         this.#categoryButton.removeChild(toRemove);
     }
 

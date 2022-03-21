@@ -9,7 +9,8 @@ export class CategoryItem{
     #items;
     #toDos;
     #itemName;
-    
+    #toDoButtons;
+
     constructor(){
         this.#items = [];
         this.#toDos = [];
@@ -58,9 +59,15 @@ export class CategoryItem{
                 sessionStorage.setItem("categories", JSON.stringify(categories));
                 parent.removeChild(node);
                 parent.removeChild(sibling);
+                this.#toDoButtons.removeSelectionOption(siblingName);
+
             }
 
         }
+    }
+
+    setToDoButtons(toDoButtons){
+        this.#toDoButtons = toDoButtons;
     }
 
     changeCurrentItem(category){

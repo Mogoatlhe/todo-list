@@ -71,6 +71,18 @@ export class TodoButtons{
 
     }
 
+    removeSelectionOption(category){
+        const options = this.#categoryButton.childNodes;
+        const toRemove = [...options].find(option => option.textContent === category);
+
+        if(toRemove === undefined){
+            return;
+        }
+
+        console.log("here");
+        this.#categoryButton.removeChild(toRemove);
+    }
+
     getToDoButtons(){
         return this.#todoButtonsContainer;
     }

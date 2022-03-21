@@ -18,6 +18,7 @@ export class Main{
     #toDoInputContainer;
     
     #categories;
+    #toDoButtons;
     #categoryName;
     #categoryItem;
     #addTaskButton;
@@ -29,6 +30,9 @@ export class Main{
         this.#categories = categories;
         this.#categoryItem = this.#categories.getCategoryItem();
         this.#categoryName = this.#categoryItem.getCurrentItem();
+
+        this.#toDoButtons = new TodoButtons(this.#categories.getAllItems());
+        this.#categoryItem.setToDoButtons(this.#toDoButtons);
 
         const cleanToilet = new CleanToilet();
         this.#cleanToilet = cleanToilet.getCleanToilet();
@@ -251,7 +255,6 @@ export class Main{
 
     #showToDoInput(){
 
-        const toDoButtons = new TodoButtons(this.#categories.getAllItems());
         const toDoInputContainerId = new Attribute("id", "to-do-input-container");
         const toDoNameId = new Attribute("id", "to-do-name-input");
         const toDoNamePlaceholder = new Attribute("placeholder", "e.g, Renew Gym Membership");
@@ -269,7 +272,7 @@ export class Main{
         const toDoInputContainerNode = toDoInputContainer.getDiv();
         const toDoNameNode = toDoName.getElement();
         const toDoDescriptionNode = toDoDescription.getElement();
-        const toDoButtonsNode = toDoButtons.getToDoButtons();
+        const toDoButtonsNode = this.#toDoButtons.getToDoButtons();
 
         this.#preventMultipleEmptyLine(toDoNameNode);
         this.#preventMultipleEmptyLine(toDoDescriptionNode);

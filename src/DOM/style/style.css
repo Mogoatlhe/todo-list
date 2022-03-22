@@ -111,6 +111,30 @@ body{
     align-items: center;
 }
 
+.category-item-input-container{
+    display: grid;
+    padding: 4% 0% 0% 4%;
+    gap: 4%;
+    grid-template-columns: 30px minmax(10%, 180px) 30px;
+}
+
+.category-item-input-container i{
+    display: grid;
+    place-items: center;
+    color: var(--russet);
+    height: 30px;
+    width: 30px;
+}
+
+.category-item-input-container *{
+    border: solid var(--amazon) 1px;
+    background-color: transparent;
+}
+
+.item-input{
+    padding-left: 2%;
+}
+
 .category-container:nth-child(2) .category-items-container{
     max-height: 42vh;
     overflow-y: auto;
@@ -145,7 +169,9 @@ body{
     color: var(--pale-spring-bud);
 }
 
-.category-item:hover, .category-items-container i:hover{
+.category-item:hover,
+.category-items-container i:hover,
+.category-item-input-container i:hover{
     cursor: pointer;
     transform: scale(1.1);
 }
@@ -302,7 +328,8 @@ main{
 
 #to-do-name-input:focus,
 #to-do-description-input:focus,
-#category-button:focus{
+#category-button:focus,
+.item-input{
     outline: none;
 }
 

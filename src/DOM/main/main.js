@@ -24,6 +24,7 @@ export class Main{
     #addTaskButton;
     #tasksContainer;
     #categoryNameNode;
+    #addCategoryButton;
 
     constructor(categories){
 
@@ -33,6 +34,8 @@ export class Main{
 
         this.#toDoButtons = new TodoButtons(this.#categories.getAllItems());
         this.#categoryItem.setToDoButtons(this.#toDoButtons);
+        this.#addCategoryButton = categories.getAddCategoryButton();
+        this.#addCategoryButtonEvent();
 
         const cleanToilet = new CleanToilet();
         this.#cleanToilet = cleanToilet.getCleanToilet();
@@ -530,6 +533,10 @@ export class Main{
             item.previousSibling.classList.add("selected-category-item");
             this.#showToDos();
         });
+    }
+
+    #addCategoryButtonEvent(){
+        this.#addCategoryButton.addEventListener("click", () => this.#categories.addCategoryItemInput());
     }
 
 }

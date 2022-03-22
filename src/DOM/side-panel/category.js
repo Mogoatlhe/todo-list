@@ -4,12 +4,17 @@ import { Button } from "../html-elements/button";
 import { IdiomaticText } from "../html-elements/idiomaticText";
 import { Div } from "../html-elements/div";
 import { CategoryItem } from "../main/categoryItem";
+import { Attribute } from "../attribute";
+import { Input } from "../html-elements/input";
 
 export class Categories{
 
+    #container;
     #categories;
     #categoryItem;
     #itemContainer;
+    #categoryHeading;
+    #addCategoryButton;
     #categoriesContainer;
 
     constructor(category){
@@ -56,6 +61,8 @@ export class Categories{
 
             if(category === "My Categories"){
                 headingContainerNode.append(this.#addCategoryManagementButtons());
+                this.#categoryHeading = headingContainerNode;
+                this.#container = containerNode;
             }
 
             containerNode.append(headingContainerNode);
@@ -76,16 +83,20 @@ export class Categories{
 
         const buttonsContainerNode = buttonsContainer.getDiv();
         const removeCategoryButtonNode = removeCategoryButton.getButton();
-        const addCategoryButtonNode = addCategoryButton.getButton();
+        this.#addCategoryButton = addCategoryButton.getButton();
         const removeSymbolNode = removeSymbol.getIdiomaticText();
         const addSymbolNode = addSymbol.getIdiomaticText();
 
         removeCategoryButtonNode.append(removeSymbolNode);
-        addCategoryButtonNode.append(addSymbolNode);
+        this.#addCategoryButton.append(addSymbolNode);
         buttonsContainerNode.append(removeCategoryButtonNode);
-        buttonsContainerNode.append(addCategoryButtonNode);
+        buttonsContainerNode.append(this.#addCategoryButton);
 
         return buttonsContainerNode;
+    }
+
+    getAddCategoryButton(){
+        return this.#addCategoryButton;
     }
 
     #setInitialItems(category){
@@ -107,10 +118,6 @@ export class Categories{
             this.#itemContainer.append(itemNode);
         });
 
-        // if(category === this.#categories[1]){
-            // this.#categoryItem.selectItem();
-        // }
-
     }
 
     getCategoryItem(){
@@ -125,5 +132,32 @@ export class Categories{
         });
 
         return items;
+    }
+
+    addCategoryItemInput(){
+
+        const container = document.getElementsByClassName("category-item-input-container")[0];
+
+        if(container !== undefined){
+            return;
+        }
+
+        const itemInputContainer = new Div("category-item-input-container");
+        const cancelItemInput = new IdiomaticText("cancel-item-input fa-solid fa-xmark");
+        const saveItem = new IdiomaticText("save-item fa-solid fa-floppy-disk");
+        const itemInput = new Input("item-input", "text");
+
+        const itemInputContainerNode = itemInputContainer.getDiv();
+        const cancelItemInputNode = cancelItemInput.getIdiomaticText();
+        const saveItemNode = saveItem.getIdiomaticText();
+        const itemInputNode = itemInput.getInput();
+
+        itemInputContainerNode.append(cancelItemInputNode);
+        itemInputContainerNode.append(itemInputNode);
+        itemInputContainerNode.append(saveItemNode);
+
+        // this.#container.insertAfter(itemInputContainerNode, this.#categoryHeading);
+        this.#categoryHeading.after(itemInputContainerNode);
+
     }
 }

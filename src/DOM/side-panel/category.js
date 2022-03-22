@@ -177,6 +177,38 @@ export class Categories{
             if(existingItem !== undefined){
                 return;
             }
+
+            this.#checkEmptyFields(inputNode);
         });
+    }
+
+    #checkEmptyFields(node){
+
+        const value = node.value;
+        let empty;
+        
+        let spaceLength = [...value].filter(ch => ch === " ").length;
+        let newLineLength = [...value].filter(ch => ch === "\n").length;
+        
+        let emptyCharactersLength = spaceLength + newLineLength;
+
+        if(value.length === 0 || emptyCharactersLength === value.length){
+            empty = true;
+        }
+
+        empty = false;
+
+        this.#preventEmptyInput(empty);
+
+    }
+
+    #preventEmptyInput(isEmpty){
+
+        if(isEmpty){
+            // prevent addition
+            return;
+        }
+        
+        // continue adding
     }
 }

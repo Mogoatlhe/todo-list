@@ -158,6 +158,11 @@ export class Categories{
         
         this.#categoryHeading.after(itemInputContainerNode);
         itemInputNode.focus();
+        this.#removeItemContainer(cancelItemInputNode, itemInputContainerNode);
 
+    }
+
+    #removeItemContainer(cancelNode, itemContainer){
+        cancelNode.addEventListener("click", () => this.#container.removeChild(itemContainer));
     }
 }

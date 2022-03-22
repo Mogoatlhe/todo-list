@@ -159,10 +159,24 @@ export class Categories{
         this.#categoryHeading.after(itemInputContainerNode);
         itemInputNode.focus();
         this.#removeItemContainer(cancelItemInputNode, itemInputContainerNode);
+        this.#addCategoryItem(saveItemNode, itemInputNode);
 
     }
 
     #removeItemContainer(cancelNode, itemContainer){
         cancelNode.addEventListener("click", () => this.#container.removeChild(itemContainer));
+    }
+
+    #addCategoryItem(addNode, inputNode){
+        addNode.addEventListener("click", () => {
+
+            const items = this.getAllItems();
+            const newItem = inputNode.value.toLowerCase();
+            const existingItem = items.find(item => item.toLowerCase() === newItem);
+
+            if(existingItem !== undefined){
+                return;
+            }
+        });
     }
 }

@@ -145,7 +145,7 @@ export class Categories{
         const itemInputContainer = new Div("category-item-input-container");
         const cancelItemInput = new IdiomaticText("cancel-item-input fa-solid fa-xmark");
         const saveItem = new IdiomaticText("save-item fa-solid fa-floppy-disk");
-        const itemInput = new Input("item-input", "text");
+        const itemInput = new Input("item-input", "text", undefined, "10");
 
         const itemInputContainerNode = itemInputContainer.getDiv();
         const cancelItemInputNode = cancelItemInput.getIdiomaticText();
@@ -155,9 +155,9 @@ export class Categories{
         itemInputContainerNode.append(cancelItemInputNode);
         itemInputContainerNode.append(itemInputNode);
         itemInputContainerNode.append(saveItemNode);
-
-        // this.#container.insertAfter(itemInputContainerNode, this.#categoryHeading);
+        
         this.#categoryHeading.after(itemInputContainerNode);
+        itemInputNode.focus();
 
     }
 }

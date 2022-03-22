@@ -6,7 +6,7 @@ export class Input extends Element{
 
     #input;
 
-    constructor(className, type, id = undefined){
+    constructor(className, type, id, maxLength){
         let idAttr;
         const attrArr = [];
         const typeAttr = new Attribute("type", type);
@@ -15,6 +15,10 @@ export class Input extends Element{
         if(id !== undefined){
             idAttr = new Attribute("id", id);
             attrArr.push(idAttr);
+        }
+
+        if(maxLength !== undefined){
+            attrArr.push(new Attribute("maxlength", maxLength));
         }
         super("input", attrArr, className);
     }

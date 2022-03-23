@@ -163,7 +163,7 @@ export class Categories{
         this.#categoryHeading.after(itemInputContainerNode);
         itemInputNode.focus();
         this.#removeItemContainer(cancelItemInputNode, itemInputContainerNode);
-        this.#addCategoryItem(saveItemNode, itemInputNode);
+        this.#addCategoryItem(saveItemNode, itemInputNode, cancelItemInputNode);
 
     }
 
@@ -171,7 +171,7 @@ export class Categories{
         cancelNode.addEventListener("click", () => this.#container.removeChild(itemContainer));
     }
 
-    #addCategoryItem(addNode, inputNode){
+    #addCategoryItem(addNode, inputNode, cancelNode){
         addNode.addEventListener("click", () => {
 
             const items = this.getAllItems();
@@ -182,11 +182,11 @@ export class Categories{
                 return;
             }
 
-            this.#checkEmptyFields(inputNode.value);
+            this.#checkEmptyFields(inputNode.value, cancelNode);
         });
     }
 
-    #checkEmptyFields(value){
+    #checkEmptyFields(value, cancelNode){
         let empty = false;
         let spaceLength = [...value].filter(ch => ch === " ").length;
         let newLineLength = [...value].filter(ch => ch === "\n").length;
@@ -195,23 +195,15 @@ export class Categories{
 
         if(value.length === 0 || emptyCharactersLength === value.length){
             empty = true;
-        }
-
-        this.#preventEmptyInput(empty, value);
-
-    }
-
-    #preventEmptyInput(isEmpty, newItem){
-
-        if(isEmpty){
             // prevent addition
             // display failure message
-            alert();
             return;
         }
-        
+
         // continue adding
-        this.#setCategoriesData(newItem);
+        cancelNode.click();
+        this.#setCategoriesData(value);
+
     }
 
     #setCategoriesData(newItem){

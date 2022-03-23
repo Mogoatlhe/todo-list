@@ -187,23 +187,19 @@ export class Categories{
     }
 
     #checkEmptyFields(value, cancelNode){
-        let empty = false;
         let spaceLength = [...value].filter(ch => ch === " ").length;
         let newLineLength = [...value].filter(ch => ch === "\n").length;
         
         let emptyCharactersLength = spaceLength + newLineLength;
 
         if(value.length === 0 || emptyCharactersLength === value.length){
-            empty = true;
-            // prevent addition
             // display failure message
             return;
         }
 
-        // continue adding
         cancelNode.click();
+        this.#categoryItem.getToDoButtons().setSelectionOptions([value]);
         this.#setCategoriesData(value);
-
     }
 
     #setCategoriesData(newItem){
@@ -213,7 +209,7 @@ export class Categories{
 
         sessionStorage.setItem("categories", JSON.stringify(this.#categories));
         this.#main.changeItem();
-        // display sucess message
+        // display success message
     }
 
 

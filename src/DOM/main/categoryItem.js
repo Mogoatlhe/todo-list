@@ -70,6 +70,10 @@ export class CategoryItem{
         this.#toDoButtons = toDoButtons;
     }
 
+    getToDoButtons(){
+        return this.#toDoButtons;
+    }
+
     changeCurrentItem(category){
         const categories = this.getCategories();
 

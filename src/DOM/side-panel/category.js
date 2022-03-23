@@ -3,12 +3,11 @@ import { Element } from "../element";
 import { Button } from "../html-elements/button";
 import { IdiomaticText } from "../html-elements/idiomaticText";
 import { Div } from "../html-elements/div";
-import { CategoryItem } from "../main/categoryItem";
-import { Attribute } from "../attribute";
 import { Input } from "../html-elements/input";
 
 export class Categories{
 
+    #main;
     #container;
     #categories;
     #categoryItem;
@@ -104,7 +103,12 @@ export class Categories{
         const itemContainer = new Div("category-items-container");
         this.#itemContainer = itemContainer.getDiv();
         
-        category.items.forEach(item => {
+        this.#appendItems(category.items);
+
+    }
+
+    #appendItems(items){
+        items.forEach(item => {
             const idiomaticText = new IdiomaticText("fa-solid fa-minus");
             const idiomaticTextNode = idiomaticText.getIdiomaticText();
 
@@ -117,7 +121,6 @@ export class Categories{
             const itemNode = this.#categoryItem.getItem();
             this.#itemContainer.append(itemNode);
         });
-
     }
 
     getCategoryItem(){
@@ -134,8 +137,9 @@ export class Categories{
         return items;
     }
 
-    addCategoryItemInput(){
+    addCategoryItemInput(main){
 
+        this.#main = main;
         const container = document.getElementsByClassName("category-item-input-container")[0];
 
         if(container !== undefined){
@@ -178,15 +182,12 @@ export class Categories{
                 return;
             }
 
-            this.#checkEmptyFields(inputNode);
+            this.#checkEmptyFields(inputNode.value);
         });
     }
 
-    #checkEmptyFields(node){
-
-        const value = node.value;
-        let empty;
-        
+    #checkEmptyFields(value){
+        let empty = false;
         let spaceLength = [...value].filter(ch => ch === " ").length;
         let newLineLength = [...value].filter(ch => ch === "\n").length;
         
@@ -196,19 +197,32 @@ export class Categories{
             empty = true;
         }
 
-        empty = false;
-
-        this.#preventEmptyInput(empty);
+        this.#preventEmptyInput(empty, value);
 
     }
 
-    #preventEmptyInput(isEmpty){
+    #preventEmptyInput(isEmpty, newItem){
 
         if(isEmpty){
             // prevent addition
+            // display failure message
+            alert();
             return;
         }
         
         // continue adding
+        this.#setCategoriesData(newItem);
     }
+
+    #setCategoriesData(newItem){
+        this.#categories[1].items.push(newItem);
+
+        this.#appendItems([newItem]);
+
+        sessionStorage.setItem("categories", JSON.stringify(this.#categories));
+        this.#main.changeItem();
+        // display sucess message
+    }
+
+
 }

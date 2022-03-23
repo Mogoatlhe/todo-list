@@ -536,7 +536,7 @@ export class Main{
     }
 
     #addCategoryButtonEvent(){
-        this.#addCategoryButton.addEventListener("click", () => this.#categories.addCategoryItemInput());
+        this.#addCategoryButton.addEventListener("click", () => this.#categories.addCategoryItemInput(this));
     }
 
 }

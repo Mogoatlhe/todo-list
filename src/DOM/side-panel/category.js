@@ -91,7 +91,17 @@ export class Categories{
         buttonsContainerNode.append(removeCategoryButtonNode);
         buttonsContainerNode.append(this.#addCategoryButton);
 
+        this.#removeAllItems(removeCategoryButtonNode);
+
         return buttonsContainerNode;
+    }
+
+    #removeAllItems(removeBtn){
+        removeBtn.addEventListener("click", () => {
+            const allMinus = document.querySelectorAll(".category-items-container i");
+            
+            [...allMinus].forEach(minus => minus.click());
+        });
     }
 
     getAddCategoryButton(){

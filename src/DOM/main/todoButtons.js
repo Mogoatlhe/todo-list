@@ -58,7 +58,7 @@ export class TodoButtons{
         
         for (const category of categories) {
 
-            if(category === "All"){
+            if(category === "All" || category === "Upcoming" || category === "Today"){
                 continue;
             }
 

@@ -100,16 +100,6 @@ export class CategoryItem{
             this.#itemName = category.items[category.current];
             break;
         }
-
-        for (const item of this.#items) {
-            if(!item.classList.contains(this.#itemName)){
-                continue;
-            }
-
-            item.classList.add("selected-category-item");
-            item.previousSibling.classList.add("selected-category-item");
-            break;
-        }
     }
 
     setCategoryItem(itemName){
@@ -178,10 +168,6 @@ export class CategoryItem{
 
     getItem(){
         return this.#item;
-    }
-
-    getItemsNodes(){
-        return this.#items;
     }
 
     createToDo(name, description, date, categoryName, priority){

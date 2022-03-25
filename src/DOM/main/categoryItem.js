@@ -49,9 +49,11 @@ export class CategoryItem{
             }
 
             this.#removeToDoByCategory(siblingName);
+            const curr = this.getCurrentItem();
 
-            if(siblingName === this.getCurrentItem()){
-                this.changeCurrentItem("All");
+            if(siblingName === curr || curr === "All"){
+                document.getElementsByClassName("Inbox")[0].click();
+                document.getElementsByClassName("All")[0].click();
             }
 
             if(!unRemovables.some(unRemovable => unRemovable === siblingName)){
@@ -162,12 +164,11 @@ export class CategoryItem{
 
     #removeToDoByCategory(category){
         
-        let index;
-        while((index = this.#toDos.findIndex(toDo => toDo.getToDo().category === category)) > 0){
-            this.#toDos.splice(index, 1);
-        }
-
-        sessionStorage.setItem("todos", JSON.stringify(this.#toDos));
+        this.#toDos.forEach(todo => {
+            if(todo.getToDo().category === category){
+                this.removeToDo(todo.getToDo().id);
+            }
+        });
 
     }
 
@@ -193,17 +194,14 @@ export class CategoryItem{
     }
 
     removeToDo(id){
-
-        const index = this.#toDos.findIndex(todo => todo.getToDo().id == id);
-        this.#toDos.splice(index, 1);
-        
+        this.#toDos = this.#toDos.filter(todo => todo.getToDo().id != id);
         this.setSessionStorage();
     }
 
     setSessionStorage(){
         const todos = [];
 
-        this.#toDos.map(toDo => todos.push(toDo.getToDo()))
+        this.#toDos.map(toDo => todos.push(toDo.getToDo()));
 
         sessionStorage.setItem("todos", JSON.stringify(todos));   
     }

@@ -35,11 +35,13 @@ export class CategoryItem{
     }
 
     removeItem(node){
+        let message;
         const parent = node.parentNode;
         const sibling = node.nextSibling;
         const siblingName = sibling.classList[0];
         const categories = this.getCategories();
         const unRemovables = ["Inbox", "Today", "Upcoming", "All"];
+        const isUnremovable = unRemovables.some(unRemovable => unRemovable === siblingName);
 
         for (const category of categories) {
             const index = category.items.findIndex(item => item === siblingName);
@@ -51,18 +53,30 @@ export class CategoryItem{
             this.#removeToDoByCategory(siblingName);
             const curr = this.getCurrentItem();
 
+            document.getElementsByClassName("Inbox")[0].click();
+
             if(siblingName === curr || curr === "All"){
-                document.getElementsByClassName("Inbox")[0].click();
                 document.getElementsByClassName("All")[0].click();
             }
+            
+            if(siblingName === curr && isUnremovable){
+                document.getElementsByClassName(siblingName)[0].click();
+            }
+            
+            if(siblingName === "All" && siblingName !== curr){
+                document.getElementsByClassName(curr)[0].click();
+            }
 
-            if(!unRemovables.some(unRemovable => unRemovable === siblingName)){
+            if(!isUnremovable){
                 category.items.splice(index, 1);
                 sessionStorage.setItem("categories", JSON.stringify(categories));
                 parent.removeChild(node);
                 parent.removeChild(sibling);
                 this.#toDoButtons.removeSelectionOption(siblingName);
-
+            }else{
+                if(siblingName === "All"){
+                    message = "All todos have been succesfully cleared"
+                }
             }
 
         }
@@ -153,6 +167,12 @@ export class CategoryItem{
     }
 
     #removeToDoByCategory(category){
+
+        if(category === "All"){
+            this.#toDos = [];
+            this.setSessionStorage();
+            return;
+        }
         
         this.#toDos.forEach(todo => {
             if(todo.getToDo().category === category){

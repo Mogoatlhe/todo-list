@@ -128,6 +128,7 @@ export class Categories{
     }
 
     getAllItems(){
+        this.#categories = JSON.parse(sessionStorage.getItem("categories"));
         const items = [];
 
         this.#categories.forEach(category => {

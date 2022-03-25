@@ -133,6 +133,7 @@ body{
 
 .item-input{
     padding-left: 2%;
+    color: var(--russet);
 }
 
 .category-container:nth-child(2) .category-items-container{

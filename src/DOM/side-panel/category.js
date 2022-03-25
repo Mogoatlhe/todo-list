@@ -3,12 +3,11 @@ import { Element } from "../element";
 import { Button } from "../html-elements/button";
 import { IdiomaticText } from "../html-elements/idiomaticText";
 import { Div } from "../html-elements/div";
-import { CategoryItem } from "../main/categoryItem";
-import { Attribute } from "../attribute";
 import { Input } from "../html-elements/input";
 
 export class Categories{
 
+    #main;
     #container;
     #categories;
     #categoryItem;
@@ -104,7 +103,12 @@ export class Categories{
         const itemContainer = new Div("category-items-container");
         this.#itemContainer = itemContainer.getDiv();
         
-        category.items.forEach(item => {
+        this.#appendItems(category.items);
+
+    }
+
+    #appendItems(items){
+        items.forEach(item => {
             const idiomaticText = new IdiomaticText("fa-solid fa-minus");
             const idiomaticTextNode = idiomaticText.getIdiomaticText();
 
@@ -117,7 +121,6 @@ export class Categories{
             const itemNode = this.#categoryItem.getItem();
             this.#itemContainer.append(itemNode);
         });
-
     }
 
     getCategoryItem(){
@@ -125,6 +128,7 @@ export class Categories{
     }
 
     getAllItems(){
+        this.#categories = JSON.parse(sessionStorage.getItem("categories"));
         const items = [];
 
         this.#categories.forEach(category => {
@@ -134,8 +138,9 @@ export class Categories{
         return items;
     }
 
-    addCategoryItemInput(){
+    addCategoryItemInput(main){
 
+        this.#main = main;
         const container = document.getElementsByClassName("category-item-input-container")[0];
 
         if(container !== undefined){
@@ -158,6 +163,55 @@ export class Categories{
         
         this.#categoryHeading.after(itemInputContainerNode);
         itemInputNode.focus();
+        this.#removeItemContainer(cancelItemInputNode, itemInputContainerNode);
+        this.#addCategoryItem(saveItemNode, itemInputNode, cancelItemInputNode);
 
     }
+
+    #removeItemContainer(cancelNode, itemContainer){
+        cancelNode.addEventListener("click", () => this.#container.removeChild(itemContainer));
+    }
+
+    #addCategoryItem(addNode, inputNode, cancelNode){
+        addNode.addEventListener("click", () => {
+
+            const items = this.getAllItems();
+            const newItem = inputNode.value.toLowerCase();
+            const existingItem = items.find(item => item.toLowerCase() === newItem);
+
+            if(existingItem !== undefined){
+                return;
+            }
+
+            this.#checkEmptyFields(inputNode.value, cancelNode);
+        });
+    }
+
+    #checkEmptyFields(value, cancelNode){
+        let spaceLength = [...value].filter(ch => ch === " ").length;
+        let newLineLength = [...value].filter(ch => ch === "\n").length;
+        
+        let emptyCharactersLength = spaceLength + newLineLength;
+
+        if(value.length === 0 || emptyCharactersLength === value.length){
+            // display failure message
+            return;
+        }
+
+        cancelNode.click();
+        this.#categoryItem.getToDoButtons().setSelectionOptions([value]);
+        this.#setCategoriesData(value);
+    }
+
+    #setCategoriesData(newItem){
+        this.#categories[1].items.push(newItem);
+
+        this.#appendItems([newItem]);
+
+        sessionStorage.setItem("categories", JSON.stringify(this.#categories));
+        this.#main.changeItem();
+        // display success message
+    }
+
+
 }

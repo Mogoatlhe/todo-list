@@ -37,7 +37,7 @@ export class TodoButtons{
         this.#categoryButton = categoryButton.getElement();
         const priorityFlagsNode = priorityFlags.getPriorityFlags();
 
-        this.#setSelectionOptions(categoryItems);
+        this.setSelectionOptions(categoryItems);
         this.#todoButtonsContainer.append(dueDateNode);
         this.#todoButtonsContainer.append(this.#categoryButton);
         this.#todoButtonsContainer.append(priorityFlagsNode);
@@ -52,7 +52,7 @@ export class TodoButtons{
         return `${year}-${month}-${day}T23:20`;
     }
 
-    #setSelectionOptions(categories){
+    setSelectionOptions(categories){
 
         let optionValue, options, option, optionNode;
         

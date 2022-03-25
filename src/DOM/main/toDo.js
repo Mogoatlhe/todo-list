@@ -42,7 +42,7 @@ export class ToDo{
         const gripDots = new IdiomaticText("fa-solid fa-grip-vertical");
         const gripDotsNode = gripDots.getIdiomaticText();
 
-        const isCompleteContainer = new Div("is-complete-container");
+        const isCompleteContainer = new Div(`is-complete-container is-complete-p${this.#todo.priority[this.#todo.priority.length - 1]}`);
         const isCompleteContainerNode = isCompleteContainer.getDiv();
 
         const check = new IdiomaticText("fa-solid fa-check");

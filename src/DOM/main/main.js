@@ -443,6 +443,10 @@ export class Main{
         todoData[index].getToDo().category = category;
         todoData[index].getToDo().priority = this.#getPriorityClass(buttonsContainer);
 
+        document.getElementsByClassName("Inbox")[0].click();
+        document.getElementsByClassName("Today")[0].click();
+        document.getElementsByClassName(category)[0].click();
+
         this.#categoryItem.setSessionStorage();
     }
 

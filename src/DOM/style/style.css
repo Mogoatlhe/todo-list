@@ -420,6 +420,22 @@ main{
     display: inline-block;
 }
 
+.is-complete-p1{
+    border-color: red;
+}
+
+.is-complete-p2{
+    border-color: orange;
+}
+
+.is-complete-p3{
+    border-color: blue;
+}
+
+.is-complete-p4{
+    border-color: white;
+}
+
 .is-complete-container .fa-check{
     visibility: hidden;
 }

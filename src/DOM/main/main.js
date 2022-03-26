@@ -543,4 +543,10 @@ export class Main{
         this.#addCategoryButton.addEventListener("click", () => this.#categories.addCategoryItemInput(this));
     }
 
+    setItem(){
+        const itemName = this.#categoryName;
+        document.getElementsByClassName("Inbox")[0].click();
+        document.getElementsByClassName(itemName)[0].click();
+    }
+
 }

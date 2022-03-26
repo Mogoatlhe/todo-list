@@ -22,5 +22,6 @@ const LoadPages = (() => {
 
     main.removeToDo();
     main.changeItem();
+    main.setItem();
 
 })();

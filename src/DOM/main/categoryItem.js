@@ -3,6 +3,7 @@ import { Paragraph } from "../html-elements/paragraph";
 import { Button } from "../html-elements/button";
 import { ToDo } from "./toDo";
 import { isFuture, isToday } from 'date-fns';
+import { SweetAlert } from "./sweetAlert";
 
 export class CategoryItem{
 
@@ -74,11 +75,16 @@ export class CategoryItem{
                 parent.removeChild(node);
                 parent.removeChild(sibling);
                 this.#toDoButtons.removeSelectionOption(siblingName);
+                message = `${siblingName} along with its todos have been removed`;
             }else{
                 if(siblingName === "All"){
                     message = "All todos have been succesfully cleared"
+                }else{
+                    message = `All todos from "${siblingName}" have been cleared`;
                 }
             }
+
+            new SweetAlert("success", "success", message);
 
         }
     }
@@ -176,6 +182,21 @@ export class CategoryItem{
         if(category === "All"){
             this.#toDos = [];
             this.setSessionStorage();
+            return;
+        }else if(category === "Today"){
+            this.#toDos.forEach(todo => {
+                if(isToday(todo.getDate())){
+                    this.removeToDo(todo.getToDo().id);
+                }
+            });
+            return;    
+        }else if(category === "Upcoming"){
+            this.#toDos.forEach(todo => {
+                if(isFuture(todo.getDate())){
+                    this.removeToDo(todo.getToDo().id);
+                }
+            });
+
             return;
         }
         

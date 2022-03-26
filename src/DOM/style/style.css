@@ -460,3 +460,12 @@ hr{
     justify-self: center;
     background-color: var(--amazon);
 }
+
+.swal2-popup{
+    background-color: var(--pale-spring-bud) !important;
+    border: 4px solid var(--tea-green) !important;
+}
+
+.swal2-confirm{
+    background-color: var(--amazon) !important;
+}

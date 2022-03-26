@@ -7,6 +7,7 @@ import { TodoButtons } from "./todoButtons";
 import { Paragraph } from "../html-elements/paragraph";
 import { IdiomaticText } from "../html-elements/idiomaticText";
 import { Div } from "../html-elements/div";
+import { SweetAlert } from "./sweetAlert";
 
 export class Main{
 
@@ -27,7 +28,6 @@ export class Main{
     #addCategoryButton;
 
     constructor(categories){
-
         this.#categories = categories;
         this.#categoryItem = this.#categories.getCategoryItem();
         this.#categoryName = this.#categoryItem.getCurrentItem();
@@ -142,7 +142,14 @@ export class Main{
         this.#addTaskButton.addEventListener("click", () => {
             const symbol = this.#addTaskButton.childNodes[0];
             
+            const cancelNode = document.getElementsByClassName("fa-xmark")[0];
+
+            if(cancelNode !== undefined){
+                cancelNode.click();
+            }
+
             if(this.#addTaskButton.classList.contains("input-empty")){
+                new SweetAlert("error", "oops!", "name and description cannot be empty");
                 return;
             }
             this.preventDuplicateInputs();
@@ -161,6 +168,8 @@ export class Main{
                 if(this.#tasksContainer.contains(this.#cleanToilet)){
                     this.#tasksContainer.removeChild(this.#cleanToilet);
                 }
+                
+                new SweetAlert("success", "success", "todo successfully added")
 
                 this.#addTaskButton.classList.remove("input-active");
                 this.#addTaskButton.nextSibling.classList.remove("display-cancel-btn");
@@ -424,7 +433,7 @@ export class Main{
 
         const toDoContainer = document.querySelector(`[data-id="${this.#toDoId}"]`);
         const buttonsContainer = this.#toDoInputContainer.children[2];
-        const category = buttonsContainer.children[1].value;
+        let category = buttonsContainer.children[1].value;
         const tasksContainer = toDoContainer.parentNode;
         
         const name = toDoContainer.getElementsByClassName("to-do-name")[0];
@@ -443,9 +452,17 @@ export class Main{
         todoData[index].getToDo().category = category;
         todoData[index].getToDo().priority = this.#getPriorityClass(buttonsContainer);
 
+        if(document.getElementsByClassName("Today")[0].classList.contains("selected-category-item")){
+            category = "Today"
+        }else if(document.getElementsByClassName("Upcoming")[0].classList.contains("selected-category-item")){
+            category = "Upcoming"
+        }
+        
         document.getElementsByClassName("Inbox")[0].click();
         document.getElementsByClassName("Today")[0].click();
         document.getElementsByClassName(category)[0].click();
+
+        new SweetAlert("success", "sucess", `${name.textContent} successfully edited.`);
 
         this.#categoryItem.setSessionStorage();
     }
@@ -522,6 +539,12 @@ export class Main{
         }
 
         item.addEventListener("click", () => {
+            const cancelNode = document.getElementsByClassName("fa-xmark")[0];
+
+            if(cancelNode !== undefined){
+                cancelNode.click();
+            }
+            
             if(item.classList.contains("selected-category-item")){
                 return;
             }

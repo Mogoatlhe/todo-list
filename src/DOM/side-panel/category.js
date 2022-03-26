@@ -4,6 +4,7 @@ import { Button } from "../html-elements/button";
 import { IdiomaticText } from "../html-elements/idiomaticText";
 import { Div } from "../html-elements/div";
 import { Input } from "../html-elements/input";
+import { SweetAlert } from "../main/sweetAlert";
 
 export class Categories{
 
@@ -101,6 +102,7 @@ export class Categories{
             const allMinus = document.querySelectorAll(".category-items-container i");
             
             [...allMinus].forEach(minus => minus.click());
+            new SweetAlert("success", "success", "All user added projects have been removed");
         });
     }
 
@@ -190,6 +192,7 @@ export class Categories{
             const existingItem = items.find(item => item.toLowerCase() === newItem);
 
             if(existingItem !== undefined){
+                new SweetAlert("error", "oops", `"${existingItem}" already exists`);
                 return;
             }
 
@@ -204,7 +207,7 @@ export class Categories{
         let emptyCharactersLength = spaceLength + newLineLength;
 
         if(value.length === 0 || emptyCharactersLength === value.length){
-            // display failure message
+            new SweetAlert("error", "oops", "Name cannot be empty");
             return;
         }
 
@@ -220,7 +223,7 @@ export class Categories{
 
         sessionStorage.setItem("categories", JSON.stringify(this.#categories));
         this.#main.changeItem();
-        // display success message
+        new SweetAlert("success", "success", `${newItem} successfully added.`);
     }
 
 

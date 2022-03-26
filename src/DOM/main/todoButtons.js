@@ -45,11 +45,29 @@ export class TodoButtons{
 
     #getTodayDate(){
         const today = new Date();
+        let hours = today.getHours();
+        let minutes = today.getMinutes();
         const day = String(today.getDate()).padStart(2, '0');
         const month = String(today.getMonth() + 1).padStart(2, '0');
         const year = today.getFullYear();
 
-        return `${year}-${month}-${day}T23:20`;
+        if(minutes.toString().length >= 50){
+            hours++;
+            minutes = 60 - minutes;
+            minutes += 10 - minutes; 
+
+            if(minutes.toString().length < 2){
+                minutes = `0${minutes}`;
+            }
+        }else{
+            minutes += 10;
+        }
+
+        if(hours.toString().length < 2){
+            hours = `0${hours}`;
+        }
+
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
 
     setSelectionOptions(categories){

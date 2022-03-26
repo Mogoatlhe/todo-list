@@ -3,6 +3,7 @@ import { Element } from "../element";
 import { Attribute } from "../attribute";
 import { IdiomaticText } from "../html-elements/idiomaticText";
 import { Div } from "../html-elements/div";
+import { format } from 'date-fns'
 
 export class ToDo{
 
@@ -51,7 +52,15 @@ export class ToDo{
         const name = new Element("h5", [], "to-do-name", this.#todo.name)
         const nameNode = name.getElement();
 
-        const description = new Element("h6", [], "to-do-description", this.#todo.description);
+        const year = this.#todo.date.slice(0, 4);
+        const month = this.#todo.date.slice(5, 7);
+        const day = this.#todo.date.slice(8, 10);
+        const hour = this.#todo.date.slice(12, 13);
+        const mins = this.#todo.date.slice(14, 16);
+        const newDate = new Date(year, month - 1, day, hour, mins);
+        const dateFormat = "Pp";
+        const date = format(newDate, dateFormat);
+        const description = new Element("h6", [], "to-do-description", date);
         const descriptionNode = description.getElement();
 
         const hr = new Element("hr", []);

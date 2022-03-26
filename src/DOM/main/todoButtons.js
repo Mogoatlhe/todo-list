@@ -51,10 +51,16 @@ export class TodoButtons{
         const month = String(today.getMonth() + 1).padStart(2, '0');
         const year = today.getFullYear();
 
-        if(minutes.toString().length >= 50){
-            hours++;
+        if(minutes.toString() >= 50){
+
+            if(hours === 23){
+                hours = `00`;
+            }else{
+                hours++;
+            }
+
             minutes = 60 - minutes;
-            minutes += 10 - minutes; 
+            minutes = 10 - minutes; 
 
             if(minutes.toString().length < 2){
                 minutes = `0${minutes}`;
@@ -66,7 +72,7 @@ export class TodoButtons{
         if(hours.toString().length < 2){
             hours = `0${hours}`;
         }
-
+        
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
 

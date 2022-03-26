@@ -2,6 +2,7 @@
 import { Paragraph } from "../html-elements/paragraph";
 import { Button } from "../html-elements/button";
 import { ToDo } from "./toDo";
+import { compareAsc, format, isFuture } from 'date-fns';
 
 export class CategoryItem{
 
@@ -155,6 +156,8 @@ export class CategoryItem{
         let myTodos;
         if(this.#itemName === "All"){
             myTodos = this.#toDos;
+        }else if(this.#itemName === "Upcoming"){
+            myTodos = this.#toDos.filter(toDo => isFuture(toDo.getDate()));
         }else{
             myTodos = this.#toDos.filter(toDo => toDo.getToDo().category === this.#itemName);
         }
